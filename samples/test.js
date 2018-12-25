@@ -1,6 +1,7 @@
-define(["require", "exports", "../index", "react-dom", "react"], function (require, exports, index_1, ReactDOM, React) {
+define(["require", "exports", "../out/index", "react-dom", "react"], function (require, exports, index_1, ReactDOM, React) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    index_1.config.serviceHost = '127.0.0.1:48628';
     let button = document.createElement('button');
     button.innerHTML = "TEST";
     button.onclick = function () {
@@ -10,7 +11,17 @@ define(["require", "exports", "../index", "react-dom", "react"], function (requi
     let element = document.createElement('div');
     document.body.appendChild(element);
     ReactDOM.render(React.createElement(index_1.ImageUpload, { style: { width: 120, height: 120 }, saveImage: (data) => {
-            return index_1.service.saveImage(data);
+            return index_1.service.saveImage(data)
+                .then(o => {
+                alert('upload success');
+                return o;
+            })
+                .catch(o => {
+                alert('upload fail');
+                return o;
+            });
+        }, onSuccess: (data) => {
+            console.log(data);
         } }), element);
     element = document.createElement('div');
     document.body.appendChild(element);

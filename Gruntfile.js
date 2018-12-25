@@ -1,30 +1,36 @@
 module.exports = function (grunt) {
 
-    let build_dir = 'src';
+    let build_dir = 'out';
     let release_dir = 'dist';
-    let lib_name = 'chitu_admin'
-    let lib_js_banner = license;
+    let lib_name = 'image_components'
+    // let lib_js_banner = license;
 
-    require('load-grunt-tasks')(grunt);
     grunt.initConfig({
         browserify: {
             dist: {
                 files: (function () {
                     let obj = {};
-                    let filePath = `${build_dir}/${lib_name}.js`;
+                    let filePath = `index.js`;
                     obj[filePath] = [`${build_dir}/index.js`];
 
                     return obj
                 })(),
                 options: {
-                    transform: ['brfs'],
+                    // transform: ['brfs'],
                     browserifyOptions: {
-                        standalone: 'chitu_admin',
+                        standalone: `${lib_name}`,
                     },
-                    external: ['react', 'react-dom', 'maishu-chitu', 'maishu-chitu-react']
+                    external: ['react', 'react-dom', 'maishu-chitu', 'maishu-chitu-react', 'maishu-ui-toolkit']
                 }
+            }
+        },
+        shell: {
+            src: {
+                command: `tsc -p src`
             }
         },
     })
 
+    require('load-grunt-tasks')(grunt);
+    grunt.registerTask('default', ['shell', 'browserify']);
 }

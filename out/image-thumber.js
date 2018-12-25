@@ -1,6 +1,15 @@
-define(["require", "exports", "react"], function (require, exports, React) {
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "react"], factory);
+    }
+})(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    const React = require("react");
     const imageThumbSize = 112;
     let selectedColor = 'blue';
     let style = document.createElement('style');

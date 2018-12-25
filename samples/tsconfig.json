@@ -1,9 +1,8 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "umd",
-        "declaration": true,
-        "outDir": "../out",
+        "module": "amd",
+        "declaration": false,
         "jsx": "react",
         "baseUrl": "../",
         "paths": {

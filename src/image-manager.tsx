@@ -3,11 +3,11 @@ import ImageThumber from './image-thumber';
 import * as wuzhui from 'maishu-wuzhui';
 import React = require('react');
 import ReactDOM = require('react-dom');
-import service from 'service';
+import service from './service';
 import { createDialogElement } from 'common';
 
 
-requirejs(['less!image-manager']);
+// requirejs(['less!image-manager']);
 
 type State = {
     images: SiteImageData[],
@@ -119,25 +119,11 @@ class ImageManager extends React.Component<Props, State> {
                                 badgeText={1}
                                 disabled={selectedAll && !selectedText}
                                 text={o.width != null && o.height != null ? `${o.width} X ${o.height}` : " "}
-                            // onClick={() => {
-                            //     let selectedItems: string[] = this.state.selectedItems
-                            //     if (selectedItems.indexOf(o.id) >= 0) {
-                            //         selectedItems = selectedItems.filter(c => c != o.id);
-                            //     }
-                            //     else {
-                            //         if (selectedItems.length == selectedMax)
-                            //             return
-
-                            //         selectedItems.push(o.id);
-                            //     }
-                            //     this.setState({ selectedItems });
-                            // }}
                             />
 
                             return thumber;
                         })}
-                        <ImageUpload className="col-xs-2" saveImage={(data) => this.saveImage(data.base64)}
-                            width={400} />
+                        <ImageUpload className="col-xs-2" saveImage={(data) => this.saveImage(data.base64)} />
                         <div className="clearfix" />
                     </div>
                     <div className="modal-footer">

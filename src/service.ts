@@ -1,7 +1,10 @@
 import { DataSourceSelectArguments, DataSourceSelectResult } from "maishu-wuzhui";
 import * as chitu from 'maishu-chitu'
+import { config } from "./config";
+import { errors } from "./errors";
+// import { errors } from "maishu-ui-toolkit";
 
-let serviceHost = '127.0.0.1:48628'
+// let serviceHost = '127.0.0.1:48628'
 class Service extends chitu.Service {
     constructor() {
         super();
@@ -9,7 +12,10 @@ class Service extends chitu.Service {
 
     ajax<T>(url: string, options?: chitu.AjaxOptions): Promise<T> {
         if (!url.startsWith('http')) {
-            url = location.protocol + "//" + serviceHost + "/" + url
+            if (!config.serviceHost)
+                throw errors.serviceHostNotConfig()
+
+            url = location.protocol + "//" + config.serviceHost + "/" + url
         }
         return super.ajax<T>(url, options);
     }
@@ -67,17 +73,19 @@ class Service extends chitu.Service {
         return this.ajax<T>(url, { headers, data, method: 'delete' });
     }
 
-    saveImage(data: { base64: string, width: number, height: number }) {
+    async saveImage(data: ui.ImageFileToBase64Result) {
         let { base64, width, height } = data
-        return this.postByJson('upload', { image: base64, width, height })
+        let result = await this.postByJson('upload', { image: base64, width, height })
+        return result
     }
 
     images(args: DataSourceSelectArguments, width: number, height: number): Promise<DataSourceSelectResult<any>> {
         return Promise.resolve(null)
     }
 
-    removeImage(id: string) {
-        return this.postByJson('remove', { id })
+    async removeImage(id: string) {
+        let result = await this.postByJson('remove', { id })
+        return result
     }
 }
 

@@ -1,7 +1,17 @@
-define(["require", "exports", "react", "maishu-ui-toolkit"], function (require, exports, React, ui) {
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "react", "maishu-ui-toolkit", "./service"], factory);
+    }
+})(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    // requirejs(['less!image-upload']);
+    const React = require("react");
+    const ui = require("maishu-ui-toolkit");
+    const service_1 = require("./service");
     let style = document.createElement("style");
     style.innerHTML = `
     .image-upload {
@@ -20,9 +30,16 @@ define(["require", "exports", "react", "maishu-ui-toolkit"], function (require, 
      */
     class ImageUpload extends React.Component {
         updloadImage(imageFile) {
-            ui.imageFileToBase64(imageFile)
-                .then(data => {
-                this.props.saveImage(data);
+            ui.imageFileToBase64(imageFile).then(data => {
+                let p = this.props.saveImage ? this.props.saveImage : service_1.default.saveImage;
+                p(data).then((result) => {
+                    debugger;
+                    if (this.props.onSuccess)
+                        this.props.onSuccess(result);
+                }).catch(err => {
+                    if (this.props.onFail)
+                        this.props.onFail(err);
+                });
             });
         }
         setFileInput(e) {

@@ -1,15 +1,17 @@
 import React = require("react");
 import * as ui from 'maishu-ui-toolkit'
+import service from "./service";
+
 interface ImageUploadProps extends React.Props<ImageUpload> {
     style?: React.CSSProperties,
-    saveImage: (data: ui.ImageFileToBase64Result) => Promise<any>,
     title?: string,
     className?: string,
-    width?: number,
-    height?: number
+    // width?: number,
+    // height?: number,
+    saveImage?: (data: ui.ImageFileToBase64Result) => Promise<any>,
+    onSuccess?: (result: any) => void,
+    onFail?: (err: Error) => void,
 }
-
-// requirejs(['less!image-upload']);
 
 let style = document.createElement("style")
 style.innerHTML = `
@@ -34,10 +36,18 @@ class ImageUpload extends React.Component<ImageUploadProps, any> {
     file: HTMLInputElement;
     image: HTMLImageElement;
     updloadImage(imageFile: File) {
-        ui.imageFileToBase64(imageFile)
-            .then(data => {
-                this.props.saveImage(data);
-            });
+        ui.imageFileToBase64(imageFile).then(data => {
+            let p = this.props.saveImage ? this.props.saveImage : service.saveImage;
+            p(data).then((result) => {
+                debugger
+                if (this.props.onSuccess)
+                    this.props.onSuccess(result)
+            }).catch(err => {
+                if (this.props.onFail)
+                    this.props.onFail(err)
+            })
+
+        });
     }
     setFileInput(e: HTMLInputElement) {
         if (!e || e.onchange) return;

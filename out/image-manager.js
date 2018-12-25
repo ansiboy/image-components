@@ -6,10 +6,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-define(["require", "exports", "./image-upload", "./image-thumber", "maishu-wuzhui", "react", "react-dom", "service", "common"], function (require, exports, image_upload_1, image_thumber_1, wuzhui, React, ReactDOM, service_1, common_1) {
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "./image-upload", "./image-thumber", "maishu-wuzhui", "react", "react-dom", "./service", "common"], factory);
+    }
+})(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    requirejs(['less!image-manager']);
+    const image_upload_1 = require("./image-upload");
+    const image_thumber_1 = require("./image-thumber");
+    const wuzhui = require("maishu-wuzhui");
+    const React = require("react");
+    const ReactDOM = require("react-dom");
+    const service_1 = require("./service");
+    const common_1 = require("common");
     class ImageManager extends React.Component {
         // private element: HTMLElement;
         constructor(props) {
@@ -102,7 +116,7 @@ define(["require", "exports", "./image-upload", "./image-thumber", "maishu-wuzhu
                             let thumber = React.createElement(image_thumber_1.default, { key: o.id, imagePath: o.id, width: 120, height: 120, remove: (imagePath) => this.removeImage(o), badgeText: 1, disabled: selectedAll && !selectedText, text: o.width != null && o.height != null ? `${o.width} X ${o.height}` : " " });
                             return thumber;
                         }),
-                        React.createElement(image_upload_1.default, { className: "col-xs-2", saveImage: (data) => this.saveImage(data.base64), width: 400 }),
+                        React.createElement(image_upload_1.default, { className: "col-xs-2", saveImage: (data) => this.saveImage(data.base64) }),
                         React.createElement("div", { className: "clearfix" })),
                     React.createElement("div", { className: "modal-footer" },
                         React.createElement("div", { className: "pull-left", ref: (e) => this.pagingBarElement = e || this.pagingBarElement }),

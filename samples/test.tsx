@@ -1,7 +1,10 @@
-import { ImageUpload, ImageThumber, service } from "../src/index";
+import { ImageUpload, ImageThumber, service, config } from "../out/index";
 
 import ReactDOM = require("react-dom");
 import React = require("react");
+
+config.serviceHost = '127.0.0.1:48628'
+
 
 let button = document.createElement('button')
 button.innerHTML = "TEST"
@@ -15,7 +18,20 @@ document.body.appendChild(element)
 ReactDOM.render(<ImageUpload style={{ width: 120, height: 120 }}
     saveImage={(data) => {
         return service.saveImage(data)
-    }} />, element)
+            .then(o => {
+                alert('upload success')
+                return o
+            })
+            .catch(o => {
+                alert('upload fail')
+                return o
+            })
+    }}
+    onSuccess={(data) => {
+        console.log(data)
+    }}
+
+/>, element)
 
 
 

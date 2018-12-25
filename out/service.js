@@ -1,14 +1,36 @@
-define(["require", "exports", "maishu-chitu"], function (require, exports, chitu) {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "maishu-chitu", "./config", "./errors"], factory);
+    }
+})(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    let serviceHost = '127.0.0.1:48628';
+    const chitu = require("maishu-chitu");
+    const config_1 = require("./config");
+    const errors_1 = require("./errors");
+    // import { errors } from "maishu-ui-toolkit";
+    // let serviceHost = '127.0.0.1:48628'
     class Service extends chitu.Service {
         constructor() {
             super();
         }
         ajax(url, options) {
             if (!url.startsWith('http')) {
-                url = location.protocol + "//" + serviceHost + "/" + url;
+                if (!config_1.config.serviceHost)
+                    throw errors_1.errors.serviceHostNotConfig();
+                url = location.protocol + "//" + config_1.config.serviceHost + "/" + url;
             }
             return super.ajax(url, options);
         }
@@ -54,14 +76,20 @@ define(["require", "exports", "maishu-chitu"], function (require, exports, chitu
             return this.ajax(url, { headers, data, method: 'delete' });
         }
         saveImage(data) {
-            let { base64, width, height } = data;
-            return this.postByJson('upload', { image: base64, width, height });
+            return __awaiter(this, void 0, void 0, function* () {
+                let { base64, width, height } = data;
+                let result = yield this.postByJson('upload', { image: base64, width, height });
+                return result;
+            });
         }
         images(args, width, height) {
             return Promise.resolve(null);
         }
         removeImage(id) {
-            return this.postByJson('remove', { id });
+            return __awaiter(this, void 0, void 0, function* () {
+                let result = yield this.postByJson('remove', { id });
+                return result;
+            });
         }
     }
     let service = new Service();

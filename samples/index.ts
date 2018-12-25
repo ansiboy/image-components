@@ -1,16 +1,5 @@
 let node_modules = '../node_modules'
 requirejs.config({
-    shim: {
-        "maishu-node-auth": {
-            deps: ['maishu-chitu-admin']
-        },
-        "maishu-chitu-react": {
-            deps: ["react", "react-dom"]
-        },
-        "maishu-chitu-admin": {
-            deps: ["maishu-chitu-react", "maishu-ui-toolkit"]
-        }
-    },
     paths: {
         css: '../lib/css',
         less: '../lib/require-less-0.1.5/less',
@@ -31,6 +20,9 @@ requirejs.config({
     }
 })
 
-requirejs(['test'], function () {
+requirejs(['react', 'react-dom', 'maishu-ui-toolkit'], function () {
+    requirejs(['test'], function () {
 
+    })
 })
+
