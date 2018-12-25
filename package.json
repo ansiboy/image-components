@@ -1,0 +1,38 @@
+{
+  "name": "maishu-image-components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansiboy/image-components.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ansiboy/image-components/issues"
+  },
+  "homepage": "https://github.com/ansiboy/image-components#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.3.0",
+    "load-grunt-tasks": "^4.0.0"
+  },
+  "dependencies": {
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "@types/requirejs": "^2.1.31",
+    "csso": "^3.5.1",
+    "less": "^3.9.0",
+    "maishu-chitu": "^2.0.13",
+    "maishu-ui-toolkit": "^1.0.1",
+    "maishu-wuzhui": "^1.1.8",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "require-less": "0.0.7",
+    "requirejs": "^2.3.6"
+  }
+}
