@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageService = exports.settings = exports.errors = void 0;
 const maishu_chitu_1 = require("maishu-chitu");
 const maishu_toolkit_1 = require("maishu-toolkit");
-const config_1 = require("./config");
+const ui = require("maishu-ui-toolkit");
 exports.errors = {
     serviceUrlCanntNull(serviceName) {
         let msg = `Service '${serviceName}' base url can not null.`;
@@ -48,9 +48,11 @@ exports.settings = {
 };
 /** 图片服务，实现图片的上传，获取 */
 class ImageService extends maishu_chitu_1.Service {
-    // static baseUrl: string
+    constructor() {
+        super(err => ImageService.errorHandle(err));
+    }
     url(path) {
-        return maishu_toolkit_1.pathConcat(config_1.config.serviceHost, path);
+        return maishu_toolkit_1.pathConcat(ImageService.serviceHost, path);
     }
     /** 获取图片的 URL
      * @param id 图片的 ID
@@ -71,7 +73,7 @@ class ImageService extends maishu_chitu_1.Service {
         if (id != null && (id.startsWith("http://") || id.startsWith("https://")))
             return id;
         if (id != null && id.indexOf("/") >= 0) {
-            let r = maishu_toolkit_1.pathConcat(config_1.config.serviceHost, id);
+            let r = maishu_toolkit_1.pathConcat(ImageService.serviceHost, id);
             let q = "";
             if (width != null)
                 q = q + `&width=${width}`;
@@ -192,6 +194,9 @@ class ImageService extends maishu_chitu_1.Service {
     }
 }
 exports.ImageService = ImageService;
+ImageService.errorHandle = (err) => {
+    ui.alert({ title: "错误", message: err.message });
+};
 let draws = {
     text: (imageText, options) => {
         return (ctx, canvasWidth, canvasHeight) => {

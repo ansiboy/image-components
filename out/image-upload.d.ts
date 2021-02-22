@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ui from "maishu-ui-toolkit";
-interface ImageUploadProps extends React.Props<ImageUpload> {
+interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     style?: React.CSSProperties;
     saveImage: (data: ui.ImageFileToBase64Result) => Promise<any>;
     title?: string;

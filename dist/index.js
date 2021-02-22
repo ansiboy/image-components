@@ -1567,28 +1567,6 @@ exports.createDialogElement = createDialogElement;
 
 /***/ }),
 
-/***/ "../out/config.js":
-/*!************************!*\
-  !*** ../out/config.js ***!
-  \************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.config = void 0;
-const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
-exports.config = {
-    serviceHost: null,
-    errorHandle: (err) => {
-        ui.alert({ title: "错误", message: err.message });
-    }
-};
-
-
-/***/ }),
-
 /***/ "../out/image-manager.js":
 /*!*******************************!*\
   !*** ../out/image-manager.js ***!
@@ -1617,7 +1595,6 @@ const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
 const common_1 = __webpack_require__(/*! ./common */ "../out/common.js");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 const image_service_1 = __webpack_require__(/*! ./image-service */ "../out/image-service.js");
-const config_1 = __webpack_require__(/*! ./config */ "../out/config.js");
 __webpack_require__(/*! ../content/image-manager.less */ "../content/image-manager.less");
 class ImageManager extends React.Component {
     constructor(props) {
@@ -1632,7 +1609,7 @@ class ImageManager extends React.Component {
             this.state.images.push(args.dataItem);
             this.setState({ images: this.state.images });
         });
-        this.imageService = new image_service_1.ImageService((err) => config_1.config.errorHandle(err));
+        this.imageService = new image_service_1.ImageService();
     }
     componentDidMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1648,13 +1625,10 @@ class ImageManager extends React.Component {
             });
             let ul = this.pagingBarElement.querySelector('ul');
             ul.className = "pagination";
-            // dataSource.select(this.selectArguments);
         });
     }
     show(selectedMax, callback) {
         this.showDialogCallback = callback;
-        // this.state.selectedItems = [];
-        // this.setState(this.state);
         this.selectArguments.startRowIndex = 0;
         this.dataSource.select(this.selectArguments);
         this.setState({ selectedItems: [], selectedMax });
@@ -1667,6 +1641,9 @@ class ImageManager extends React.Component {
     }
     removeImage(item) {
         this.dataSource.delete(item);
+        let images = this.state.images;
+        images = images.filter(o => o.id != item.id);
+        this.setState({ images });
     }
     render() {
         let { images, selectedItems, selectedMax } = this.state;
@@ -1729,7 +1706,7 @@ function showImageDialog(maxImagesCount, callback) {
 }
 exports.showImageDialog = showImageDialog;
 function createImageDataSource() {
-    let station = new image_service_1.ImageService(err => config_1.config.errorHandle(err));
+    let station = new image_service_1.ImageService();
     let dataSource = new wuzhui.DataSource({
         primaryKeys: ['id'],
         select(args) {
@@ -1781,7 +1758,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageService = exports.settings = exports.errors = void 0;
 const maishu_chitu_1 = __webpack_require__(/*! maishu-chitu */ "maishu-chitu");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "../node_modules/maishu-toolkit/dist/index.js");
-const config_1 = __webpack_require__(/*! ./config */ "../out/config.js");
+const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 exports.errors = {
     serviceUrlCanntNull(serviceName) {
         let msg = `Service '${serviceName}' base url can not null.`;
@@ -1817,9 +1794,11 @@ exports.settings = {
 };
 /** 图片服务，实现图片的上传，获取 */
 class ImageService extends maishu_chitu_1.Service {
-    // static baseUrl: string
+    constructor() {
+        super(err => ImageService.errorHandle(err));
+    }
     url(path) {
-        return maishu_toolkit_1.pathConcat(config_1.config.serviceHost, path);
+        return maishu_toolkit_1.pathConcat(ImageService.serviceHost, path);
     }
     /** 获取图片的 URL
      * @param id 图片的 ID
@@ -1840,7 +1819,7 @@ class ImageService extends maishu_chitu_1.Service {
         if (id != null && (id.startsWith("http://") || id.startsWith("https://")))
             return id;
         if (id != null && id.indexOf("/") >= 0) {
-            let r = maishu_toolkit_1.pathConcat(config_1.config.serviceHost, id);
+            let r = maishu_toolkit_1.pathConcat(ImageService.serviceHost, id);
             let q = "";
             if (width != null)
                 q = q + `&width=${width}`;
@@ -1961,6 +1940,9 @@ class ImageService extends maishu_chitu_1.Service {
     }
 }
 exports.ImageService = ImageService;
+ImageService.errorHandle = (err) => {
+    ui.alert({ title: "错误", message: err.message });
+};
 let draws = {
     text: (imageText, options) => {
         return (ctx, canvasWidth, canvasHeight) => {
@@ -2033,7 +2015,7 @@ class ImageThumber extends React.Component {
                 React.createElement("div", { className: "top" }, selectedText),
                 this.props.remove ?
                     React.createElement("div", { className: "remove" },
-                        React.createElement("i", { className: "icon-remove", ref: (e) => this.setDeleteButton(e, imagePath) })) : null,
+                        React.createElement("i", { className: "fa fa-remove", ref: (e) => this.setDeleteButton(e, imagePath) })) : null,
                 React.createElement("img", { src: imagePath, ref: (e) => e ? ui.renderImage(e, { imageSize: { width: 150, height: 150 } }) : null }),
                 React.createElement("div", { className: "bottom" }, text),
                 disabled ? React.createElement("div", { className: "disabled" }) : null)));
@@ -2125,7 +2107,7 @@ exports.default = ImageUpload;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.config = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
+exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
 var image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "../out/image-thumber.js");
 Object.defineProperty(exports, "ImageThumber", { enumerable: true, get: function () { return image_thumber_1.default; } });
 var image_upload_1 = __webpack_require__(/*! ./image-upload */ "../out/image-upload.js");
@@ -2134,8 +2116,6 @@ var image_manager_1 = __webpack_require__(/*! ./image-manager */ "../out/image-m
 Object.defineProperty(exports, "showImageDialog", { enumerable: true, get: function () { return image_manager_1.showImageDialog; } });
 var image_service_1 = __webpack_require__(/*! ./image-service */ "../out/image-service.js");
 Object.defineProperty(exports, "ImageService", { enumerable: true, get: function () { return image_service_1.ImageService; } });
-var config_1 = __webpack_require__(/*! ./config */ "../out/config.js");
-Object.defineProperty(exports, "config", { enumerable: true, get: function () { return config_1.config; } });
 
 
 /***/ }),

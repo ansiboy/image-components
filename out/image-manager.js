@@ -18,7 +18,6 @@ const ReactDOM = require("react-dom");
 const common_1 = require("./common");
 const ui = require("maishu-ui-toolkit");
 const image_service_1 = require("./image-service");
-const config_1 = require("./config");
 require("../content/image-manager.less");
 class ImageManager extends React.Component {
     constructor(props) {
@@ -33,7 +32,7 @@ class ImageManager extends React.Component {
             this.state.images.push(args.dataItem);
             this.setState({ images: this.state.images });
         });
-        this.imageService = new image_service_1.ImageService((err) => config_1.config.errorHandle(err));
+        this.imageService = new image_service_1.ImageService();
     }
     componentDidMount() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -49,13 +48,10 @@ class ImageManager extends React.Component {
             });
             let ul = this.pagingBarElement.querySelector('ul');
             ul.className = "pagination";
-            // dataSource.select(this.selectArguments);
         });
     }
     show(selectedMax, callback) {
         this.showDialogCallback = callback;
-        // this.state.selectedItems = [];
-        // this.setState(this.state);
         this.selectArguments.startRowIndex = 0;
         this.dataSource.select(this.selectArguments);
         this.setState({ selectedItems: [], selectedMax });
@@ -68,6 +64,9 @@ class ImageManager extends React.Component {
     }
     removeImage(item) {
         this.dataSource.delete(item);
+        let images = this.state.images;
+        images = images.filter(o => o.id != item.id);
+        this.setState({ images });
     }
     render() {
         let { images, selectedItems, selectedMax } = this.state;
@@ -130,7 +129,7 @@ function showImageDialog(maxImagesCount, callback) {
 }
 exports.showImageDialog = showImageDialog;
 function createImageDataSource() {
-    let station = new image_service_1.ImageService(err => config_1.config.errorHandle(err));
+    let station = new image_service_1.ImageService();
     let dataSource = new wuzhui.DataSource({
         primaryKeys: ['id'],
         select(args) {

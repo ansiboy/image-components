@@ -1,5 +1,6 @@
 import * as React from "react";
-import "bootstrap/less/bootstrap.less";
+
+
 export default class IndexPage extends React.Component {
     render() {
         return <div className="container">
@@ -7,6 +8,9 @@ export default class IndexPage extends React.Component {
             <ul className="list-group">
                 <li className="list-group-item">
                     <a href="#image-selector">图片选择</a>
+                </li>
+                <li className="list-group-item">
+                    <a href="#image-upload">图片上传</a>
                 </li>
             </ul>
         </div>

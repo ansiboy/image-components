@@ -14,6 +14,9 @@ export declare let settings: {
 };
 /** 图片服务，实现图片的上传，获取 */
 export declare class ImageService extends Service {
+    static serviceHost: string;
+    static errorHandle: (err: Error) => void;
+    constructor();
     protected url(path: string): string;
     /** 获取图片的 URL
      * @param id 图片的 ID

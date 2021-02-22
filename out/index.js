@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.config = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
+exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
 var image_thumber_1 = require("./image-thumber");
 Object.defineProperty(exports, "ImageThumber", { enumerable: true, get: function () { return image_thumber_1.default; } });
 var image_upload_1 = require("./image-upload");
@@ -9,5 +9,3 @@ var image_manager_1 = require("./image-manager");
 Object.defineProperty(exports, "showImageDialog", { enumerable: true, get: function () { return image_manager_1.showImageDialog; } });
 var image_service_1 = require("./image-service");
 Object.defineProperty(exports, "ImageService", { enumerable: true, get: function () { return image_service_1.ImageService; } });
-var config_1 = require("./config");
-Object.defineProperty(exports, "config", { enumerable: true, get: function () { return config_1.config; } });
