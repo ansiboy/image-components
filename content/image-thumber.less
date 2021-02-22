@@ -1,29 +1,31 @@
 .image-thumber {
-    .item {
-        @img-size: 120px;
+    width   : 120px;
+    position: relative;
 
-        border: solid 1px #ccc;
+    .item {
+        @item-inner-width : ~"calc(100% - 2px)";
+        @item-inner-height: ~"calc(100% - 2px)";
+        border            : solid 1px #ccc;
 
         .bottom {
-            display              : block;
-            overflow             : hidden;
-            white-space          : nowrap;
-            -webkit-text-overflow: ellipsis;
+            display                 : block;
+            overflow                : hidden;
+            white-space             : nowrap;
+            -webkit-text-overflow   : ellipsis;
             // -moz-binding         : url(ellipsis.xml#ellipsis);
-            -ms-text-overflow    : ellipsis;
-            -o-text-overflow     : ellipsis;
-            text-overflow        : ellipsis;
-            position             : absolute;
-            bottom               : 0;
-            padding              : 4px 8px 0px 8px;
-            font-size            : 12px;
-            text-align           : center;
-            background-color     : rgba(0, 0, 0, 0.55);
-            color                : white; // position: absolute; 
-            // bottom: 0px;
-            width                : @img-size;
-            @height              : 24px;
-            height               : @height;
+            -ms-text-overflow       : ellipsis;
+            -o-text-overflow        : ellipsis;
+            text-overflow           : ellipsis;
+            position                : absolute;
+            bottom                  : 0;
+            padding                 : 4px 8px 0px 8px;
+            font-size               : 12px;
+            text-align              : center;
+            background-color        : rgba(0, 0, 0, 0.55);
+            color                   : white;
+            width                   : @item-inner-width;
+            @height                 : 24px;
+            height                  : @height;
 
             // margin-top: 0 - @height; // background-color: rgba(0, 0, 0, 0.55);
             // color: white;
@@ -41,23 +43,23 @@
             font-size  : 12px;
             font-weight: bold;
             text-align : right;
-            width      : @img-size;
+            width      : @item-inner-width;
         }
 
         @selected_color: blue;
 
         &.selected {
-            @triangle_height: 8px;
+            @triangle_height: 10px;
             @size           : @triangle_height*2;
             border-color    : @selected_color;
 
             .triangle {
                 position     : relative;
-                top          : 16px;
-                left         : ~"calc(100% - 8px)";
+                top          : 19px;
+                left         : ~"calc(100% - 18px)";
                 width        : @size;
                 height       : @size;
-                margin-top   : -32px;
+                margin-top   : -40px;
                 background   : transparent;
                 border-top   : @size solid transparent;
                 border-bottom: @size solid @selected_color;
@@ -78,7 +80,7 @@
         &:hover .remove {
             @size           : 20px;
             position        : relative;
-            left            : ~"calc(100% - 14px)";
+            left            :~"calc(100% - @{size})";
             top             : @size;
             width           : @size;
             height          : @size;
@@ -92,15 +94,15 @@
             }
         }
 
-        img {
-            width : @img-size;
-            height: @img-size;
-        }
+        // img {
+        //     width : @img-size;
+        //     height: @img-size;
+        // }
 
         .disabled {
             position        : absolute;
-            width           : @img-size;
-            height          : @img-size;
+            width           : @item-inner-width;
+            height          : @item-inner-height;
             background-color: gray;
             top             : 0px;
             opacity         : 0.3;

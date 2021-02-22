@@ -12,6 +12,9 @@ export default class IndexPage extends React.Component {
                 <li className="list-group-item">
                     <a href="#image-upload">图片上传</a>
                 </li>
+                <li className="list-group-item">
+                    <a href="#image-thumb">缩略图</a>
+                </li>
             </ul>
         </div>
     }

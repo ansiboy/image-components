@@ -102,7 +102,7 @@ class ImageManager extends React.Component<Props, State> {
                         {images.map((o) => {
                             let selectedText = selectedItems.indexOf(o.id) >= 0 ? `${selectedItems.indexOf(o.id) + 1}` : ''
                             let selectedAll = selectedItems.length == selectedMax
-                            let thumber = <ImageThumber key={o.id} imagePath={this.imageService.imageSource(o.id, 150, 150)} className="col-xs-2"
+                            let thumber = <ImageThumber key={o.id} imagePath={this.imageService.imageSource(o.id, 150, 150)}
                                 remove={() => this.removeImage(o)}
                                 selectedText={selectedText}
                                 disabled={selectedAll && !selectedText}
@@ -123,7 +123,7 @@ class ImageManager extends React.Component<Props, State> {
 
                             return thumber;
                         })}
-                        <ImageUpload className="col-xs-2" saveImage={(data) => this.saveImage(data.base64)}
+                        <ImageUpload saveImage={(data) => this.saveImage(data.base64)}
                             width={400} />
                         <div className="clearfix" />
                     </div>

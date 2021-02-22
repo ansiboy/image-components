@@ -83,7 +83,7 @@ class ImageManager extends React.Component {
                     images.map((o) => {
                         let selectedText = selectedItems.indexOf(o.id) >= 0 ? `${selectedItems.indexOf(o.id) + 1}` : '';
                         let selectedAll = selectedItems.length == selectedMax;
-                        let thumber = React.createElement(image_thumber_1.default, { key: o.id, imagePath: this.imageService.imageSource(o.id, 150, 150), className: "col-xs-2", remove: () => this.removeImage(o), selectedText: selectedText, disabled: selectedAll && !selectedText, text: o.width != null && o.height != null ? `${o.width} X ${o.height}` : " ", onClick: () => {
+                        let thumber = React.createElement(image_thumber_1.default, { key: o.id, imagePath: this.imageService.imageSource(o.id, 150, 150), remove: () => this.removeImage(o), selectedText: selectedText, disabled: selectedAll && !selectedText, text: o.width != null && o.height != null ? `${o.width} X ${o.height}` : " ", onClick: () => {
                                 let selectedItems = this.state.selectedItems;
                                 if (selectedItems.indexOf(o.id) >= 0) {
                                     selectedItems = selectedItems.filter(c => c != o.id);
@@ -97,7 +97,7 @@ class ImageManager extends React.Component {
                             } });
                         return thumber;
                     }),
-                    React.createElement(image_upload_1.default, { className: "col-xs-2", saveImage: (data) => this.saveImage(data.base64), width: 400 }),
+                    React.createElement(image_upload_1.default, { saveImage: (data) => this.saveImage(data.base64), width: 400 }),
                     React.createElement("div", { className: "clearfix" })),
                 React.createElement("div", { className: "modal-footer" },
                     React.createElement("div", { className: "pull-left", ref: (e) => this.pagingBarElement = e || this.pagingBarElement }),

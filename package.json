@@ -19,6 +19,11 @@
   },
   "homepage": "https://github.com/ansiboy/image-components#readme",
   "devDependencies": {
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "@types/requirejs": "^2.1.31",
+    "require-less": "0.0.7",
+    "csso": "^3.5.1",
     "css-loader": "^5.0.2",
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.3.0",
@@ -32,16 +37,10 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@types/react": "^16.7.18",
-    "@types/react-dom": "^16.0.11",
-    "@types/requirejs": "^2.1.31",
-    "csso": "^3.5.1",
     "maishu-chitu": "^2.0.13",
     "maishu-ui-toolkit": "^1.0.1",
     "maishu-wuzhui-helper": "^1.9.4",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "require-less": "0.0.7",
-    "requirejs": "^2.3.6"
+    "react-dom": "^16.7.0"
   }
 }

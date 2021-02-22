@@ -32,7 +32,7 @@ export declare class ImageService extends Service {
     resize(imageBase64: string, width: number, height: number): Promise<string>;
     list(args: DataSourceSelectArguments): Promise<DataSourceSelectResult<{
         id: string;
-        with: number;
+        width: number;
         height: number;
     }>>;
     /**

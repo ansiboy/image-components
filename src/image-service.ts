@@ -173,7 +173,7 @@ export class ImageService extends Service {
 
     async list(args: DataSourceSelectArguments) {
         let url = this.url("list"); //`${ImageService.baseUrl}/list`;
-        type T = { id: string, with: number, height: number };
+        type T = { id: string, width: number, height: number };
         let result = await this.postByJson<DataSourceSelectResult<T>>(url, args);
         return result;
     }

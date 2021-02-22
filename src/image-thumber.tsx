@@ -54,7 +54,7 @@ export default class ImageThumber extends React.Component<ImageThumberProps, Ima
                         <div className="remove">
                             <i className="fa fa-remove" ref={(e: any) => this.setDeleteButton(e, imagePath)} />
                         </div> : null}
-                    <img src={imagePath}
+                    <img className="img-responsive" src={imagePath}
                         ref={(e: HTMLImageElement) => e ? ui.renderImage(e, { imageSize: { width: 150, height: 150 } }) : null} />
                     <div className="bottom">
                         {text}
