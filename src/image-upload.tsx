@@ -1,5 +1,9 @@
 import * as React from "react";
 import * as ui from "maishu-ui-toolkit";
+import "../content/image-upload.less";
+import { getStrings } from "./strings";
+
+let strings = getStrings();
 
 interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     style?: React.CSSProperties,
@@ -10,7 +14,6 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     height?: number
 }
 
-import "../content/image-upload.less";
 
 class ImageUpload extends React.Component<ImageUploadProps, any> {
     itemElement: HTMLElement;
@@ -63,7 +66,7 @@ class ImageUpload extends React.Component<ImageUploadProps, any> {
 
     render() {
         let { title, className } = this.props;
-        title = title || '图片上传'
+        title = title || strings.imageUpload;
         className = className || '';
 
         return (

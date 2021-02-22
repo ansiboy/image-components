@@ -9,9 +9,6 @@ export declare let errors: {
     instanceMessangerStart(): Error;
     notSupportedInNode(): Error;
 };
-export declare let settings: {
-    noImageText: string;
-};
 /** 图片服务，实现图片的上传，获取 */
 export declare class ImageService extends Service {
     static serviceHost: string;

@@ -7,9 +7,11 @@ import { createDialogElement } from './common';
 import * as ui from "maishu-ui-toolkit";
 import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 import { ImageService } from "./image-service";
+import { getStrings } from "./strings";
 
 import "../content/image-manager.less";
 
+let strings = getStrings();
 type SiteImageData = {
     id: string, width?: number, height?: number
 }
@@ -94,7 +96,7 @@ class ImageManager extends React.Component<Props, State> {
                             onClick={() => ui.hideDialog(element)}>
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 className="modal-title">选择图片</h4>
+                        <h4 className="modal-title">{strings.selectImage}</h4>
                     </div>
                     <div className="modal-body">
                         {images.map((o) => {
@@ -130,11 +132,11 @@ class ImageManager extends React.Component<Props, State> {
                             ref={(e: HTMLElement) => this.pagingBarElement = e || this.pagingBarElement}>
                         </div>
                         {selectedMax ? <div className="pull-left" style={{ paddingTop: 8, paddingLeft: 10 }}>
-                            最多可选<b style={{ padding: '0 2px 0 2px' }}>{selectedMax}</b>张</div> : null}
+                            {strings.selectMax}<b style={{ padding: '0 2px 0 2px' }}>{selectedMax}</b>张</div> : null}
                         <button name="cancel" type="button" className="btn btn-default"
                             onClick={() => ui.hideDialog(element)}>
-                            取消
-                            </button>
+                            {strings.cancel}
+                        </button>
                         <button name="ok" type="button" className="btn btn-primary"
                             disabled={selectedItems.length == 0}
                             onClick={() => {
@@ -144,7 +146,7 @@ class ImageManager extends React.Component<Props, State> {
                                 }
                                 ui.hideDialog(element);
                             }}>
-                            确定
+                            {strings.confirm}
                         </button>
                     </div>
                 </div>

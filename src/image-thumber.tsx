@@ -13,7 +13,9 @@ type ImageThumberState = {
 }
 
 import "../content/image-thumber.less";
+import { getStrings } from "./strings";
 
+let strings = getStrings();
 export default class ImageThumber extends React.Component<ImageThumberProps, ImageThumberState>{
     constructor(props) {
         super(props);
@@ -28,7 +30,7 @@ export default class ImageThumber extends React.Component<ImageThumberProps, Ima
                 return this.props.remove(imagePath)
             },
             {
-                confirm: '确定删除该图片吗？'
+                confirm: strings.deleteImageConfirm
             });
     }
     render() {

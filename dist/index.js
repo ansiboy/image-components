@@ -1595,7 +1595,9 @@ const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
 const common_1 = __webpack_require__(/*! ./common */ "../out/common.js");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 const image_service_1 = __webpack_require__(/*! ./image-service */ "../out/image-service.js");
+const strings_1 = __webpack_require__(/*! ./strings */ "../out/strings.js");
 __webpack_require__(/*! ../content/image-manager.less */ "../content/image-manager.less");
+let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
         super(props);
@@ -1653,7 +1655,7 @@ class ImageManager extends React.Component {
                 React.createElement("div", { className: "modal-header" },
                     React.createElement("button", { type: "button", className: "btn close", onClick: () => ui.hideDialog(element) },
                         React.createElement("span", { "aria-hidden": "true" }, "\u00D7")),
-                    React.createElement("h4", { className: "modal-title" }, "\u9009\u62E9\u56FE\u7247")),
+                    React.createElement("h4", { className: "modal-title" }, strings.selectImage)),
                 React.createElement("div", { className: "modal-body" },
                     images.map((o) => {
                         let selectedText = selectedItems.indexOf(o.id) >= 0 ? `${selectedItems.indexOf(o.id) + 1}` : '';
@@ -1677,17 +1679,17 @@ class ImageManager extends React.Component {
                 React.createElement("div", { className: "modal-footer" },
                     React.createElement("div", { className: "pull-left", ref: (e) => this.pagingBarElement = e || this.pagingBarElement }),
                     selectedMax ? React.createElement("div", { className: "pull-left", style: { paddingTop: 8, paddingLeft: 10 } },
-                        "\u6700\u591A\u53EF\u9009",
+                        strings.selectMax,
                         React.createElement("b", { style: { padding: '0 2px 0 2px' } }, selectedMax),
                         "\u5F20") : null,
-                    React.createElement("button", { name: "cancel", type: "button", className: "btn btn-default", onClick: () => ui.hideDialog(element) }, "\u53D6\u6D88"),
+                    React.createElement("button", { name: "cancel", type: "button", className: "btn btn-default", onClick: () => ui.hideDialog(element) }, strings.cancel),
                     React.createElement("button", { name: "ok", type: "button", className: "btn btn-primary", disabled: selectedItems.length == 0, onClick: () => {
                             if (this.showDialogCallback) {
                                 let imageIds = this.state.selectedItems.map(o => o);
                                 this.showDialogCallback(imageIds);
                             }
                             ui.hideDialog(element);
-                        } }, "\u786E\u5B9A")))));
+                        } }, strings.confirm)))));
     }
 }
 let element = common_1.createDialogElement('image-manager');
@@ -1755,10 +1757,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImageService = exports.settings = exports.errors = void 0;
+exports.ImageService = exports.errors = void 0;
 const maishu_chitu_1 = __webpack_require__(/*! maishu-chitu */ "maishu-chitu");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "../node_modules/maishu-toolkit/dist/index.js");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
+const strings_1 = __webpack_require__(/*! ./strings */ "../out/strings.js");
+let strings = strings_1.getStrings();
 exports.errors = {
     serviceUrlCanntNull(serviceName) {
         let msg = `Service '${serviceName}' base url can not null.`;
@@ -1789,9 +1793,9 @@ exports.errors = {
         return new Error(msg);
     }
 };
-exports.settings = {
-    noImageText: "暂无图片"
-};
+// export let settings = {
+//     noImageText: "暂无图片"
+// }
 /** 图片服务，实现图片的上传，获取 */
 class ImageService extends maishu_chitu_1.Service {
     constructor() {
@@ -1809,7 +1813,7 @@ class ImageService extends maishu_chitu_1.Service {
         if (!id) {
             width = width == null ? 200 : width;
             height = height == null ? 200 : height;
-            id = this.generateImageBase64(width, height, exports.settings.noImageText);
+            id = this.generateImageBase64(width, height, strings.noImageText);
             return id;
         }
         let isBase64 = id.startsWith('data:image');
@@ -1985,6 +1989,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 __webpack_require__(/*! ../content/image-thumber.less */ "../content/image-thumber.less");
+const strings_1 = __webpack_require__(/*! ./strings */ "../out/strings.js");
+let strings = strings_1.getStrings();
 class ImageThumber extends React.Component {
     constructor(props) {
         super(props);
@@ -1998,7 +2004,7 @@ class ImageThumber extends React.Component {
             e.cancelBubble = true;
             return this.props.remove(imagePath);
         }, {
-            confirm: '确定删除该图片吗？'
+            confirm: strings.deleteImageConfirm
         });
     }
     render() {
@@ -2039,6 +2045,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 __webpack_require__(/*! ../content/image-upload.less */ "../content/image-upload.less");
+const strings_1 = __webpack_require__(/*! ./strings */ "../out/strings.js");
+let strings = strings_1.getStrings();
 class ImageUpload extends React.Component {
     updloadImage(imageFile) {
         let { width, height } = this.props;
@@ -2083,7 +2091,7 @@ class ImageUpload extends React.Component {
     }
     render() {
         let { title, className } = this.props;
-        title = title || '图片上传';
+        title = title || strings.imageUpload;
         className = className || '';
         return (React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
             React.createElement("div", { className: "item", ref: (e) => this.itemElement = e || this.itemElement },
@@ -2116,6 +2124,54 @@ var image_manager_1 = __webpack_require__(/*! ./image-manager */ "../out/image-m
 Object.defineProperty(exports, "showImageDialog", { enumerable: true, get: function () { return image_manager_1.showImageDialog; } });
 var image_service_1 = __webpack_require__(/*! ./image-service */ "../out/image-service.js");
 Object.defineProperty(exports, "ImageService", { enumerable: true, get: function () { return image_service_1.ImageService; } });
+
+
+/***/ }),
+
+/***/ "../out/strings.js":
+/*!*************************!*\
+  !*** ../out/strings.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setLanguage = exports.getStrings = void 0;
+let chinese = {
+    selectImage: "选择图片",
+    selectMax: "最多可选",
+    cancel: "取消",
+    confirm: "确定",
+    deleteImageConfirm: "确定删除该图片吗？",
+    imageUpload: "图片上传",
+    noImageText: "暂无图片"
+};
+let english = {
+    selectImage: "Select Image",
+    selectMax: "Select Max",
+    cancel: "Cancel",
+    confirm: "Confirm",
+    deleteImageConfirm: "Are you sure delete the image?",
+    imageUpload: "Image Upload",
+    noImageText: "NO IMAGE"
+};
+let strings = { chinese, english, };
+function getStrings(language) {
+    language = language || getLanguage();
+    let r = strings[language];
+    return r;
+}
+exports.getStrings = getStrings;
+let language = "chinese";
+function setLanguage(value) {
+    language = value;
+}
+exports.setLanguage = setLanguage;
+function getLanguage() {
+    return language;
+}
 
 
 /***/ }),

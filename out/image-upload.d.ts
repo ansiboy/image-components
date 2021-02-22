@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ui from "maishu-ui-toolkit";
+import "../content/image-upload.less";
 interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     style?: React.CSSProperties;
     saveImage: (data: ui.ImageFileToBase64Result) => Promise<any>;
@@ -8,7 +9,6 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     width?: number;
     height?: number;
 }
-import "../content/image-upload.less";
 declare class ImageUpload extends React.Component<ImageUploadProps, any> {
     itemElement: HTMLElement;
     file: HTMLInputElement;

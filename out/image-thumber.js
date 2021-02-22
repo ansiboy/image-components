@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ui = require("maishu-ui-toolkit");
 require("../content/image-thumber.less");
+const strings_1 = require("./strings");
+let strings = strings_1.getStrings();
 class ImageThumber extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +18,7 @@ class ImageThumber extends React.Component {
             e.cancelBubble = true;
             return this.props.remove(imagePath);
         }, {
-            confirm: '确定删除该图片吗？'
+            confirm: strings.deleteImageConfirm
         });
     }
     render() {

@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ui = require("maishu-ui-toolkit");
 require("../content/image-upload.less");
+const strings_1 = require("./strings");
+let strings = strings_1.getStrings();
 class ImageUpload extends React.Component {
     updloadImage(imageFile) {
         let { width, height } = this.props;
@@ -47,7 +49,7 @@ class ImageUpload extends React.Component {
     }
     render() {
         let { title, className } = this.props;
-        title = title || '图片上传';
+        title = title || strings.imageUpload;
         className = className || '';
         return (React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
             React.createElement("div", { className: "item", ref: (e) => this.itemElement = e || this.itemElement },

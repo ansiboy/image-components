@@ -18,7 +18,9 @@ const ReactDOM = require("react-dom");
 const common_1 = require("./common");
 const ui = require("maishu-ui-toolkit");
 const image_service_1 = require("./image-service");
+const strings_1 = require("./strings");
 require("../content/image-manager.less");
+let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
         super(props);
@@ -76,7 +78,7 @@ class ImageManager extends React.Component {
                 React.createElement("div", { className: "modal-header" },
                     React.createElement("button", { type: "button", className: "btn close", onClick: () => ui.hideDialog(element) },
                         React.createElement("span", { "aria-hidden": "true" }, "\u00D7")),
-                    React.createElement("h4", { className: "modal-title" }, "\u9009\u62E9\u56FE\u7247")),
+                    React.createElement("h4", { className: "modal-title" }, strings.selectImage)),
                 React.createElement("div", { className: "modal-body" },
                     images.map((o) => {
                         let selectedText = selectedItems.indexOf(o.id) >= 0 ? `${selectedItems.indexOf(o.id) + 1}` : '';
@@ -100,17 +102,17 @@ class ImageManager extends React.Component {
                 React.createElement("div", { className: "modal-footer" },
                     React.createElement("div", { className: "pull-left", ref: (e) => this.pagingBarElement = e || this.pagingBarElement }),
                     selectedMax ? React.createElement("div", { className: "pull-left", style: { paddingTop: 8, paddingLeft: 10 } },
-                        "\u6700\u591A\u53EF\u9009",
+                        strings.selectMax,
                         React.createElement("b", { style: { padding: '0 2px 0 2px' } }, selectedMax),
                         "\u5F20") : null,
-                    React.createElement("button", { name: "cancel", type: "button", className: "btn btn-default", onClick: () => ui.hideDialog(element) }, "\u53D6\u6D88"),
+                    React.createElement("button", { name: "cancel", type: "button", className: "btn btn-default", onClick: () => ui.hideDialog(element) }, strings.cancel),
                     React.createElement("button", { name: "ok", type: "button", className: "btn btn-primary", disabled: selectedItems.length == 0, onClick: () => {
                             if (this.showDialogCallback) {
                                 let imageIds = this.state.selectedItems.map(o => o);
                                 this.showDialogCallback(imageIds);
                             }
                             ui.hideDialog(element);
-                        } }, "\u786E\u5B9A")))));
+                        } }, strings.confirm)))));
     }
 }
 let element = common_1.createDialogElement('image-manager');

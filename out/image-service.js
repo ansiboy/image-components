@@ -9,10 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImageService = exports.settings = exports.errors = void 0;
+exports.ImageService = exports.errors = void 0;
 const maishu_chitu_1 = require("maishu-chitu");
 const maishu_toolkit_1 = require("maishu-toolkit");
 const ui = require("maishu-ui-toolkit");
+const strings_1 = require("./strings");
+let strings = strings_1.getStrings();
 exports.errors = {
     serviceUrlCanntNull(serviceName) {
         let msg = `Service '${serviceName}' base url can not null.`;
@@ -43,9 +45,9 @@ exports.errors = {
         return new Error(msg);
     }
 };
-exports.settings = {
-    noImageText: "暂无图片"
-};
+// export let settings = {
+//     noImageText: "暂无图片"
+// }
 /** 图片服务，实现图片的上传，获取 */
 class ImageService extends maishu_chitu_1.Service {
     constructor() {
@@ -63,7 +65,7 @@ class ImageService extends maishu_chitu_1.Service {
         if (!id) {
             width = width == null ? 200 : width;
             height = height == null ? 200 : height;
-            id = this.generateImageBase64(width, height, exports.settings.noImageText);
+            id = this.generateImageBase64(width, height, strings.noImageText);
             return id;
         }
         let isBase64 = id.startsWith('data:image');

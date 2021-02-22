@@ -2,6 +2,9 @@ import { Service } from "maishu-chitu";
 import { DataSourceSelectArguments, DataSourceSelectResult } from "maishu-toolkit";
 import { pathConcat } from "maishu-toolkit";
 import * as ui from "maishu-ui-toolkit";
+import { getStrings } from "./strings";
+
+let strings = getStrings();
 
 export let errors = {
     serviceUrlCanntNull(serviceName: string) {
@@ -34,9 +37,9 @@ export let errors = {
     }
 }
 
-export let settings = {
-    noImageText: "暂无图片"
-}
+// export let settings = {
+//     noImageText: "暂无图片"
+// }
 
 /** 图片服务，实现图片的上传，获取 */
 export class ImageService extends Service {
@@ -64,7 +67,7 @@ export class ImageService extends Service {
         if (!id) {
             width = width == null ? 200 : width
             height = height == null ? 200 : height
-            id = this.generateImageBase64(width, height, settings.noImageText)
+            id = this.generateImageBase64(width, height, strings.noImageText)
             return id;
         }
 
