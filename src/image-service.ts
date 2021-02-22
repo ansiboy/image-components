@@ -1,7 +1,7 @@
 import { Service } from "maishu-chitu";
 import { DataSourceSelectArguments, DataSourceSelectResult } from "maishu-toolkit";
 import { pathConcat } from "maishu-toolkit";
-import { config } from "./config";
+import * as ui from "maishu-ui-toolkit";
 
 export let errors = {
     serviceUrlCanntNull(serviceName: string) {
@@ -41,10 +41,18 @@ export let settings = {
 /** 图片服务，实现图片的上传，获取 */
 export class ImageService extends Service {
 
-    // static baseUrl: string
+    static serviceHost: string;
+
+    static errorHandle = (err: Error) => {
+        ui.alert({ title: "错误", message: err.message });
+    }
+
+    constructor() {
+        super(err => ImageService.errorHandle(err))
+    }
 
     protected url(path: string) {
-        return pathConcat(config.serviceHost, path);
+        return pathConcat(ImageService.serviceHost, path);
     }
 
     /** 获取图片的 URL
@@ -69,7 +77,7 @@ export class ImageService extends Service {
             return id;
 
         if (id != null && id.indexOf("/") >= 0) {
-            let r = pathConcat(config.serviceHost, id);
+            let r = pathConcat(ImageService.serviceHost, id);
             let q = "";
             if (width != null)
                 q = q + `&width=${width}`;

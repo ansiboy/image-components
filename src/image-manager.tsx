@@ -7,7 +7,6 @@ import { createDialogElement } from './common';
 import * as ui from "maishu-ui-toolkit";
 import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 import { ImageService } from "./image-service";
-import { config } from './config';
 
 import "../content/image-manager.less";
 
@@ -43,7 +42,7 @@ class ImageManager extends React.Component<Props, State> {
             this.state.images.push(args.dataItem);
             this.setState({ images: this.state.images })
         })
-        this.imageService = new ImageService((err) => config.errorHandle(err));
+        this.imageService = new ImageService();
     }
 
     async componentDidMount() {
@@ -62,14 +61,10 @@ class ImageManager extends React.Component<Props, State> {
         let ul = this.pagingBarElement.querySelector('ul');
         ul.className = "pagination";
 
-        // dataSource.select(this.selectArguments);
     }
 
     show(selectedMax: number, callback?: (imageIds: string[]) => void) {
         this.showDialogCallback = callback;
-        // this.state.selectedItems = [];
-        // this.setState(this.state);
-
         this.selectArguments.startRowIndex = 0;
         this.dataSource.select(this.selectArguments);
 
@@ -83,6 +78,9 @@ class ImageManager extends React.Component<Props, State> {
 
     removeImage(item: { id: string }): any {
         this.dataSource.delete(item);
+        let images = this.state.images;
+        images = images.filter(o => o.id != item.id);
+        this.setState({ images });
     }
 
     render() {
@@ -176,7 +174,7 @@ export function showImageDialog(maxImagesCount: any, callback?: any) {
 }
 
 function createImageDataSource() {
-    let station = new ImageService(err => config.errorHandle(err));
+    let station = new ImageService();
 
     let dataSource = new wuzhui.DataSource<SiteImageData>({
         primaryKeys: ['id'],
