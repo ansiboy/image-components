@@ -1,0 +1,25 @@
+.image-upload {
+
+    @height: 120px;
+    @width : 120px;
+
+    .item {
+        border    : 1px solid rgb(204, 204, 204);
+        text-align: center;
+        height    : @height;
+        width     : @width;
+    }
+
+    input[type="file"] {
+        opacity : 0;
+        position: absolute;
+        height  : @height;
+        width   : @width;
+        top     : 0;
+    }
+
+    i {
+        margin-top: 20px;
+    }
+
+}

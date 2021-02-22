@@ -1,16 +1,14 @@
-import React = require("react");
-import * as ui from 'maishu-ui-toolkit';
+import * as React from "react";
+import * as ui from "maishu-ui-toolkit";
 interface ImageUploadProps extends React.Props<ImageUpload> {
     style?: React.CSSProperties;
+    saveImage: (data: ui.ImageFileToBase64Result) => Promise<any>;
     title?: string;
     className?: string;
-    saveImage?: (data: ui.ImageFileToBase64Result) => Promise<any>;
-    onSuccess?: (result: any) => void;
-    onFail?: (err: Error) => void;
+    width?: number;
+    height?: number;
 }
-/**
- * 图片上传控件
- */
+import "../content/image-upload.less";
 declare class ImageUpload extends React.Component<ImageUploadProps, any> {
     itemElement: HTMLElement;
     file: HTMLInputElement;
@@ -18,6 +16,7 @@ declare class ImageUpload extends React.Component<ImageUploadProps, any> {
     updloadImage(imageFile: File): void;
     setFileInput(e: HTMLInputElement): void;
     componentDidMount(): void;
+    setSizes(): void;
     render(): JSX.Element;
 }
 export default ImageUpload;

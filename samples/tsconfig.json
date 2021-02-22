@@ -1,29 +1,12 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "amd",
-        "declaration": false,
-        "jsx": "react",
-        "baseUrl": "../",
+        "noEmit": true,
         "paths": {
-            "maishu-chitu": [
-                "node_modules/maishu-chitu/dist/chitu.d.ts"
-            ],
-            "maishu-chitu-admin": [
-                "node_modules/maishu-chitu-admin/dist/chitu_admin.d.ts"
-            ],
-            "maishu-chitu-react": [
-                "node_modules/maishu-chitu-react/out/index.d.ts"
-            ],
-            "maishu-dilu": [
-                "node_modules/maishu-dilu/dist/dilu.d.ts"
-            ],
-            "maishu-ui-toolkit": [
-                "node_modules/maishu-ui-toolkit/dist/index.d.ts"
-            ],
-            "maishu-wuzhui": [
-                "node_modules/maishu-wuzhui/dist/wuzhui.d.ts"
+            "maishu-image-components": [
+                "../out/index.d.ts"
             ]
-        }
+        },
+        "baseUrl": "./",
+        "jsx": "react"
     }
 }

@@ -1,53 +1,27 @@
-import React = require("react");
-import * as ui from 'maishu-ui-toolkit'
-import service from "./service";
+import * as React from "react";
+import * as ui from "maishu-ui-toolkit";
 
 interface ImageUploadProps extends React.Props<ImageUpload> {
     style?: React.CSSProperties,
+    saveImage: (data: ui.ImageFileToBase64Result) => Promise<any>,
     title?: string,
     className?: string,
-    // width?: number,
-    // height?: number,
-    saveImage?: (data: ui.ImageFileToBase64Result) => Promise<any>,
-    onSuccess?: (result: any) => void,
-    onFail?: (err: Error) => void,
+    width?: number,
+    height?: number
 }
 
-let style = document.createElement("style")
-style.innerHTML = `
-    .image-upload {
-        border: 1px solid #cccccc;      
-        text-align: center;  
-        width: 120px;
-        height: 120px;
-    }
-    .image-upload input[type="file"] {
-        opacity: 0;
-    }
-`
+import "../content/image-upload.less";
 
-document.head.appendChild(style)
-
-/**
- * 图片上传控件
- */
 class ImageUpload extends React.Component<ImageUploadProps, any> {
     itemElement: HTMLElement;
     file: HTMLInputElement;
     image: HTMLImageElement;
     updloadImage(imageFile: File) {
-        ui.imageFileToBase64(imageFile).then(data => {
-            let p = this.props.saveImage ? this.props.saveImage : service.saveImage;
-            p(data).then((result) => {
-                debugger
-                if (this.props.onSuccess)
-                    this.props.onSuccess(result)
-            }).catch(err => {
-                if (this.props.onFail)
-                    this.props.onFail(err)
-            })
-
-        });
+        let { width, height } = this.props;
+        ui.imageFileToBase64(imageFile)
+            .then(data => {
+                this.props.saveImage(data);
+            });
     }
     setFileInput(e: HTMLInputElement) {
         if (!e || e.onchange) return;
@@ -61,17 +35,45 @@ class ImageUpload extends React.Component<ImageUploadProps, any> {
         // this.setSizes();
     }
 
+    setSizes() {
+        let width = this.itemElement.offsetWidth;
+        //==========================================
+        // 获取元素的宽带，作为高度，如果小于一个很小的数值，
+        // 比如 10，则认为元素没有渲染完成，稍后再获取
+        if (width < 10) {
+            setTimeout(() => {
+                this.setSizes()
+            }, 100)
+        }
+        //==========================================
+
+        let height = width;
+        let itemPaddingTop: number;
+        this.itemElement.style.height = `${height}px`;
+        if (height > 80) {
+            itemPaddingTop = (height - 80) / 2;
+            this.itemElement.style.paddingTop = `${itemPaddingTop}px`;
+        }
+
+        this.file.style.marginTop = `-${height - itemPaddingTop}px`;
+        this.file.style.width = `${width}px`;
+        this.file.style.height = `${height}px`;
+
+    }
+
     render() {
         let { title, className } = this.props;
         title = title || '图片上传'
         className = className || '';
-        let titleHeight = '20px'
+
         return (
-            <div className="image-upload" ref={(e: HTMLElement) => this.itemElement = e || this.itemElement} style={this.props.style}>
-                <i className="icon-plus icon-4x"></i>
-                <div style={{ position: 'relative', top: `calc( 50% - ${titleHeight} )`, height: titleHeight }}>{title}</div>
-                <input type="file" style={{ width: '100%', height: '100%', position: 'relative', top: `-${titleHeight}` }}
-                    ref={(e: HTMLInputElement) => this.setFileInput(e)} />
+            <div className={`image-upload ${className}`} style={this.props.style}  >
+                <div className="item" ref={(e: HTMLElement) => this.itemElement = e || this.itemElement}>
+                    <i className="fa fa-plus fa-4x"></i>
+                    <div>{title}</div>
+                    <input type="file" style={{}}
+                        ref={(e: HTMLInputElement) => this.setFileInput(e)} />
+                </div>
             </div>
         );
     }

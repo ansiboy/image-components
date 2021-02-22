@@ -1,18 +1,9 @@
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.errors = void 0;
+class Errors {
+    serviceHostNotConfig() {
+        return new Error(`Service host is not config.`);
     }
-    else if (typeof define === "function" && define.amd) {
-        define(["require", "exports"], factory);
-    }
-})(function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    class Errors {
-        serviceHostNotConfig() {
-            return new Error(`Service host is not config.`);
-        }
-    }
-    exports.errors = new Errors();
-});
+}
+exports.errors = new Errors();

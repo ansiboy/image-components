@@ -1,69 +1,59 @@
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = require("react");
+const ui = require("maishu-ui-toolkit");
+require("../content/image-upload.less");
+class ImageUpload extends React.Component {
+    updloadImage(imageFile) {
+        let { width, height } = this.props;
+        ui.imageFileToBase64(imageFile)
+            .then(data => {
+            this.props.saveImage(data);
+        });
     }
-    else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "react", "maishu-ui-toolkit", "./service"], factory);
+    setFileInput(e) {
+        if (!e || e.onchange)
+            return;
+        this.file = e;
+        e.onchange = () => {
+            if (e.files.length > 0)
+                this.updloadImage(e.files[0]);
+        };
     }
-})(function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    const React = require("react");
-    const ui = require("maishu-ui-toolkit");
-    const service_1 = require("./service");
-    let style = document.createElement("style");
-    style.innerHTML = `
-    .image-upload {
-        border: 1px solid #cccccc;      
-        text-align: center;  
-        width: 120px;
-        height: 120px;
+    componentDidMount() {
+        // this.setSizes();
     }
-    .image-upload input[type="file"] {
-        opacity: 0;
-    }
-`;
-    document.head.appendChild(style);
-    /**
-     * 图片上传控件
-     */
-    class ImageUpload extends React.Component {
-        updloadImage(imageFile) {
-            ui.imageFileToBase64(imageFile).then(data => {
-                let p = this.props.saveImage ? this.props.saveImage : service_1.default.saveImage;
-                p(data).then((result) => {
-                    debugger;
-                    if (this.props.onSuccess)
-                        this.props.onSuccess(result);
-                }).catch(err => {
-                    if (this.props.onFail)
-                        this.props.onFail(err);
-                });
-            });
+    setSizes() {
+        let width = this.itemElement.offsetWidth;
+        //==========================================
+        // 获取元素的宽带，作为高度，如果小于一个很小的数值，
+        // 比如 10，则认为元素没有渲染完成，稍后再获取
+        if (width < 10) {
+            setTimeout(() => {
+                this.setSizes();
+            }, 100);
         }
-        setFileInput(e) {
-            if (!e || e.onchange)
-                return;
-            this.file = e;
-            e.onchange = () => {
-                if (e.files.length > 0)
-                    this.updloadImage(e.files[0]);
-            };
+        //==========================================
+        let height = width;
+        let itemPaddingTop;
+        this.itemElement.style.height = `${height}px`;
+        if (height > 80) {
+            itemPaddingTop = (height - 80) / 2;
+            this.itemElement.style.paddingTop = `${itemPaddingTop}px`;
         }
-        componentDidMount() {
-            // this.setSizes();
-        }
-        render() {
-            let { title, className } = this.props;
-            title = title || '图片上传';
-            className = className || '';
-            let titleHeight = '20px';
-            return (React.createElement("div", { className: "image-upload", ref: (e) => this.itemElement = e || this.itemElement, style: this.props.style },
-                React.createElement("i", { className: "icon-plus icon-4x" }),
-                React.createElement("div", { style: { position: 'relative', top: `calc( 50% - ${titleHeight} )`, height: titleHeight } }, title),
-                React.createElement("input", { type: "file", style: { width: '100%', height: '100%', position: 'relative', top: `-${titleHeight}` }, ref: (e) => this.setFileInput(e) })));
-        }
+        this.file.style.marginTop = `-${height - itemPaddingTop}px`;
+        this.file.style.width = `${width}px`;
+        this.file.style.height = `${height}px`;
     }
-    exports.default = ImageUpload;
-});
+    render() {
+        let { title, className } = this.props;
+        title = title || '图片上传';
+        className = className || '';
+        return (React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+            React.createElement("div", { className: "item", ref: (e) => this.itemElement = e || this.itemElement },
+                React.createElement("i", { className: "fa fa-plus fa-4x" }),
+                React.createElement("div", null, title),
+                React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) }))));
+    }
+}
+exports.default = ImageUpload;

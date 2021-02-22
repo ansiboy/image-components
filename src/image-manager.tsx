@@ -1,13 +1,19 @@
 import ImageUpload from './image-upload';
 import ImageThumber from './image-thumber';
-import * as wuzhui from 'maishu-wuzhui';
+import * as wuzhui from 'maishu-wuzhui-helper';
 import React = require('react');
 import ReactDOM = require('react-dom');
-import service from './service';
-import { createDialogElement } from 'common';
+import { createDialogElement } from './common';
+import * as ui from "maishu-ui-toolkit";
+import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
+import { ImageService } from "./image-service";
+import { config } from './config';
 
+import "../content/image-manager.less";
 
-// requirejs(['less!image-manager']);
+type SiteImageData = {
+    id: string, width?: number, height?: number
+}
 
 type State = {
     images: SiteImageData[],
@@ -15,54 +21,35 @@ type State = {
     selectedMax?: number
 }
 
-type Props = { element: HTMLElement } & React.Props<ImageManager>;//station: StationService 
+type Props = { element: HTMLElement } & React.Props<ImageManager>;
 class ImageManager extends React.Component<Props, State> {
 
     private showDialogCallback: (imageIds: string[]) => void;
     private dataSource: wuzhui.DataSource<SiteImageData>;
     private pagingBarElement: HTMLElement;
-    // private element: HTMLElement;
+    private selectArguments: DataSourceSelectArguments;
+    private imageService: ImageService;
 
     constructor(props) {
         super(props);
 
         this.state = { images: [], selectedItems: [] };
+        this.selectArguments = { maximumRows: 17 };
+        this.dataSource = createImageDataSource();
+        this.dataSource.selected.add(args => {
+            this.setState({ images: args.selectResult.dataItems })
+        })
+        this.dataSource.inserted.add(args => {
+            this.state.images.push(args.dataItem);
+            this.setState({ images: this.state.images })
+        })
+        this.imageService = new ImageService((err) => config.errorHandle(err));
     }
 
     async componentDidMount() {
-        let station = service;
-        // station.error.add((sender, err) => app.error.fire(app, err, app.currentPage));
 
-        let self = this;
-        let dataSource = this.dataSource = new wuzhui.DataSource<SiteImageData>({
-            primaryKeys: ['id'],
-            async select(args) {
-                let result = await station.images(args, 140, 140);
-                // self.state.images = result.dataItems;
-                self.setState({ images: result.dataItems })
-                self.setState(self.state);
-                return result;
-            },
-            async delete(item) {
-                let result = await station.removeImage(item.id);
-                // self.state.images = self.state.images.filter(o => o.id != item.id);
-                self.setState({ images: self.state.images.filter(o => o.id != item.id) })
-                self.setState(self.state);
-                return result;
-            },
-            async insert(item) {
-                console.assert((item as any).data != null);
-                let result = await station.saveImage((item as any).data);
-                // item.id = result.id;
-                Object.assign(item, result);
-                self.state.images.unshift(item);
-                self.setState(self.state);
-                return result;
-            }
-        })
-
-        let pagingBar = new wuzhui.NumberPagingBar({
-            dataSource: dataSource,
+        new wuzhui.DataSourcePagingBar({
+            dataSource: this.dataSource,
             element: this.pagingBarElement,
             pagerSettings: {
                 activeButtonClassName: 'active',
@@ -75,16 +62,18 @@ class ImageManager extends React.Component<Props, State> {
         let ul = this.pagingBarElement.querySelector('ul');
         ul.className = "pagination";
 
-        // dataSource.selectArguments.maximumRows = 17;
-        // dataSource.select();
+        // dataSource.select(this.selectArguments);
     }
 
     show(selectedMax: number, callback?: (imageIds: string[]) => void) {
         this.showDialogCallback = callback;
         // this.state.selectedItems = [];
         // this.setState(this.state);
-        this.setState({ selectedItems: [], selectedMax })
 
+        this.selectArguments.startRowIndex = 0;
+        this.dataSource.select(this.selectArguments);
+
+        this.setState({ selectedItems: [], selectedMax })
         ui.showDialog(this.props.element);
     }
 
@@ -100,30 +89,42 @@ class ImageManager extends React.Component<Props, State> {
         let { images, selectedItems, selectedMax } = this.state;
         let element = this.props.element;
         return (
-            // <div className="image-manager modal fade" ref={(e: HTMLElement) => this.element = e || this.element}>
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <button type="button" className="close"
+                        <button type="button" className="btn close"
                             onClick={() => ui.hideDialog(element)}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 className="modal-title">选择图片</h4>
                     </div>
                     <div className="modal-body">
-                        {images.map((o, i) => {
+                        {images.map((o) => {
                             let selectedText = selectedItems.indexOf(o.id) >= 0 ? `${selectedItems.indexOf(o.id) + 1}` : ''
                             let selectedAll = selectedItems.length == selectedMax
-                            let thumber = <ImageThumber key={o.id} imagePath={o.id} width={120} height={120}
-                                remove={(imagePath: string) => this.removeImage(o)}
-                                badgeText={1}
+                            let thumber = <ImageThumber key={o.id} imagePath={this.imageService.imageSource(o.id, 150, 150)} className="col-xs-2"
+                                remove={() => this.removeImage(o)}
+                                selectedText={selectedText}
                                 disabled={selectedAll && !selectedText}
                                 text={o.width != null && o.height != null ? `${o.width} X ${o.height}` : " "}
-                            />
+                                onClick={() => {
+                                    let selectedItems: string[] = this.state.selectedItems
+                                    if (selectedItems.indexOf(o.id) >= 0) {
+                                        selectedItems = selectedItems.filter(c => c != o.id);
+                                    }
+                                    else {
+                                        if (selectedItems.length == selectedMax)
+                                            return
+
+                                        selectedItems.push(o.id);
+                                    }
+                                    this.setState({ selectedItems });
+                                }} />
 
                             return thumber;
                         })}
-                        <ImageUpload className="col-xs-2" saveImage={(data) => this.saveImage(data.base64)} />
+                        <ImageUpload className="col-xs-2" saveImage={(data) => this.saveImage(data.base64)}
+                            width={400} />
                         <div className="clearfix" />
                     </div>
                     <div className="modal-footer">
@@ -137,6 +138,7 @@ class ImageManager extends React.Component<Props, State> {
                             取消
                             </button>
                         <button name="ok" type="button" className="btn btn-primary"
+                            disabled={selectedItems.length == 0}
                             onClick={() => {
                                 if (this.showDialogCallback) {
                                     let imageIds = this.state.selectedItems.map(o => o);
@@ -149,7 +151,6 @@ class ImageManager extends React.Component<Props, State> {
                     </div>
                 </div>
             </div>
-            // </div>
         )
     }
 }
@@ -172,4 +173,28 @@ export function showImageDialog(maxImagesCount: any, callback?: any) {
         callback = maxImagesCount
     }
     instance.show(maxImagesCount, callback)
+}
+
+function createImageDataSource() {
+    let station = new ImageService(err => config.errorHandle(err));
+
+    let dataSource = new wuzhui.DataSource<SiteImageData>({
+        primaryKeys: ['id'],
+        async select(args) {
+            let result = await station.list(args);//, 140, 140
+            return result;
+        },
+        async delete(item) {
+            let result = await station.remove(item.id);
+            return result;
+        },
+        async insert(item) {
+            console.assert((item as any).data != null);
+            let result = await station.upload((item as any).data);
+            Object.assign(item, result);
+            return result;
+        }
+    })
+
+    return dataSource;
 }

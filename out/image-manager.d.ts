@@ -1,3 +1,4 @@
+import "../content/image-manager.less";
 declare const _default: {
     show(callback?: (imageIds: string[]) => void): void;
 };
