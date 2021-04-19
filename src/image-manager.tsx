@@ -25,13 +25,13 @@ type State = {
 type Props = { element: HTMLElement } & React.Props<ImageManager>;
 class ImageManager extends React.Component<Props, State> {
 
-    private showDialogCallback: (imageIds: string[]) => void;
+    private showDialogCallback: ((imageIds: string[]) => void) | undefined;
     private dataSource: wuzhui.DataSource<SiteImageData>;
     private pagingBarElement: HTMLElement;
     private selectArguments: DataSourceSelectArguments;
     private imageService: ImageService;
 
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
 
         this.state = { images: [], selectedItems: [] };
@@ -61,11 +61,12 @@ class ImageManager extends React.Component<Props, State> {
         });
 
         let ul = this.pagingBarElement.querySelector('ul');
-        ul.className = "pagination";
+        if (ul)
+            ul.className = "pagination";
 
     }
 
-    show(selectedMax: number, callback?: (imageIds: string[]) => void) {
+    show(selectedMax: number | undefined, callback?: (imageIds: string[]) => void) {
         this.showDialogCallback = callback;
         this.selectArguments.startRowIndex = 0;
         this.dataSource.select(this.selectArguments);
@@ -129,7 +130,7 @@ class ImageManager extends React.Component<Props, State> {
                     </div>
                     <div className="modal-footer">
                         <div className="pull-left"
-                            ref={(e: HTMLElement) => this.pagingBarElement = e || this.pagingBarElement}>
+                            ref={(e) => this.pagingBarElement = e || this.pagingBarElement}>
                         </div>
                         {selectedMax ? <div className="pull-left" style={{ paddingTop: 8, paddingLeft: 10 }}>
                             {strings.selectMax}<b style={{ padding: '0 2px 0 2px' }}>{selectedMax}</b>张</div> : null}
@@ -161,12 +162,12 @@ let instance: ImageManager = ReactDOM.render(<ImageManager element={element} />,
 
 export default {
     show(callback?: (imageIds: string[]) => void) {
-        instance.show(null, callback);
+        instance.show(undefined, callback);
     }
 }
 
-export function showImageDialog(maxImagesCount: number, callback: (imageIds: string[]) => void)
-export function showImageDialog(callback: (imageIds: string[]) => void)
+export function showImageDialog(maxImagesCount: number, callback: (imageIds: string[]) => void): void
+export function showImageDialog(callback: (imageIds: string[]) => void): void
 export function showImageDialog(maxImagesCount: any, callback?: any) {
     if (typeof maxImagesCount == 'function') {
         maxImagesCount = null

@@ -17,7 +17,7 @@ import { getStrings } from "./strings";
 
 let strings = getStrings();
 export default class ImageThumber extends React.Component<ImageThumberProps, ImageThumberState>{
-    constructor(props) {
+    constructor(props: ImageThumberProps) {
         super(props);
         this.state = { selectedText: '' }
     }
@@ -27,7 +27,10 @@ export default class ImageThumber extends React.Component<ImageThumberProps, Ima
             (e) => {
                 e.stopPropagation();
                 e.cancelBubble = true;
-                return this.props.remove(imagePath)
+                if (this.props.remove)
+                    return this.props.remove(imagePath);
+
+                return Promise.resolve();
             },
             {
                 confirm: strings.deleteImageConfirm
