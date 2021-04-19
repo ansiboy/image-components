@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.0.0
+ *  maishu-image-components v1.2.0
  * 
  * 
  */
@@ -254,7 +254,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: absolute;\n  height: 120px;\n  width: 120px;\n  top: 0;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n", "",{"version":3,"sources":["webpack://./content/image-upload.less"],"names":[],"mappings":"AAAA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,UAAU;EACV,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,MAAM;AACR;AACA;EACE,gBAAgB;AAClB","sourcesContent":[".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: absolute;\n  height: 120px;\n  width: 120px;\n  top: 0;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, ".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n", "",{"version":3,"sources":["webpack://./content/image-upload.less"],"names":[],"mappings":"AAAA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,UAAU;EACV,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,WAAW;AACb;AACA;EACE,gBAAgB;AAClB","sourcesContent":[".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -1626,7 +1626,8 @@ class ImageManager extends React.Component {
                 },
             });
             let ul = this.pagingBarElement.querySelector('ul');
-            ul.className = "pagination";
+            if (ul)
+                ul.className = "pagination";
         });
     }
     show(selectedMax, callback) {
@@ -1696,7 +1697,7 @@ let element = common_1.createDialogElement('image-manager');
 let instance = ReactDOM.render(React.createElement(ImageManager, { element: element }), element);
 exports.default = {
     show(callback) {
-        instance.show(null, callback);
+        instance.show(undefined, callback);
     }
 };
 function showImageDialog(maxImagesCount, callback) {
@@ -2002,7 +2003,9 @@ class ImageThumber extends React.Component {
         ui.buttonOnClick(e, (e) => {
             e.stopPropagation();
             e.cancelBubble = true;
-            return this.props.remove(imagePath);
+            if (this.props.remove)
+                return this.props.remove(imagePath);
+            return Promise.resolve();
         }, {
             confirm: strings.deleteImageConfirm
         });
@@ -2053,6 +2056,7 @@ class ImageUpload extends React.Component {
         ui.imageFileToBase64(imageFile)
             .then(data => {
             this.props.saveImage(data);
+            this.setState({ imageSource: data.base64 });
         });
     }
     setFileInput(e) {
@@ -2060,7 +2064,7 @@ class ImageUpload extends React.Component {
             return;
         this.file = e;
         e.onchange = () => {
-            if (e.files.length > 0)
+            if (e.files != null && e.files.length > 0)
                 this.updloadImage(e.files[0]);
         };
     }
@@ -2079,7 +2083,7 @@ class ImageUpload extends React.Component {
         }
         //==========================================
         let height = width;
-        let itemPaddingTop;
+        let itemPaddingTop = 0;
         this.itemElement.style.height = `${height}px`;
         if (height > 80) {
             itemPaddingTop = (height - 80) / 2;
@@ -2091,13 +2095,15 @@ class ImageUpload extends React.Component {
     }
     render() {
         let { title, className } = this.props;
+        let { imageSource } = this.state || {};
         title = title || strings.imageUpload;
         className = className || '';
-        return (React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
-            React.createElement("div", { className: "item", ref: (e) => this.itemElement = e || this.itemElement },
-                React.createElement("i", { className: "fa fa-plus fa-4x" }),
-                React.createElement("div", null, title),
-                React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) }))));
+        return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+            React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+                imageSource ? React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } }) : React.createElement(React.Fragment, null,
+                    React.createElement("i", { className: "fa fa-plus fa-4x" }),
+                    React.createElement("div", null, title)),
+                React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
     }
 }
 exports.default = ImageUpload;

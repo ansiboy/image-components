@@ -5,6 +5,7 @@
         "declaration": true,
         "outDir": "../out",
         "jsx": "react",
-    
+        "strict": true,
+        "strictPropertyInitialization": false
     }
 }

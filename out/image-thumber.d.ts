@@ -12,7 +12,7 @@ declare type ImageThumberProps = React.Props<ImageThumber> & {
 declare type ImageThumberState = {};
 import "../content/image-thumber.less";
 export default class ImageThumber extends React.Component<ImageThumberProps, ImageThumberState> {
-    constructor(props: any);
+    constructor(props: ImageThumberProps);
     private setDeleteButton;
     render(): JSX.Element;
 }

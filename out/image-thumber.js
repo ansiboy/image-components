@@ -16,7 +16,9 @@ class ImageThumber extends React.Component {
         ui.buttonOnClick(e, (e) => {
             e.stopPropagation();
             e.cancelBubble = true;
-            return this.props.remove(imagePath);
+            if (this.props.remove)
+                return this.props.remove(imagePath);
+            return Promise.resolve();
         }, {
             confirm: strings.deleteImageConfirm
         });

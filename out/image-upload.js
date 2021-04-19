@@ -11,6 +11,7 @@ class ImageUpload extends React.Component {
         ui.imageFileToBase64(imageFile)
             .then(data => {
             this.props.saveImage(data);
+            this.setState({ imageSource: data.base64 });
         });
     }
     setFileInput(e) {
@@ -18,7 +19,7 @@ class ImageUpload extends React.Component {
             return;
         this.file = e;
         e.onchange = () => {
-            if (e.files.length > 0)
+            if (e.files != null && e.files.length > 0)
                 this.updloadImage(e.files[0]);
         };
     }
@@ -37,7 +38,7 @@ class ImageUpload extends React.Component {
         }
         //==========================================
         let height = width;
-        let itemPaddingTop;
+        let itemPaddingTop = 0;
         this.itemElement.style.height = `${height}px`;
         if (height > 80) {
             itemPaddingTop = (height - 80) / 2;
@@ -49,13 +50,15 @@ class ImageUpload extends React.Component {
     }
     render() {
         let { title, className } = this.props;
+        let { imageSource } = this.state || {};
         title = title || strings.imageUpload;
         className = className || '';
-        return (React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
-            React.createElement("div", { className: "item", ref: (e) => this.itemElement = e || this.itemElement },
-                React.createElement("i", { className: "fa fa-plus fa-4x" }),
-                React.createElement("div", null, title),
-                React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) }))));
+        return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+            React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+                imageSource ? React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } }) : React.createElement(React.Fragment, null,
+                    React.createElement("i", { className: "fa fa-plus fa-4x" }),
+                    React.createElement("div", null, title)),
+                React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
     }
 }
 exports.default = ImageUpload;

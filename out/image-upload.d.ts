@@ -9,7 +9,10 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     width?: number;
     height?: number;
 }
-declare class ImageUpload extends React.Component<ImageUploadProps, any> {
+interface ImageUploadState {
+    imageSource?: string;
+}
+declare class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
     itemElement: HTMLElement;
     file: HTMLInputElement;
     image: HTMLImageElement;

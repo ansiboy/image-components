@@ -49,7 +49,8 @@ class ImageManager extends React.Component {
                 },
             });
             let ul = this.pagingBarElement.querySelector('ul');
-            ul.className = "pagination";
+            if (ul)
+                ul.className = "pagination";
         });
     }
     show(selectedMax, callback) {
@@ -119,7 +120,7 @@ let element = common_1.createDialogElement('image-manager');
 let instance = ReactDOM.render(React.createElement(ImageManager, { element: element }), element);
 exports.default = {
     show(callback) {
-        instance.show(null, callback);
+        instance.show(undefined, callback);
     }
 };
 function showImageDialog(maxImagesCount, callback) {
