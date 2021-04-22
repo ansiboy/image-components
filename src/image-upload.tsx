@@ -12,6 +12,7 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     className?: string,
     width?: number,
     height?: number,
+    imageSource?: string,
 }
 
 interface ImageUploadState {
@@ -22,6 +23,13 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
     itemElement: HTMLElement;
     file: HTMLInputElement;
     image: HTMLImageElement;
+
+    constructor(props: ImageUploadProps) {
+        super(props);
+
+        this.state = { imageSource: props.imageSource };
+    }
+
     updloadImage(imageFile: File) {
         let { width, height } = this.props;
         ui.imageFileToBase64(imageFile)

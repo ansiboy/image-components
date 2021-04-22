@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.2.0
+ *  maishu-image-components v1.2.2
  * 
  * 
  */
@@ -2051,6 +2051,10 @@ __webpack_require__(/*! ../content/image-upload.less */ "./content/image-upload.
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 let strings = strings_1.getStrings();
 class ImageUpload extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { imageSource: props.imageSource };
+    }
     updloadImage(imageFile) {
         let { width, height } = this.props;
         ui.imageFileToBase64(imageFile)

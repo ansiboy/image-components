@@ -6,6 +6,10 @@ require("../content/image-upload.less");
 const strings_1 = require("./strings");
 let strings = strings_1.getStrings();
 class ImageUpload extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { imageSource: props.imageSource };
+    }
     updloadImage(imageFile) {
         let { width, height } = this.props;
         ui.imageFileToBase64(imageFile)
