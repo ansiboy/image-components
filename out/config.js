@@ -1,3 +1,4 @@
+"use strict";
 // import * as ui from "maishu-ui-toolkit";
 // export let config = {
 //     serviceHost: null as string,
