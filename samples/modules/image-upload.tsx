@@ -43,11 +43,28 @@ export default class ImageUploadPage extends React.Component<{}, State> {
                 break;
         }
         return <div className="container">
+            <br />
+            <label>默认</label>
+            <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} />`}</pre>
             <ImageUpload saveImage={(data) => this.uploadImage(data.base64)} />
-            {messageElement}
-            <button className="btn btn-primary" onClick={() => this.showImageManager()}>
-                图片管理
-            </button>
+            <hr />
+            <label>设置默认图片</label>
+            <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} imageSource="//www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />`}</pre>
+            <ImageUpload saveImage={(data) => this.uploadImage(data.base64)} imageSource="//www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />
+            <hr />
+            <label>图片设置(图片不固定大小)</label>
+            <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)}
+            displayImage={{ fixed: false }}
+            imageSource="//www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />`}</pre>
+            <ImageUpload saveImage={(data) => this.uploadImage(data.base64)}
+                displayImage={{ fixed: false }}
+                imageSource="//www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />
+            <hr />
+
+            <label>图片设置(图片设置最大宽度)</label>
+            <ImageUpload saveImage={(data) => this.uploadImage(data.base64)}
+                displayImage={{ fixed: true, maxWidth: 200 }}
+                imageSource="//www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />
         </div>;
 
     }

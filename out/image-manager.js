@@ -12,14 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.showImageDialog = void 0;
 const image_upload_1 = require("./image-upload");
 const image_thumber_1 = require("./image-thumber");
-const wuzhui = require("maishu-wuzhui-helper");
+// import * as wuzhui from 'maishu-wuzhui-helper';
 const React = require("react");
 const ReactDOM = require("react-dom");
 const common_1 = require("./common");
 const ui = require("maishu-ui-toolkit");
+// import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 const image_service_1 = require("./image-service");
 const strings_1 = require("./strings");
+const maishu_toolkit_1 = require("maishu-toolkit");
 require("../content/image-manager.less");
+const number_paging_bar_1 = require("./number-paging-bar");
 let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
@@ -38,7 +41,7 @@ class ImageManager extends React.Component {
     }
     componentDidMount() {
         return __awaiter(this, void 0, void 0, function* () {
-            new wuzhui.DataSourcePagingBar({
+            new number_paging_bar_1.DataSourcePagingBar({
                 dataSource: this.dataSource,
                 element: this.pagingBarElement,
                 pagerSettings: {
@@ -133,7 +136,7 @@ function showImageDialog(maxImagesCount, callback) {
 exports.showImageDialog = showImageDialog;
 function createImageDataSource() {
     let station = new image_service_1.ImageService();
-    let dataSource = new wuzhui.DataSource({
+    let dataSource = new maishu_toolkit_1.DataSource({
         primaryKeys: ['id'],
         select(args) {
             return __awaiter(this, void 0, void 0, function* () {

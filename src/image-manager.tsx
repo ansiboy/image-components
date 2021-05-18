@@ -1,15 +1,17 @@
 import ImageUpload from './image-upload';
 import ImageThumber from './image-thumber';
-import * as wuzhui from 'maishu-wuzhui-helper';
+// import * as wuzhui from 'maishu-wuzhui-helper';
 import React = require('react');
 import ReactDOM = require('react-dom');
 import { createDialogElement } from './common';
 import * as ui from "maishu-ui-toolkit";
-import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
+// import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 import { ImageService } from "./image-service";
 import { getStrings } from "./strings";
+import { DataSource, DataSourceSelectArguments } from "maishu-toolkit";
 
 import "../content/image-manager.less";
+import { DataSourcePagingBar } from './number-paging-bar';
 
 let strings = getStrings();
 type SiteImageData = {
@@ -26,7 +28,7 @@ type Props = { element: HTMLElement } & React.Props<ImageManager>;
 class ImageManager extends React.Component<Props, State> {
 
     private showDialogCallback: ((imageIds: string[]) => void) | undefined;
-    private dataSource: wuzhui.DataSource<SiteImageData>;
+    private dataSource: DataSource<SiteImageData>;
     private pagingBarElement: HTMLElement;
     private selectArguments: DataSourceSelectArguments;
     private imageService: ImageService;
@@ -49,7 +51,7 @@ class ImageManager extends React.Component<Props, State> {
 
     async componentDidMount() {
 
-        new wuzhui.DataSourcePagingBar({
+        new DataSourcePagingBar({
             dataSource: this.dataSource,
             element: this.pagingBarElement,
             pagerSettings: {
@@ -179,7 +181,7 @@ export function showImageDialog(maxImagesCount: any, callback?: any) {
 function createImageDataSource() {
     let station = new ImageService();
 
-    let dataSource = new wuzhui.DataSource<SiteImageData>({
+    let dataSource = new DataSource<SiteImageData>({
         primaryKeys: ['id'],
         async select(args) {
             let result = await station.list(args);//, 140, 140

@@ -1,19 +1,19 @@
 /*!
  * 
- *  maishu-image-components v1.2.2
+ *  maishu-image-components v1.2.5
  * 
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("maishu-chitu"), require("maishu-ui-toolkit"), require("maishu-wuzhui-helper"), require("react"), require("react-dom"));
+		module.exports = factory(require("maishu-chitu"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
 	else if(typeof define === 'function' && define.amd)
-		define(["maishu-chitu", "maishu-ui-toolkit", "maishu-wuzhui-helper", "react", "react-dom"], factory);
+		define(["maishu-chitu", "maishu-ui-toolkit", "react", "react-dom"], factory);
 	else if(typeof exports === 'object')
-		exports["image-components"] = factory(require("maishu-chitu"), require("maishu-ui-toolkit"), require("maishu-wuzhui-helper"), require("react"), require("react-dom"));
+		exports["image-components"] = factory(require("maishu-chitu"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
 	else
-		root["image-components"] = factory(root["maishu-chitu"], root["maishu-ui-toolkit"], root["maishu-wuzhui-helper"], root["react"], root["react-dom"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_maishu_chitu__, __WEBPACK_EXTERNAL_MODULE_maishu_ui_toolkit__, __WEBPACK_EXTERNAL_MODULE_maishu_wuzhui_helper__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
+		root["image-components"] = factory(root["maishu-chitu"], root["maishu-ui-toolkit"], root["react"], root["react-dom"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_maishu_chitu__, __WEBPACK_EXTERNAL_MODULE_maishu_ui_toolkit__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -390,7 +390,7 @@ module.exports = function cssWithMappingToString(item) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*!
  * ~
- *  maishu-toolkit v1.6.0
+ *  maishu-toolkit v1.6.6
  *  https://github.com/ansiboy/toolkit
  *  
  *  Copyright (c) 2016-2018, shu mai <ansiboy@163.com>
@@ -920,16 +920,17 @@ let errors = new Errors();
 
 /***/ }),
 
-/***/ "./out/format-date.js":
-/*!****************************!*\
-  !*** ./out/format-date.js ***!
-  \****************************/
-/*! exports provided: formatDate */
+/***/ "./out/format.js":
+/*!***********************!*\
+  !*** ./out/format.js ***!
+  \***********************/
+/*! exports provided: formatDate, formatString */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatDate", function() { return formatDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatString", function() { return formatString; });
 function formatDate(date, showHourMinutes) {
     if (typeof date == "string")
         return date;
@@ -937,6 +938,13 @@ function formatDate(date, showHourMinutes) {
     if (showHourMinutes)
         return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours() + 1}:${d.getMinutes()}`;
     return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+function formatString(pattern, ...args) {
+    let a = pattern;
+    for (let k in args) {
+        a = a.replace("{" + k + "}", args[k]);
+    }
+    return a;
 }
 
 
@@ -1021,7 +1029,7 @@ class HTML {
 /*!**********************!*\
   !*** ./out/index.js ***!
   \**********************/
-/*! exports provided: guid, pathConcat, Errors, errors, Callback, DataSource, DataSourceSelectArguments, parseUrl, deepEqual, objectAssignDeep, formatDate, HTML, ValueStore */
+/*! exports provided: guid, pathConcat, Errors, errors, Callback, DataSource, DataSourceSelectArguments, parseUrl, deepEqual, objectAssignDeep, formatDate, formatString, HTML, ValueStore */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1054,8 +1062,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assign_deep__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./assign-deep */ "./out/assign-deep.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "objectAssignDeep", function() { return _assign_deep__WEBPACK_IMPORTED_MODULE_7__["objectAssignDeep"]; });
 
-/* harmony import */ var _format_date__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./format-date */ "./out/format-date.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatDate", function() { return _format_date__WEBPACK_IMPORTED_MODULE_8__["formatDate"]; });
+/* harmony import */ var _format__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./format */ "./out/format.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatDate", function() { return _format__WEBPACK_IMPORTED_MODULE_8__["formatDate"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatString", function() { return _format__WEBPACK_IMPORTED_MODULE_8__["formatString"]; });
 
 /* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./html */ "./out/html.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTML", function() { return _html__WEBPACK_IMPORTED_MODULE_9__["HTML"]; });
@@ -1099,7 +1109,7 @@ function pathConcat(...paths) {
     let str = paths.join("/");
     // 将一个或多个的 / 或者 变为一个 /，例如：/shop/test// 转换为 /shop/test/
     // 或者 D:\shop\test\  转换为 D:/shop/test/
-    str = str.replace(/(\/+|\\+)/g, '/');
+    str = str.replace(/(\/+\\*|\\+\/*)/g, '/');
     //======================================================
     // fixed 把 http:// https:// 变为 http:/ https:/ 的 BUG
     str = str.replace("http:/", "http://");
@@ -1508,6 +1518,32 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./out/Errors.js":
+/*!***********************!*\
+  !*** ./out/Errors.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.errors = void 0;
+const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "./node_modules/maishu-toolkit/dist/index.js");
+class Errors extends maishu_toolkit_1.Errors {
+    serviceHostNotConfig() {
+        return new Error(`Service host is not config.`);
+    }
+    notImplemented(message) {
+        message = message || "Not implemented";
+        return new Error(message);
+    }
+}
+exports.errors = new Errors();
+
+
+/***/ }),
+
 /***/ "./out/common.js":
 /*!***********************!*\
   !*** ./out/common.js ***!
@@ -1589,14 +1625,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.showImageDialog = void 0;
 const image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
 const image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
-const wuzhui = __webpack_require__(/*! maishu-wuzhui-helper */ "maishu-wuzhui-helper");
+// import * as wuzhui from 'maishu-wuzhui-helper';
 const React = __webpack_require__(/*! react */ "react");
 const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
 const common_1 = __webpack_require__(/*! ./common */ "./out/common.js");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
+// import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
+const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "./node_modules/maishu-toolkit/dist/index.js");
 __webpack_require__(/*! ../content/image-manager.less */ "./content/image-manager.less");
+const number_paging_bar_1 = __webpack_require__(/*! ./number-paging-bar */ "./out/number-paging-bar.js");
 let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
@@ -1615,7 +1654,7 @@ class ImageManager extends React.Component {
     }
     componentDidMount() {
         return __awaiter(this, void 0, void 0, function* () {
-            new wuzhui.DataSourcePagingBar({
+            new number_paging_bar_1.DataSourcePagingBar({
                 dataSource: this.dataSource,
                 element: this.pagingBarElement,
                 pagerSettings: {
@@ -1710,7 +1749,7 @@ function showImageDialog(maxImagesCount, callback) {
 exports.showImageDialog = showImageDialog;
 function createImageDataSource() {
     let station = new image_service_1.ImageService();
-    let dataSource = new wuzhui.DataSource({
+    let dataSource = new maishu_toolkit_1.DataSource({
         primaryKeys: ['id'],
         select(args) {
             return __awaiter(this, void 0, void 0, function* () {
@@ -2049,6 +2088,7 @@ const React = __webpack_require__(/*! react */ "react");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 __webpack_require__(/*! ../content/image-upload.less */ "./content/image-upload.less");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
+const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
 let strings = strings_1.getStrings();
 class ImageUpload extends React.Component {
     constructor(props) {
@@ -2060,7 +2100,8 @@ class ImageUpload extends React.Component {
         ui.imageFileToBase64(imageFile)
             .then(data => {
             this.props.saveImage(data);
-            this.setState({ imageSource: data.base64 });
+            if (this.props.displayImage)
+                this.setState({ imageSource: data.base64 });
         });
     }
     setFileInput(e) {
@@ -2102,6 +2143,32 @@ class ImageUpload extends React.Component {
         let { imageSource } = this.state || {};
         title = title || strings.imageUpload;
         className = className || '';
+        if (imageSource != null && this.props.displayImage != null)
+            return React.createElement("div", { ref: div => {
+                    if (!div)
+                        return;
+                    let imageElement = document.createElement("img");
+                    imageElement.src = imageSource;
+                    imageElement.onload = (e) => {
+                        var _a;
+                        let width = e.target.width;
+                        let height = e.target.height;
+                        let maxWidth = (_a = this.props.displayImage) === null || _a === void 0 ? void 0 : _a.maxWidth;
+                        if (maxWidth) {
+                            let scale = height / width; //`${this.props.displayImage.maxWidth}px`;
+                            height = maxWidth * scale;
+                            width = maxWidth;
+                        }
+                        div.style.backgroundImage = `url(${e.target.src})`;
+                        div.style.backgroundSize = `${width}px ${height}px`;
+                        div.style.backgroundRepeat = "no-repeat";
+                        let fileElement = div.querySelector('[type="file"]');
+                        fileElement.style.width = `${width}px`;
+                        fileElement.style.height = `${height}px`;
+                    };
+                    ReactDOM.render(React.createElement(React.Fragment, null,
+                        React.createElement("input", { type: "file", style: { opacity: 0 }, ref: (e) => this.setFileInput(e) })), div);
+                } });
         return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
             React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
                 imageSource ? React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } }) : React.createElement(React.Fragment, null,
@@ -2110,6 +2177,7 @@ class ImageUpload extends React.Component {
                 React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
     }
 }
+ImageUpload.defaultProps = { displayImage: { fixed: true } };
 exports.default = ImageUpload;
 
 
@@ -2134,6 +2202,325 @@ var image_manager_1 = __webpack_require__(/*! ./image-manager */ "./out/image-ma
 Object.defineProperty(exports, "showImageDialog", { enumerable: true, get: function () { return image_manager_1.showImageDialog; } });
 var image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
 Object.defineProperty(exports, "ImageService", { enumerable: true, get: function () { return image_service_1.ImageService; } });
+
+
+/***/ }),
+
+/***/ "./out/number-paging-bar.js":
+/*!**********************************!*\
+  !*** ./out/number-paging-bar.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataSourcePagingBar = exports.PagingBar = exports.PagerPosition = void 0;
+const Errors_1 = __webpack_require__(/*! ./Errors */ "./out/Errors.js");
+// namespace wuzhui {
+var PagerPosition;
+(function (PagerPosition) {
+    PagerPosition[PagerPosition["Bottom"] = 0] = "Bottom";
+    PagerPosition[PagerPosition["Top"] = 1] = "Top";
+    PagerPosition[PagerPosition["TopAndBottom"] = 2] = "TopAndBottom";
+})(PagerPosition = exports.PagerPosition || (exports.PagerPosition = {}));
+;
+class PagingBar {
+    init(dataSource) {
+        this._pageIndex = 0;
+        var pagingBar = this;
+        pagingBar.totalRowCount = 1000000;
+        if (dataSource) {
+            dataSource.selected.add(args => {
+                this._selectArguments = args.selectArguments;
+                pagingBar.pageSize = args.selectArguments.maximumRows || 0;
+                var totalRowCount = args.selectResult.totalRowCount;
+                if (totalRowCount != null && totalRowCount >= 0) {
+                    pagingBar.totalRowCount = totalRowCount;
+                }
+                var startRowIndex = this._selectArguments.startRowIndex;
+                if (startRowIndex == null || startRowIndex <= 0)
+                    startRowIndex = 0;
+                pagingBar.pageIndex = Math.floor(startRowIndex / pagingBar.pageSize);
+                pagingBar.render();
+            });
+            dataSource.deleted.add(function () {
+                pagingBar.totalRowCount = pagingBar.totalRowCount - 1;
+                pagingBar.render();
+            });
+            dataSource.inserted.add(function () {
+                pagingBar.totalRowCount = pagingBar.totalRowCount + 1;
+                pagingBar.render();
+            });
+        }
+    }
+    get selectArguments() {
+        console.assert(this._selectArguments != null);
+        return this._selectArguments;
+    }
+    get pageCount() {
+        var pageCount = Math.ceil(this.totalRowCount / this.pageSize);
+        return pageCount;
+    }
+    get pageSize() {
+        return this._pageSize;
+    }
+    set pageSize(value) {
+        this._pageSize = value;
+    }
+    get pageIndex() {
+        return this._pageIndex;
+    }
+    set pageIndex(value) {
+        this._pageIndex = value;
+    }
+    get totalRowCount() {
+        return this._totalRowCount;
+    }
+    set totalRowCount(value) {
+        this._totalRowCount = value;
+    }
+    // Virtual Method
+    render() {
+        throw Errors_1.errors.notImplemented('The table-row render method is not implemented.');
+    }
+}
+exports.PagingBar = PagingBar;
+class DataSourcePagingBar extends PagingBar {
+    constructor(params) {
+        if (!params.dataSource)
+            throw Errors_1.errors.argumentNull('dataSource');
+        if (!params.element)
+            throw Errors_1.errors.argumentNull('element');
+        let pagerSettings = Object.assign(DataSourcePagingBar.defaultPagerSettings, params.pagerSettings || {});
+        super();
+        this.dataSource = params.dataSource;
+        this.pagerSettings = pagerSettings;
+        this.element = params.element;
+        this.numberButtons = new Array();
+        this.createButton = this.createPagingButton;
+        this.createLabel = this.createTotalLabel;
+        let buttonContainer = pagerSettings.buttonContainerWraper ?
+            document.createElement(pagerSettings.buttonContainerWraper) :
+            document.createElement('div');
+        buttonContainer.className = pagerSettings.buttonContainerClassName || "buttons";
+        this.element.appendChild(buttonContainer);
+        this.createPreviousButtons(buttonContainer);
+        this.createNumberButtons(buttonContainer);
+        this.createNextButtons(buttonContainer);
+        if (this.pagerSettings.showTotal) {
+            this.totalElement = this.createLabel();
+            this.totalElement.visible = false;
+        }
+        this.init(params.dataSource);
+    }
+    createPagingButton(container) {
+        var pagerSettings = this.pagerSettings;
+        let button = document.createElement('a');
+        button.href = 'javascript:';
+        if (this.pagerSettings.buttonWrapper) {
+            let w = document.createElement(this.pagerSettings.buttonWrapper);
+            w.appendChild(button);
+            container.appendChild(w);
+        }
+        else {
+            container.appendChild(button);
+        }
+        let result = {
+            _button: button,
+            get visible() {
+                let button = this._button;
+                return button.style.display != 'none';
+            },
+            set visible(value) {
+                let button = this._button;
+                let element = pagerSettings.buttonWrapper ? button.parentElement : button;
+                if (element == null)
+                    return;
+                if (value) {
+                    element.style.removeProperty('display');
+                }
+                else {
+                    element.style.display = 'none';
+                }
+            },
+            get pageIndex() {
+                let button = this._button;
+                return new Number(button.getAttribute('pageIndex')).valueOf();
+            },
+            set pageIndex(value) {
+                let button = this._button;
+                button.setAttribute('pageIndex', value);
+            },
+            get text() {
+                let button = this._button;
+                return button.innerHTML;
+            },
+            set text(value) {
+                let button = this._button;
+                button.innerHTML = value;
+            },
+            get active() {
+                let button = this._button;
+                return button.href != null;
+            },
+            set active(value) {
+                let button = this._button;
+                if (value == true) {
+                    button.removeAttribute('href');
+                    if (pagerSettings.activeButtonClassName) {
+                        // button.className = pagerSettings.activeButtonClassName;
+                        this.setClassName(pagerSettings.activeButtonClassName);
+                    }
+                    return;
+                }
+                button.href = 'javascript:';
+                if (pagerSettings.buttonClassName)
+                    this.setClassName(pagerSettings.buttonClassName);
+                else
+                    this.setClassName(null);
+            },
+            setClassName(value) {
+                let button = this._button;
+                let element = pagerSettings.buttonWrapper ? button.parentElement : button;
+                if (element == null)
+                    return;
+                if (value)
+                    element.className = value;
+                else
+                    element.removeAttribute('class');
+            },
+            onclick: null
+        };
+        button.onclick = () => {
+            if (result.onclick) {
+                result.onclick(result, this);
+            }
+        };
+        return result;
+    }
+    createTotalLabel() {
+        let totalElement = document.createElement('div');
+        totalElement.className = 'total';
+        let textElement = document.createElement('span');
+        textElement.className = 'text';
+        textElement.innerHTML = '总记录：';
+        totalElement.appendChild(textElement);
+        let numberElement = document.createElement('span');
+        numberElement.className = 'number';
+        totalElement.appendChild(numberElement);
+        this.element.appendChild(totalElement);
+        return {
+            get text() {
+                return numberElement.innerHTML;
+            },
+            set text(value) {
+                numberElement.innerHTML = value;
+            },
+            get visible() {
+                let display = totalElement.style.display;
+                return display != 'none';
+            },
+            set visible(value) {
+                if (value == true)
+                    totalElement.style.display = 'block';
+                else
+                    totalElement.style.display = 'node';
+            }
+        };
+    }
+    createPreviousButtons(buttonContainer) {
+        this.firstPageButton = this.createButton(buttonContainer);
+        this.firstPageButton.onclick = DataSourcePagingBar.on_buttonClick;
+        this.firstPageButton.text = this.pagerSettings.firstPageText;
+        this.firstPageButton.visible = false;
+        this.previousPageButton = this.createButton(buttonContainer);
+        this.previousPageButton.onclick = DataSourcePagingBar.on_buttonClick;
+        this.previousPageButton.text = this.pagerSettings.previousPageText;
+        this.previousPageButton.visible = false;
+    }
+    createNextButtons(buttonContainer) {
+        this.nextPageButton = this.createButton(buttonContainer);
+        this.nextPageButton.onclick = DataSourcePagingBar.on_buttonClick;
+        this.nextPageButton.text = this.pagerSettings.nextPageText;
+        this.nextPageButton.visible = false;
+        this.lastPageButton = this.createButton(buttonContainer);
+        this.lastPageButton.onclick = DataSourcePagingBar.on_buttonClick;
+        this.lastPageButton.text = this.pagerSettings.lastPageText;
+        this.lastPageButton.visible = false;
+    }
+    createNumberButtons(buttonContainer) {
+        let pagingBar = this;
+        let buttonCount = this.pagerSettings.pageButtonCount;
+        for (let i = 0; i < buttonCount; i++) {
+            let button = this.createButton(buttonContainer);
+            button.onclick = DataSourcePagingBar.on_buttonClick;
+            this.numberButtons[i] = button;
+        }
+        this.numberButtons.forEach(btn => {
+            btn.onclick = () => DataSourcePagingBar.on_buttonClick(btn, pagingBar);
+        });
+    }
+    static on_buttonClick(button, pagingBar) {
+        let pageIndex = button.pageIndex;
+        if (!pageIndex == null) {
+            return;
+        }
+        let args = pagingBar.selectArguments;
+        args.maximumRows = pagingBar.pageSize;
+        args.startRowIndex = pageIndex * pagingBar.pageSize;
+        pagingBar.pageIndex = pageIndex;
+        pagingBar.dataSource.select(pagingBar.selectArguments);
+    }
+    render() {
+        var pagerSettings = this.pagerSettings;
+        var buttonCount = pagerSettings.pageButtonCount;
+        let pagingBarIndex = Math.floor(this.pageIndex / buttonCount);
+        let pagingBarCount = Math.ceil(this.pageCount / buttonCount);
+        this.previousPageButton.pageIndex = (pagingBarIndex - 1) * buttonCount;
+        this.nextPageButton.pageIndex = (pagingBarIndex + 1) * buttonCount;
+        this.firstPageButton.pageIndex = 0;
+        this.lastPageButton.pageIndex = this.pageCount - 1;
+        for (let i = 0; i < this.numberButtons.length; i++) {
+            let pageIndex = pagingBarIndex * buttonCount + i;
+            if (pageIndex < this.pageCount) {
+                this.numberButtons[i].pageIndex = pageIndex;
+                this.numberButtons[i].text = (pagingBarIndex * buttonCount + i + 1).toString();
+                this.numberButtons[i].visible = true;
+                this.numberButtons[i].active = pageIndex == this.pageIndex;
+            }
+            else {
+                this.numberButtons[i].visible = false;
+            }
+        }
+        if (this.totalElement) {
+            this.totalElement.text = this.totalRowCount;
+            this.totalElement.visible = true;
+        }
+        this.firstPageButton.visible = false;
+        this.previousPageButton.visible = false;
+        this.lastPageButton.visible = false;
+        this.nextPageButton.visible = false;
+        if (pagingBarIndex > 0) {
+            this.firstPageButton.visible = true;
+            this.previousPageButton.visible = true;
+        }
+        if (pagingBarIndex < pagingBarCount - 1) {
+            this.lastPageButton.visible = true;
+            this.nextPageButton.visible = true;
+        }
+    }
+}
+exports.DataSourcePagingBar = DataSourcePagingBar;
+DataSourcePagingBar.defaultPagerSettings = {
+    pageButtonCount: 10,
+    firstPageText: '<<',
+    lastPageText: '>>',
+    nextPageText: '...',
+    previousPageText: '...',
+    showTotal: true,
+};
 
 
 /***/ }),
@@ -2205,17 +2592,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_maishu_chitu__;
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_maishu_ui_toolkit__;
-
-/***/ }),
-
-/***/ "maishu-wuzhui-helper":
-/*!***************************************!*\
-  !*** external "maishu-wuzhui-helper" ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_maishu_wuzhui_helper__;
 
 /***/ }),
 

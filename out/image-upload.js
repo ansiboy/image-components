@@ -4,6 +4,7 @@ const React = require("react");
 const ui = require("maishu-ui-toolkit");
 require("../content/image-upload.less");
 const strings_1 = require("./strings");
+const ReactDOM = require("react-dom");
 let strings = strings_1.getStrings();
 class ImageUpload extends React.Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class ImageUpload extends React.Component {
         ui.imageFileToBase64(imageFile)
             .then(data => {
             this.props.saveImage(data);
-            this.setState({ imageSource: data.base64 });
+            if (this.props.displayImage)
+                this.setState({ imageSource: data.base64 });
         });
     }
     setFileInput(e) {
@@ -57,6 +59,32 @@ class ImageUpload extends React.Component {
         let { imageSource } = this.state || {};
         title = title || strings.imageUpload;
         className = className || '';
+        if (imageSource != null && this.props.displayImage != null)
+            return React.createElement("div", { ref: div => {
+                    if (!div)
+                        return;
+                    let imageElement = document.createElement("img");
+                    imageElement.src = imageSource;
+                    imageElement.onload = (e) => {
+                        var _a;
+                        let width = e.target.width;
+                        let height = e.target.height;
+                        let maxWidth = (_a = this.props.displayImage) === null || _a === void 0 ? void 0 : _a.maxWidth;
+                        if (maxWidth) {
+                            let scale = height / width; //`${this.props.displayImage.maxWidth}px`;
+                            height = maxWidth * scale;
+                            width = maxWidth;
+                        }
+                        div.style.backgroundImage = `url(${e.target.src})`;
+                        div.style.backgroundSize = `${width}px ${height}px`;
+                        div.style.backgroundRepeat = "no-repeat";
+                        let fileElement = div.querySelector('[type="file"]');
+                        fileElement.style.width = `${width}px`;
+                        fileElement.style.height = `${height}px`;
+                    };
+                    ReactDOM.render(React.createElement(React.Fragment, null,
+                        React.createElement("input", { type: "file", style: { opacity: 0 }, ref: (e) => this.setFileInput(e) })), div);
+                } });
         return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
             React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
                 imageSource ? React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } }) : React.createElement(React.Fragment, null,
@@ -65,4 +93,5 @@ class ImageUpload extends React.Component {
                 React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
     }
 }
+ImageUpload.defaultProps = { displayImage: { fixed: true } };
 exports.default = ImageUpload;
