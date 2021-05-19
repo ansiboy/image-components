@@ -15,12 +15,12 @@ export default class ImageUploadPage extends React.Component<{}, State> {
     }
 
     async uploadImage(imageBase64: string) {
-        // this.setState({ status: "uploading" })
-        // return imageService.upload(imageBase64).then(() => {
-        //     this.setState({ status: "success" });
-        // }).catch(err => {
-        //     this.setState({ status: "fail", error: err })
-        // });
+        this.setState({ status: "uploading" })
+        return imageService.upload(imageBase64).then(() => {
+            this.setState({ status: "success" });
+        }).catch(err => {
+            this.setState({ status: "fail", error: err })
+        });
     }
     showImageManager() {
         showImageDialog(1, () => {
@@ -42,11 +42,13 @@ export default class ImageUploadPage extends React.Component<{}, State> {
                 messageElement = <div>图片上传失败</div>;
                 break;
         }
+
         return <div className="container">
             <br />
             <label>默认</label>
             <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} />`}</pre>
             <ImageUpload saveImage={(data) => this.uploadImage(data.base64)} />
+            {messageElement}
             {/* <hr />
             <label>设置默认图片</label>
             <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} imageSource="//www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />`}</pre>

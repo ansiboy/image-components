@@ -1,4 +1,4 @@
-import { errors } from "./Errors";
+import { errors } from "./errors";
 import { DataSourceSelectArguments, DataSource } from "maishu-toolkit";
 
 // namespace wuzhui {

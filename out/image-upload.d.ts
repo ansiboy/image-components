@@ -18,7 +18,7 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     /** 图片显示设置 */
     displayImage?: {
         /** 固定图片高度，宽度为控件的高度宽度 */
-        fixed: boolean;
+        fixed?: boolean;
         /** 图片最大宽度，仅当 fixed 为 true 有效 */
         maxWidth?: number;
     };
@@ -27,7 +27,6 @@ interface ImageUploadState {
     imageSource?: string;
 }
 declare class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
-    static defaultProps: Pick<ImageUploadProps, "displayImage">;
     itemElement: HTMLElement;
     file: HTMLInputElement;
     image: HTMLImageElement;

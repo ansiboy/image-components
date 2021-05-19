@@ -31,7 +31,7 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     /** 图片显示设置 */
     displayImage?: {
         /** 固定图片高度，宽度为控件的高度宽度 */
-        fixed: boolean,
+        fixed?: boolean,
         /** 图片最大宽度，仅当 fixed 为 true 有效 */
         maxWidth?: number,
     }
@@ -43,7 +43,7 @@ interface ImageUploadState {
 
 class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
 
-    static defaultProps: Pick<ImageUploadProps, "displayImage"> = { displayImage: { fixed: true } };
+    // static defaultProps: Pick<ImageUploadProps, "displayImage"> = { displayImage: { fixed: true } };
 
     itemElement: HTMLElement;
     file: HTMLInputElement;
@@ -60,8 +60,7 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
         ui.imageFileToBase64(imageFile)
             .then(data => {
                 this.props.saveImage(data);
-                if (this.props.displayImage)
-                    this.setState({ imageSource: data.base64 });
+                this.setState({ imageSource: data.base64 });
             });
     }
     setFileInput(e: HTMLInputElement) {
@@ -107,54 +106,75 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
         title = title || strings.imageUpload;
         className = className || '';
 
-        if (imageSource != null && this.props.displayImage != null)
-            return <div ref={div => {
-                if (!div) return;
+        // if (imageSource != null && !this.props.displayImage?.fixed)
 
+        // return <div className={`image-upload ${className}`} style={this.props.style}  >
+        //     <div className="item" ref={e => this.itemElement = e || this.itemElement}>
+        //         {imageSource ? <img src={imageSource} style={{ width: "100%", height: "100%" }} /> : <>
+        //             <i className="fa fa-plus fa-4x"></i>
+        //             <div>{title}</div>
+        //         </>}
+        //         <input type="file" style={{}}
+        //             ref={(e: HTMLInputElement) => this.setFileInput(e)} />
+        //     </div>
+        // </div>
+        if (imageSource == null || this.props.displayImage == null) {
+            return <div className={`image-upload ${className}`} style={this.props.style}  >
+                <div className="item" ref={e => this.itemElement = e || this.itemElement}>
+                    <>
+                        <i className="fa fa-plus fa-4x"></i>
+                        <div>{title}</div>
+                    </>
+                    <input type="file" style={{}}
+                        ref={(e: HTMLInputElement) => this.setFileInput(e)} />
+                </div>
+            </div>
+        }
 
+        if (this.props.displayImage.fixed) {
+            return <div className={`image-upload ${className}`} style={this.props.style}  >
+                <div className="item" ref={e => this.itemElement = e || this.itemElement}>
+                    <img src={imageSource} style={{ width: "100%", height: "100%" }} />
+                </div>
+            </div>
+        }
 
-                let imageElement = document.createElement("img") as HTMLImageElement;
+        return <div ref={div => {
+            if (!div) return;
 
+            let imageElement = document.createElement("img") as HTMLImageElement;
 
-                imageElement.src = imageSource as string;
-                imageElement.onload = (e) => {
-                    let width = (e.target as HTMLImageElement).width;
-                    let height = (e.target as HTMLImageElement).height;
+            imageElement.src = imageSource as string;
+            imageElement.onload = (e) => {
+                let width = (e.target as HTMLImageElement).width;
+                let height = (e.target as HTMLImageElement).height;
 
-                    let maxWidth = this.props.displayImage?.maxWidth;
-                    if (maxWidth) {
-                        let scale = height / width;//`${this.props.displayImage.maxWidth}px`;
-                        height = maxWidth * scale;
-                        width = maxWidth;
-                    }
-
-                    div.style.backgroundImage = `url(${(e.target as HTMLImageElement).src})`;
-                    div.style.backgroundSize = `${width}px ${height}px`;
-                    div.style.backgroundRepeat = "no-repeat";
-
-                    let fileElement = div.querySelector('[type="file"]') as HTMLInputElement;
-                    fileElement.style.width = `${width}px`;
-                    fileElement.style.height = `${height}px`;
+                let maxWidth = this.props.displayImage?.maxWidth;
+                if (maxWidth) {
+                    let scale = height / width;//`${this.props.displayImage.maxWidth}px`;
+                    height = maxWidth * scale;
+                    width = maxWidth;
                 }
 
-                ReactDOM.render(<>
-                    <input type="file" style={{ opacity: 0 }}
-                        ref={(e: HTMLInputElement) => this.setFileInput(e)} />
-                </>, div)
-            }}>
+                div.style.backgroundImage = `url(${(e.target as HTMLImageElement).src})`;
+                div.style.backgroundSize = `${width}px ${height}px`;
+                div.style.backgroundRepeat = "no-repeat";
 
-            </div>
+                let fileElement = div.querySelector('[type="file"]') as HTMLInputElement;
+                fileElement.style.width = `${width}px`;
+                fileElement.style.height = `${height}px`;
+            }
 
-        return <div className={`image-upload ${className}`} style={this.props.style}  >
-            <div className="item" ref={e => this.itemElement = e || this.itemElement}>
-                {imageSource ? <img src={imageSource} style={{ width: "100%", height: "100%" }} /> : <>
-                    <i className="fa fa-plus fa-4x"></i>
-                    <div>{title}</div>
-                </>}
-                <input type="file" style={{}}
+            ReactDOM.render(<>
+                <input type="file" style={{ opacity: 0 }}
                     ref={(e: HTMLInputElement) => this.setFileInput(e)} />
-            </div>
+            </>, div)
+        }}>
+
         </div>
+
+
+
     }
 }
 

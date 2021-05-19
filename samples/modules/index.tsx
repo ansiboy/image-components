@@ -10,7 +10,13 @@ export default class IndexPage extends React.Component {
                     <a href="#image-selector">图片选择</a>
                 </li>
                 <li className="list-group-item">
-                    <a href="#image-upload">图片上传</a>
+                    <a href="#image-upload/default">图片上传 - 默认</a>
+                </li>
+                <li className="list-group-item">
+                    <a href="#image-upload/display-image/fixed">图片上传 - 显示图片 - 固定大小</a>
+                </li>
+                <li className="list-group-item">
+                    <a href="#image-upload/display-image/max-width">图片上传 - 显示图片 - 最大宽度</a>
                 </li>
                 <li className="list-group-item">
                     <a href="#image-thumb">缩略图</a>

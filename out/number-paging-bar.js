@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSourcePagingBar = exports.PagingBar = exports.PagerPosition = void 0;
-const Errors_1 = require("./Errors");
+const errors_1 = require("./errors");
 // namespace wuzhui {
 var PagerPosition;
 (function (PagerPosition) {
@@ -67,16 +67,16 @@ class PagingBar {
     }
     // Virtual Method
     render() {
-        throw Errors_1.errors.notImplemented('The table-row render method is not implemented.');
+        throw errors_1.errors.notImplemented('The table-row render method is not implemented.');
     }
 }
 exports.PagingBar = PagingBar;
 class DataSourcePagingBar extends PagingBar {
     constructor(params) {
         if (!params.dataSource)
-            throw Errors_1.errors.argumentNull('dataSource');
+            throw errors_1.errors.argumentNull('dataSource');
         if (!params.element)
-            throw Errors_1.errors.argumentNull('element');
+            throw errors_1.errors.argumentNull('element');
         let pagerSettings = Object.assign(DataSourcePagingBar.defaultPagerSettings, params.pagerSettings || {});
         super();
         this.dataSource = params.dataSource;

@@ -1,19 +1,19 @@
 /*!
  * 
- *  maishu-image-components v1.2.5
+ *  maishu-image-components v1.4.0
  * 
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("maishu-chitu"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
+		module.exports = factory(require("maishu-chitu"), require("maishu-toolkit"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
 	else if(typeof define === 'function' && define.amd)
-		define(["maishu-chitu", "maishu-ui-toolkit", "react", "react-dom"], factory);
+		define(["maishu-chitu", "maishu-toolkit", "maishu-ui-toolkit", "react", "react-dom"], factory);
 	else if(typeof exports === 'object')
-		exports["image-components"] = factory(require("maishu-chitu"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
+		exports["image-components"] = factory(require("maishu-chitu"), require("maishu-toolkit"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
 	else
-		root["image-components"] = factory(root["maishu-chitu"], root["maishu-ui-toolkit"], root["react"], root["react-dom"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_maishu_chitu__, __WEBPACK_EXTERNAL_MODULE_maishu_ui_toolkit__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
+		root["image-components"] = factory(root["maishu-chitu"], root["maishu-toolkit"], root["maishu-ui-toolkit"], root["react"], root["react-dom"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_maishu_chitu__, __WEBPACK_EXTERNAL_MODULE_maishu_toolkit__, __WEBPACK_EXTERNAL_MODULE_maishu_ui_toolkit__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -381,832 +381,6 @@ module.exports = function cssWithMappingToString(item) {
 
 /***/ }),
 
-/***/ "./node_modules/maishu-toolkit/dist/index.js":
-/*!***************************************************!*\
-  !*** ./node_modules/maishu-toolkit/dist/index.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {/*!
- * ~
- *  maishu-toolkit v1.6.6
- *  https://github.com/ansiboy/toolkit
- *  
- *  Copyright (c) 2016-2018, shu mai <ansiboy@163.com>
- *  Licensed under the MIT License.
- * 
- */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else { var i, a; }
-})(typeof window === 'undefined' ? global : window, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./out/index.js");
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./out/assign-deep.js":
-/*!****************************!*\
-  !*** ./out/assign-deep.js ***!
-  \****************************/
-/*! exports provided: objectAssignDeep, objectAssignDeepInto, withOptions */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "objectAssignDeep", function() { return objectAssignDeep; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "objectAssignDeepInto", function() { return objectAssignDeepInto; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "withOptions", function() { return withOptions; });
-
-/*
- * OBJECT ASSIGN DEEP
- * Allows deep cloning of plain objects that contain primitives, nested plain objects, or nested plain arrays.
- */
-/*
- * A unified way of returning a string that describes the type of the given variable.
- */
-function getTypeOf(input) {
-    if (input === null) {
-        return 'null';
-    }
-    else if (typeof input === 'undefined') {
-        return 'undefined';
-    }
-    else if (typeof input === 'object') {
-        return (Array.isArray(input) ? 'array' : 'object');
-    }
-    return typeof input;
-}
-/*
- * Branching logic which calls the correct function to clone the given value base on its type.
- */
-function cloneValue(value) {
-    // The value is an object so lets clone it.
-    if (getTypeOf(value) === 'object') {
-        return quickCloneObject(value);
-    }
-    // The value is an array so lets clone it.
-    else if (getTypeOf(value) === 'array') {
-        return quickCloneArray(value);
-    }
-    // Any other value can just be copied.
-    return value;
-}
-/*
- * Enumerates the given array and returns a new array, with each of its values cloned (i.e. references broken).
- */
-function quickCloneArray(input) {
-    return input.map(cloneValue);
-}
-/*
- * Enumerates the properties of the given object (ignoring the prototype chain) and returns a new object, with each of
- * its values cloned (i.e. references broken).
- */
-function quickCloneObject(input) {
-    const output = {};
-    for (const key in input) {
-        if (!input.hasOwnProperty(key)) {
-            continue;
-        }
-        output[key] = cloneValue(input[key]);
-    }
-    return output;
-}
-/*
- * Does the actual deep merging.
- */
-function executeDeepMerge(target, _objects = [], _options = {}) {
-    const options = {
-        arrayBehaviour: _options.arrayBehaviour || 'replace',
-    };
-    // Ensure we have actual objects for each.
-    const objects = _objects.map(object => object || {});
-    const output = target || {};
-    // Enumerate the objects and their keys.
-    for (let oindex = 0; oindex < objects.length; oindex++) {
-        const object = objects[oindex];
-        const keys = Object.keys(object);
-        for (let kindex = 0; kindex < keys.length; kindex++) {
-            const key = keys[kindex];
-            const value = object[key];
-            const type = getTypeOf(value);
-            const existingValueType = getTypeOf(output[key]);
-            if (type === 'object') {
-                if (existingValueType !== 'undefined') {
-                    const existingValue = (existingValueType === 'object' ? output[key] : {});
-                    output[key] = executeDeepMerge({}, [existingValue, quickCloneObject(value)], options);
-                }
-                else {
-                    output[key] = quickCloneObject(value);
-                }
-            }
-            else if (type === 'array') {
-                if (existingValueType === 'array') {
-                    const newValue = quickCloneArray(value);
-                    output[key] = (options.arrayBehaviour === 'merge' ? output[key].concat(newValue) : newValue);
-                }
-                else {
-                    output[key] = quickCloneArray(value);
-                }
-            }
-            else {
-                output[key] = value;
-            }
-        }
-    }
-    return output;
-}
-/*
- * Merge all the supplied objects into the target object, breaking all references, including those of nested objects
- * and arrays, and even objects nested inside arrays. The first parameter is not mutated unlike Object.assign().
- * Properties in later objects will always overwrite.
- */
-function objectAssignDeep(target, ...objects) {
-    return executeDeepMerge(target, objects);
-}
-;
-/*
- * Same as objectAssignDeep() except it doesn't mutate the target object and returns an entirely new object.
- */
-function objectAssignDeepInto(...objects) {
-    return executeDeepMerge({}, objects);
-}
-;
-/*
- * Allows an options object to be passed in to customise the behaviour of the function.
- */
-let withOptions = function objectAssignDeepInto(target, objects, options) {
-    return executeDeepMerge(target, objects, options);
-};
-
-
-/***/ }),
-
-/***/ "./out/callback.js":
-/*!*************************!*\
-  !*** ./out/callback.js ***!
-  \*************************/
-/*! exports provided: Callback */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Callback", function() { return Callback; });
-class Callback {
-    constructor() {
-        this.funcs = new Array();
-    }
-    add(func) {
-        this.funcs.push(func);
-    }
-    remove(func) {
-        this.funcs = this.funcs.filter(o => o != func);
-    }
-    fire(args) {
-        this.funcs.forEach(o => o(args));
-    }
-    static create() {
-        return new Callback();
-    }
-}
-
-
-/***/ }),
-
-/***/ "./out/data.js":
-/*!*********************!*\
-  !*** ./out/data.js ***!
-  \*********************/
-/*! exports provided: DataSource, DataSourceSelectArguments */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataSource", function() { return DataSource; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataSourceSelectArguments", function() { return DataSourceSelectArguments; });
-/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./errors */ "./out/errors.js");
-/* harmony import */ var _callback__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./callback */ "./out/callback.js");
-
-
-let errors = Object.assign(_errors__WEBPACK_IMPORTED_MODULE_0__["errors"], {
-    dataSourceCanntInsert() {
-        return new Error("DataSource can not insert.");
-    },
-    dataSourceCanntDelete() {
-        return new Error("DataSource can not delete.");
-    },
-    dataSourceCanntUpdate() {
-        return new Error("DataSource can not update.");
-    },
-    primaryKeyNull(key) {
-        let msg = `Primary key named '${key}' value is null.`;
-        return new Error(msg);
-    },
-    queryResultTypeError() {
-        let msg = `Query result type error.`;
-        return new Error(msg);
-    }
-});
-class DataSource {
-    constructor(args) {
-        this.inserting = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"](); //callbacks1<DataSource<T>, T, number>();
-        this.inserted = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"]();
-        this.deleting = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"](); //callbacks<DataSource<T>, T>();
-        this.deleted = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"](); //callbacks<DataSource<T>, T>();
-        this.updating = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"]();
-        this.updated = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"]();
-        this.selecting = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"]();
-        this.selected = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"](); //callbacks<DataSource<T>, DataSourceSelectResult<T>>();
-        this.error = new _callback__WEBPACK_IMPORTED_MODULE_1__["Callback"](); //callbacks<this, DataSourceError>();
-        this.args = args;
-        this.primaryKeys = args.primaryKeys || [];
-    }
-    ; //callbacks<DataSource<T>, DataSourceSelectArguments>();
-    get canDelete() {
-        return this.args.delete != null && this.primaryKeys.length > 0;
-    }
-    get canInsert() {
-        return this.args.insert != null && this.primaryKeys.length > 0;
-    }
-    get canUpdate() {
-        return this.args.update != null && this.primaryKeys.length > 0;
-    }
-    executeInsert(item, args) {
-        return this.args.insert(item, args);
-    }
-    executeDelete(item, args) {
-        return this.args.delete(item, args);
-    }
-    executeUpdate(item, args) {
-        return this.args.update(item, args);
-    }
-    executeSelect(args) {
-        args = args || {};
-        return this.args.select(args);
-    }
-    insert(item, args, index) {
-        if (!this.canInsert)
-            throw errors.dataSourceCanntInsert();
-        if (!item)
-            throw errors.argumentNull("item");
-        if (typeof args == 'number') {
-            index = args;
-            args = null;
-        }
-        this.inserting.fire({ sender: this, dataItem: item, index });
-        return this.executeInsert(item, args).then((data) => {
-            Object.assign(item, data);
-            this.inserted.fire({ sender: this, dataItem: item, index });
-            return data;
-        }).catch(exc => {
-            this.processError(exc, 'insert');
-            throw exc;
-        });
-    }
-    delete(item, args) {
-        if (!this.canDelete)
-            throw errors.dataSourceCanntDelete();
-        if (!item)
-            throw errors.argumentNull("item");
-        this.checkPrimaryKeys(item);
-        this.deleting.fire({ sender: this, dataItem: item });
-        return this.executeDelete(item, args).then((data) => {
-            this.deleted.fire({ sender: this, dataItem: item });
-            return data;
-        }).catch(exc => {
-            this.processError(exc, 'delete');
-            throw exc;
-        });
-    }
-    update(item, args) {
-        if (!this.canUpdate)
-            throw errors.dataSourceCanntUpdate();
-        if (!item)
-            throw errors.argumentNull("item");
-        this.checkPrimaryKeys(item);
-        this.updating.fire({ sender: this, dataItem: item });
-        return this.executeUpdate(item, args).then((data) => {
-            Object.assign(item, data);
-            this.updated.fire({ sender: this, dataItem: item });
-            return data;
-        }).catch((exc) => {
-            this.processError(exc, 'update');
-            throw exc;
-        });
-    }
-    isSameItem(theItem, otherItem) {
-        if (theItem == null)
-            throw errors.argumentNull('theItem');
-        if (otherItem == null)
-            throw errors.argumentNull('otherItem');
-        if (this.primaryKeys.length == 0)
-            return theItem == otherItem;
-        this.checkPrimaryKeys(theItem);
-        this.checkPrimaryKeys(otherItem);
-        for (let pk of this.primaryKeys) {
-            if (theItem[pk] != otherItem[pk])
-                return false;
-        }
-        return true;
-    }
-    checkPrimaryKeys(item) {
-        for (let key in item) {
-            if (item[key] == null && this.primaryKeys.indexOf(key) >= 0)
-                throw errors.primaryKeyNull(key);
-        }
-    }
-    select(args) {
-        args = args || {};
-        // fireCallback(this.selecting, this, args);
-        this.selecting.fire({ sender: this, selectArguments: args });
-        return this.executeSelect(args).then((data) => {
-            let dataItems;
-            let totalRowCount;
-            if (Array.isArray(data)) {
-                dataItems = data;
-                totalRowCount = data.length;
-            }
-            else if (data.dataItems !== undefined && data.totalRowCount !== undefined) {
-                dataItems = data.dataItems;
-                totalRowCount = data.totalRowCount;
-            }
-            else {
-                throw errors.queryResultTypeError();
-            }
-            this.selected.fire({ sender: this, selectResult: { totalRowCount, dataItems }, selectArguments: args });
-            return { totalRowCount, dataItems };
-        }).catch(exc => {
-            this.processError(exc, 'select');
-            throw exc;
-        });
-    }
-    processError(exc, method) {
-        exc.method = method;
-        this.error.fire({ sender: this, error: exc });
-        if (!exc.handled)
-            throw exc;
-    }
-}
-class DataSourceSelectArguments {
-    constructor() {
-        this.startRowIndex = 0;
-        this.maximumRows = 2147483647;
-    }
-}
-
-
-/***/ }),
-
-/***/ "./out/deep-equal.js":
-/*!***************************!*\
-  !*** ./out/deep-equal.js ***!
-  \***************************/
-/*! exports provided: deepEqual */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deepEqual", function() { return deepEqual; });
-function deepEqual(x, y) {
-    if (x === y) {
-        return true;
-    }
-    if ((typeof x == "object" && x != null) && (typeof y == "object" && y != null)) {
-        if (Object.keys(x).length != Object.keys(y).length)
-            return false;
-        for (var prop in x) {
-            if (y.hasOwnProperty(prop)) {
-                if (!deepEqual(x[prop], y[prop]))
-                    return false;
-            }
-            else
-                return false;
-        }
-        return true;
-    }
-    return false;
-}
-
-
-/***/ }),
-
-/***/ "./out/errors.js":
-/*!***********************!*\
-  !*** ./out/errors.js ***!
-  \***********************/
-/*! exports provided: Errors, errors */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Errors", function() { return Errors; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "errors", function() { return errors; });
-class Errors {
-    argumentNull(argumentName) {
-        let error = new Error(`Argument ${argumentName} cannt be null or emtpy.`);
-        let name = "argumentNull";
-        error.name = name;
-        return error;
-    }
-    routeDataFieldNull(fieldName) {
-        let msg = `The ${fieldName} field of route data cannt be null.`;
-        let error = new Error(msg);
-        let name = "routeDataFieldNull";
-        error.name = name;
-        return error;
-    }
-    argumentFieldNull(fieldName, argumentName) {
-        let msg = `The ${fieldName} field of ${argumentName} cannt be null.`;
-        let error = new Error(msg);
-        let name = "argumentFieldNull";
-        error.name = name;
-        return error;
-    }
-    argumentTypeIncorrect(argumentName, expectedType) {
-        let msg = `Argument ${argumentName} type error, expected type is ${expectedType}.`;
-        let error = new Error(msg);
-        let name = "argumentTypeIncorrect";
-        error.name = name;
-        return error;
-    }
-}
-let errors = new Errors();
-
-
-/***/ }),
-
-/***/ "./out/format.js":
-/*!***********************!*\
-  !*** ./out/format.js ***!
-  \***********************/
-/*! exports provided: formatDate, formatString */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatDate", function() { return formatDate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatString", function() { return formatString; });
-function formatDate(date, showHourMinutes) {
-    if (typeof date == "string")
-        return date;
-    let d = date;
-    if (showHourMinutes)
-        return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours() + 1}:${d.getMinutes()}`;
-    return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-}
-function formatString(pattern, ...args) {
-    let a = pattern;
-    for (let k in args) {
-        a = a.replace("{" + k + "}", args[k]);
-    }
-    return a;
-}
-
-
-/***/ }),
-
-/***/ "./out/guid.js":
-/*!*********************!*\
-  !*** ./out/guid.js ***!
-  \*********************/
-/*! exports provided: guid */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "guid", function() { return guid; });
-function guid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-}
-
-
-/***/ }),
-
-/***/ "./out/html.js":
-/*!*********************!*\
-  !*** ./out/html.js ***!
-  \*********************/
-/*! exports provided: HTML */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HTML", function() { return HTML; });
-/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./errors */ "./out/errors.js");
-
-class HTML {
-    static addClassName(element, addonClassName) {
-        if (element == null)
-            throw _errors__WEBPACK_IMPORTED_MODULE_0__["errors"].argumentNull('element');
-        if (!addonClassName)
-            throw _errors__WEBPACK_IMPORTED_MODULE_0__["errors"].argumentNull('addonClassName');
-        let sourceClassName;
-        if (typeof element == 'string')
-            sourceClassName = element;
-        else
-            sourceClassName = element.className;
-        sourceClassName = sourceClassName || '';
-        console.assert(addonClassName != null);
-        if (sourceClassName.indexOf(addonClassName) >= 0)
-            return sourceClassName;
-        let className = `${sourceClassName} ${addonClassName}`;
-        if (typeof element != 'string')
-            element.className = className;
-        return className;
-    }
-    static removeClassName(element, targetClassName) {
-        let sourceClassName;
-        if (typeof element == 'string')
-            sourceClassName = element;
-        else
-            sourceClassName = element.className || '';
-        if (sourceClassName.indexOf(targetClassName) < 0)
-            return sourceClassName;
-        sourceClassName = sourceClassName || '';
-        sourceClassName = sourceClassName.replace(new RegExp(targetClassName, 'g'), '');
-        sourceClassName = sourceClassName.trim();
-        if (typeof element != 'string')
-            element.className = sourceClassName;
-        return sourceClassName;
-    }
-}
-
-
-/***/ }),
-
-/***/ "./out/index.js":
-/*!**********************!*\
-  !*** ./out/index.js ***!
-  \**********************/
-/*! exports provided: guid, pathConcat, Errors, errors, Callback, DataSource, DataSourceSelectArguments, parseUrl, deepEqual, objectAssignDeep, formatDate, formatString, HTML, ValueStore */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _guid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./guid */ "./out/guid.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "guid", function() { return _guid__WEBPACK_IMPORTED_MODULE_0__["guid"]; });
-
-/* harmony import */ var _path__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./path */ "./out/path.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "pathConcat", function() { return _path__WEBPACK_IMPORTED_MODULE_1__["pathConcat"]; });
-
-/* harmony import */ var _errors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./errors */ "./out/errors.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Errors", function() { return _errors__WEBPACK_IMPORTED_MODULE_2__["Errors"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "errors", function() { return _errors__WEBPACK_IMPORTED_MODULE_2__["errors"]; });
-
-/* harmony import */ var _callback__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./callback */ "./out/callback.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Callback", function() { return _callback__WEBPACK_IMPORTED_MODULE_3__["Callback"]; });
-
-/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data */ "./out/data.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DataSource", function() { return _data__WEBPACK_IMPORTED_MODULE_4__["DataSource"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DataSourceSelectArguments", function() { return _data__WEBPACK_IMPORTED_MODULE_4__["DataSourceSelectArguments"]; });
-
-/* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./url */ "./out/url.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "parseUrl", function() { return _url__WEBPACK_IMPORTED_MODULE_5__["parseUrl"]; });
-
-/* harmony import */ var _deep_equal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./deep-equal */ "./out/deep-equal.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "deepEqual", function() { return _deep_equal__WEBPACK_IMPORTED_MODULE_6__["deepEqual"]; });
-
-/* harmony import */ var _assign_deep__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./assign-deep */ "./out/assign-deep.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "objectAssignDeep", function() { return _assign_deep__WEBPACK_IMPORTED_MODULE_7__["objectAssignDeep"]; });
-
-/* harmony import */ var _format__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./format */ "./out/format.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatDate", function() { return _format__WEBPACK_IMPORTED_MODULE_8__["formatDate"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "formatString", function() { return _format__WEBPACK_IMPORTED_MODULE_8__["formatString"]; });
-
-/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./html */ "./out/html.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "HTML", function() { return _html__WEBPACK_IMPORTED_MODULE_9__["HTML"]; });
-
-/* harmony import */ var _value_store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./value-store */ "./out/value-store.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ValueStore", function() { return _value_store__WEBPACK_IMPORTED_MODULE_10__["ValueStore"]; });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./out/path.js":
-/*!*********************!*\
-  !*** ./out/path.js ***!
-  \*********************/
-/*! exports provided: pathConcat */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pathConcat", function() { return pathConcat; });
-/** 连接多个路径 */
-function pathConcat(...paths) {
-    paths = paths || [];
-    if (paths.length == 0)
-        return "";
-    if (paths.length == 1) {
-        return paths[0];
-    }
-    let str = paths.join("/");
-    // 将一个或多个的 / 或者 变为一个 /，例如：/shop/test// 转换为 /shop/test/
-    // 或者 D:\shop\test\  转换为 D:/shop/test/
-    str = str.replace(/(\/+\\*|\\+\/*)/g, '/');
-    //======================================================
-    // fixed 把 http:// https:// 变为 http:/ https:/ 的 BUG
-    str = str.replace("http:/", "http://");
-    str = str.replace("https:/", "https://");
-    //======================================================
-    return str;
-}
-
-
-/***/ }),
-
-/***/ "./out/url.js":
-/*!********************!*\
-  !*** ./out/url.js ***!
-  \********************/
-/*! exports provided: parseUrl */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseUrl", function() { return parseUrl; });
-function parseUrl(url) {
-    let i = url.indexOf("?");
-    if (i < 0)
-        return {};
-    let query = url.substr(i + 1);
-    return pareeUrlQuery(query);
-}
-function pareeUrlQuery(query) {
-    let match, pl = /\+/g, // Regex for replacing addition symbol with a space
-    search = /([^&=]+)=?([^&]*)/g, decode = function (s) {
-        return decodeURIComponent(s.replace(pl, " "));
-    };
-    let urlParams = {};
-    while (match = search.exec(query))
-        urlParams[decode(match[1])] = decode(match[2]);
-    return urlParams;
-}
-
-
-/***/ }),
-
-/***/ "./out/value-store.js":
-/*!****************************!*\
-  !*** ./out/value-store.js ***!
-  \****************************/
-/*! exports provided: ValueStore */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ValueStore", function() { return ValueStore; });
-/**
- * 实现数据的存储，以及数据修改的通知
- */
-class ValueStore {
-    constructor(value) {
-        this.items = new Array();
-        this._value = value;
-    }
-    attach(func, sender) {
-        if (this.value !== undefined) {
-            func(this.value, sender);
-        }
-        return this.add(func, sender);
-    }
-    add(func, sender) {
-        this.items.push({ func, sender });
-        return func;
-    }
-    remove(func) {
-        this.items = this.items.filter(o => o.func != func);
-    }
-    fire(value) {
-        this.items.forEach(o => o.func(value, o.sender));
-    }
-    get value() {
-        if (this._value === undefined)
-            return null;
-        return this._value;
-    }
-    set value(value) {
-        this._value = value;
-        this.fire(value);
-    }
-}
-
-
-/***/ })
-
-/******/ });
-});
-//# sourceMappingURL=index.js.map
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -1487,63 +661,6 @@ module.exports = function (list, options) {
 
 /***/ }),
 
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ "./out/Errors.js":
-/*!***********************!*\
-  !*** ./out/Errors.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.errors = void 0;
-const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "./node_modules/maishu-toolkit/dist/index.js");
-class Errors extends maishu_toolkit_1.Errors {
-    serviceHostNotConfig() {
-        return new Error(`Service host is not config.`);
-    }
-    notImplemented(message) {
-        message = message || "Not implemented";
-        return new Error(message);
-    }
-}
-exports.errors = new Errors();
-
-
-/***/ }),
-
 /***/ "./out/common.js":
 /*!***********************!*\
   !*** ./out/common.js ***!
@@ -1603,6 +720,32 @@ exports.createDialogElement = createDialogElement;
 
 /***/ }),
 
+/***/ "./out/errors.js":
+/*!***********************!*\
+  !*** ./out/errors.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.errors = void 0;
+const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
+class Errors extends maishu_toolkit_1.Errors {
+    serviceHostNotConfig() {
+        return new Error(`Service host is not config.`);
+    }
+    notImplemented(message) {
+        message = message || "Not implemented";
+        return new Error(message);
+    }
+}
+exports.errors = new Errors();
+
+
+/***/ }),
+
 /***/ "./out/image-manager.js":
 /*!******************************!*\
   !*** ./out/image-manager.js ***!
@@ -1633,7 +776,7 @@ const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 // import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
-const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "./node_modules/maishu-toolkit/dist/index.js");
+const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 __webpack_require__(/*! ../content/image-manager.less */ "./content/image-manager.less");
 const number_paging_bar_1 = __webpack_require__(/*! ./number-paging-bar */ "./out/number-paging-bar.js");
 let strings = strings_1.getStrings();
@@ -1799,7 +942,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageService = exports.errors = void 0;
 const maishu_chitu_1 = __webpack_require__(/*! maishu-chitu */ "maishu-chitu");
-const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "./node_modules/maishu-toolkit/dist/index.js");
+const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 let strings = strings_1.getStrings();
@@ -2100,8 +1243,7 @@ class ImageUpload extends React.Component {
         ui.imageFileToBase64(imageFile)
             .then(data => {
             this.props.saveImage(data);
-            if (this.props.displayImage)
-                this.setState({ imageSource: data.base64 });
+            this.setState({ imageSource: data.base64 });
         });
     }
     setFileInput(e) {
@@ -2143,41 +1285,57 @@ class ImageUpload extends React.Component {
         let { imageSource } = this.state || {};
         title = title || strings.imageUpload;
         className = className || '';
-        if (imageSource != null && this.props.displayImage != null)
-            return React.createElement("div", { ref: div => {
-                    if (!div)
-                        return;
-                    let imageElement = document.createElement("img");
-                    imageElement.src = imageSource;
-                    imageElement.onload = (e) => {
-                        var _a;
-                        let width = e.target.width;
-                        let height = e.target.height;
-                        let maxWidth = (_a = this.props.displayImage) === null || _a === void 0 ? void 0 : _a.maxWidth;
-                        if (maxWidth) {
-                            let scale = height / width; //`${this.props.displayImage.maxWidth}px`;
-                            height = maxWidth * scale;
-                            width = maxWidth;
-                        }
-                        div.style.backgroundImage = `url(${e.target.src})`;
-                        div.style.backgroundSize = `${width}px ${height}px`;
-                        div.style.backgroundRepeat = "no-repeat";
-                        let fileElement = div.querySelector('[type="file"]');
-                        fileElement.style.width = `${width}px`;
-                        fileElement.style.height = `${height}px`;
-                    };
-                    ReactDOM.render(React.createElement(React.Fragment, null,
-                        React.createElement("input", { type: "file", style: { opacity: 0 }, ref: (e) => this.setFileInput(e) })), div);
-                } });
-        return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
-            React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
-                imageSource ? React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } }) : React.createElement(React.Fragment, null,
-                    React.createElement("i", { className: "fa fa-plus fa-4x" }),
-                    React.createElement("div", null, title)),
-                React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
+        // if (imageSource != null && !this.props.displayImage?.fixed)
+        // return <div className={`image-upload ${className}`} style={this.props.style}  >
+        //     <div className="item" ref={e => this.itemElement = e || this.itemElement}>
+        //         {imageSource ? <img src={imageSource} style={{ width: "100%", height: "100%" }} /> : <>
+        //             <i className="fa fa-plus fa-4x"></i>
+        //             <div>{title}</div>
+        //         </>}
+        //         <input type="file" style={{}}
+        //             ref={(e: HTMLInputElement) => this.setFileInput(e)} />
+        //     </div>
+        // </div>
+        if (imageSource == null || this.props.displayImage == null) {
+            return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+                React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+                    React.createElement(React.Fragment, null,
+                        React.createElement("i", { className: "fa fa-plus fa-4x" }),
+                        React.createElement("div", null, title)),
+                    React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
+        }
+        if (this.props.displayImage.fixed) {
+            return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+                React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+                    React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } })));
+        }
+        return React.createElement("div", { ref: div => {
+                if (!div)
+                    return;
+                let imageElement = document.createElement("img");
+                imageElement.src = imageSource;
+                imageElement.onload = (e) => {
+                    var _a;
+                    let width = e.target.width;
+                    let height = e.target.height;
+                    let maxWidth = (_a = this.props.displayImage) === null || _a === void 0 ? void 0 : _a.maxWidth;
+                    if (maxWidth) {
+                        let scale = height / width; //`${this.props.displayImage.maxWidth}px`;
+                        height = maxWidth * scale;
+                        width = maxWidth;
+                    }
+                    div.style.backgroundImage = `url(${e.target.src})`;
+                    div.style.backgroundSize = `${width}px ${height}px`;
+                    div.style.backgroundRepeat = "no-repeat";
+                    let fileElement = div.querySelector('[type="file"]');
+                    fileElement.style.width = `${width}px`;
+                    fileElement.style.height = `${height}px`;
+                };
+                ReactDOM.render(React.createElement(React.Fragment, null,
+                    React.createElement("input", { type: "file", style: { opacity: 0 }, ref: (e) => this.setFileInput(e) })), div);
+            } });
     }
 }
-ImageUpload.defaultProps = { displayImage: { fixed: true } };
 exports.default = ImageUpload;
 
 
@@ -2217,7 +1375,7 @@ Object.defineProperty(exports, "ImageService", { enumerable: true, get: function
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSourcePagingBar = exports.PagingBar = exports.PagerPosition = void 0;
-const Errors_1 = __webpack_require__(/*! ./Errors */ "./out/Errors.js");
+const errors_1 = __webpack_require__(/*! ./errors */ "./out/errors.js");
 // namespace wuzhui {
 var PagerPosition;
 (function (PagerPosition) {
@@ -2283,16 +1441,16 @@ class PagingBar {
     }
     // Virtual Method
     render() {
-        throw Errors_1.errors.notImplemented('The table-row render method is not implemented.');
+        throw errors_1.errors.notImplemented('The table-row render method is not implemented.');
     }
 }
 exports.PagingBar = PagingBar;
 class DataSourcePagingBar extends PagingBar {
     constructor(params) {
         if (!params.dataSource)
-            throw Errors_1.errors.argumentNull('dataSource');
+            throw errors_1.errors.argumentNull('dataSource');
         if (!params.element)
-            throw Errors_1.errors.argumentNull('element');
+            throw errors_1.errors.argumentNull('element');
         let pagerSettings = Object.assign(DataSourcePagingBar.defaultPagerSettings, params.pagerSettings || {});
         super();
         this.dataSource = params.dataSource;
@@ -2581,6 +1739,17 @@ function getLanguage() {
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_maishu_chitu__;
+
+/***/ }),
+
+/***/ "maishu-toolkit":
+/*!*********************************!*\
+  !*** external "maishu-toolkit" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_maishu_toolkit__;
 
 /***/ }),
 
