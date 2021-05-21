@@ -39,8 +39,9 @@ class ImageThumber extends React.Component {
                     React.createElement("div", { className: "remove" },
                         React.createElement("i", { className: "fa fa-remove", ref: (e) => this.setDeleteButton(e, imagePath) })) : null,
                 React.createElement("img", { className: "img-responsive", src: imagePath, ref: (e) => e ? ui.renderImage(e, { imageSize: { width: 150, height: 150 } }) : null }),
-                React.createElement("div", { className: "bottom" }, text),
-                disabled ? React.createElement("div", { className: "disabled" }) : null)));
+                text ? React.createElement("div", { className: "bottom" }, text) : null,
+                disabled ? React.createElement("div", { className: "disabled" }) : null,
+                this.props.children)));
     }
 }
 exports.default = ImageThumber;
