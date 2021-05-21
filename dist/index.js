@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.4.0
+ *  maishu-image-components v1.4.1
  * 
  * 
  */

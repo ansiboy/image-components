@@ -20,8 +20,8 @@ export default class ImageThumberPage extends React.Component<{}, State> {
         let imageInfos = this.state?.imageInfos || [];
         return <div className="container">
             <div>
-                {imageInfos.map(o =>
-                    <div style={{ marginRight: 10 }}><ImageThumber imagePath={o.path} text={o.text} /></div>
+                {imageInfos.map((o, i) =>
+                    <div style={{ marginRight: 10 }}><ImageThumber imagePath={o.path} text={o.text} selectedText={i.toString()} /></div>
                 )}
             </div>
         </div>

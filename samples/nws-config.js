@@ -12,7 +12,6 @@ for (let i = 0; i < files.length; i++) {
     virtualPaths[files[i]] = path.join(__dirname, "../out", files[i]);
 }
 
-
 module.exports = {
     port: 49532,
     virtualPaths

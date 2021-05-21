@@ -1,12 +1,13 @@
 {
   "name": "maishu-image-components",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "",
   "main": "index.js",
   "types": "out/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "grunt",
+    "start": "grunt demo"
   },
   "repository": {
     "type": "git",

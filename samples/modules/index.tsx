@@ -21,6 +21,9 @@ export default class IndexPage extends React.Component {
                 <li className="list-group-item">
                     <a href="#image-thumb">缩略图</a>
                 </li>
+                <li className="list-group-item">
+                    <a href="#image-zoom">图片放大</a>
+                </li>
             </ul>
         </div>
     }
