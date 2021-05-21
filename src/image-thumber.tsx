@@ -59,10 +59,11 @@ export default class ImageThumber extends React.Component<ImageThumberProps, Ima
                         </div> : null}
                     <img className="img-responsive" src={imagePath}
                         ref={(e: HTMLImageElement) => e ? ui.renderImage(e, { imageSize: { width: 150, height: 150 } }) : null} />
-                    <div className="bottom">
+                    {text ? <div className="bottom">
                         {text}
-                    </div>
+                    </div> : null}
                     {disabled ? <div className="disabled"></div> : null}
+                    {this.props.children}
                 </div>
             </div>
         );
