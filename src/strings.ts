@@ -7,6 +7,8 @@ interface Strings {
     deleteImageConfirm: string;
     imageUpload: string;
     noImageText: string;
+    dataLoading: string;
+    dataEmpty: string;
 }
 
 let chinese: Strings = {
@@ -16,7 +18,9 @@ let chinese: Strings = {
     confirm: "确定",
     deleteImageConfirm: "确定删除该图片吗？",
     imageUpload: "图片上传",
-    noImageText: "暂无图片"
+    noImageText: "暂无图片",
+    dataLoading: "数据正在加载中...",
+    dataEmpty: "暂无所要展示的数据"
 }
 
 let english: Strings = {
@@ -26,7 +30,9 @@ let english: Strings = {
     confirm: "Confirm",
     deleteImageConfirm: "Are you sure delete the image?",
     imageUpload: "Image Upload",
-    noImageText: "NO IMAGE"
+    noImageText: "NO IMAGE",
+    dataLoading: "Data is loading...",
+    dataEmpty: "Data is empty"
 }
 
 let strings = { chinese, english, }

@@ -34,7 +34,10 @@ export default class IndexPage extends React.Component {
                     <a href="#image-thumb">缩略图</a>
                 </li>
                 <li className="list-group-item">
-                    <a href="#image-zoom">图片放大</a>
+                    <a href="#dialogs/dialog-base">对话框 - 基础</a>
+                </li>
+                <li className="list-group-item">
+                    <a href="#dialogs/dialog-data-source">对话框 - 数据源</a>
                 </li>
             </ul>
         </div>

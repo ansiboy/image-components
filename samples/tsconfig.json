@@ -1,6 +1,8 @@
 {
     "compilerOptions": {
         "noEmit": true,
+        "target": "ES2015",
+        "module": "commonjs",
         "paths": {
             "maishu-image-components": [
                 "../out/index.d.ts"

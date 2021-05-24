@@ -1,6 +1,6 @@
 {
   "name": "maishu-image-components",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "",
   "main": "index.js",
   "types": "out/index.d.ts",
@@ -42,5 +42,9 @@
     "maishu-ui-toolkit": "^1.10.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
-  }
+  },
+  "files": [
+    "dist",
+    "out"
+  ]
 }

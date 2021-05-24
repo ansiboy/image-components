@@ -1,0 +1,15 @@
+.dialog-data-source {
+    .image-thumber {
+        width      : 120px;
+        height     : 120px;
+        margin-left: 10px;
+        margin-top : 10px;
+    }
+
+    .modal-body {
+        display       : flex;
+        flex-direction: row;
+        flex-wrap     : wrap;
+        height        : 450px;
+    }
+}

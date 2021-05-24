@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.4.1
+ *  maishu-image-components v1.4.3
  * 
  * 
  */
@@ -720,6 +720,200 @@ exports.createDialogElement = createDialogElement;
 
 /***/ }),
 
+/***/ "./out/dialogs/data-source-dialog.js":
+/*!*******************************************!*\
+  !*** ./out/dialogs/data-source-dialog.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+};
+var _pagingBarElement, _dialog;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataSourceDialog = exports.DataSourceDialogContext = void 0;
+const React = __webpack_require__(/*! react */ "react");
+const number_paging_bar_1 = __webpack_require__(/*! ../number-paging-bar */ "./out/number-paging-bar.js");
+const strings_1 = __webpack_require__(/*! ../strings */ "./out/strings.js");
+const modal_dialog_1 = __webpack_require__(/*! ./modal-dialog */ "./out/dialogs/modal-dialog.js");
+__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'content/data-source-dialog.less'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+let strings = strings_1.getStrings();
+exports.DataSourceDialogContext = React.createContext({ dataItem: null });
+class DataSourceDialog extends React.Component {
+    constructor(props) {
+        super(props);
+        _pagingBarElement.set(this, void 0);
+        _dialog.set(this, void 0);
+        this.state = {};
+        this.props.dataSource.selected.add(e => {
+            this.setState({ items: e.selectResult.dataItems });
+        });
+        this.props.dataSource.inserted.add(args => {
+            var _a;
+            (_a = this.state.items) === null || _a === void 0 ? void 0 : _a.push(args.dataItem);
+            this.setState({ items: this.state.items });
+        });
+    }
+    show() {
+        this.props.dataSource.select({
+            maximumRows: this.props.pageItemsCount,
+        });
+        __classPrivateFieldGet(this, _dialog).show();
+    }
+    confirm() {
+    }
+    pagingBarElementRef(e) {
+        if (!e || __classPrivateFieldGet(this, _pagingBarElement))
+            return;
+        __classPrivateFieldSet(this, _pagingBarElement, e);
+        new number_paging_bar_1.DataSourcePagingBar({
+            dataSource: this.props.dataSource,
+            element: e,
+            pagerSettings: {
+                activeButtonClassName: 'active',
+                buttonWrapper: 'li',
+                buttonContainerWraper: 'ul',
+                showTotal: false
+            },
+        });
+        let ul = e.querySelector('ul');
+        if (ul)
+            ul.className = "pagination";
+    }
+    renderBody() {
+        let { items } = this.state;
+        if (items === undefined) {
+            return React.createElement("div", { className: "empty" }, strings.dataLoading);
+        }
+        if (items == null || items.length == 0) {
+            return React.createElement("div", { className: "empty" }, strings.dataEmpty);
+        }
+        return items.map((o, i) => React.createElement(exports.DataSourceDialogContext.Provider, { key: i, value: { dataItem: o } }, this.props.children));
+    }
+    componentDidMount() {
+    }
+    render() {
+        return React.createElement(modal_dialog_1.ModalDialog, Object.assign({}, this.props, { ref: e => __classPrivateFieldSet(this, _dialog, e || __classPrivateFieldGet(this, _dialog)) }),
+            React.createElement("div", { className: "modal-body" }, this.renderBody()),
+            React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
+                React.createElement("div", { className: "pull-left", ref: (e) => this.pagingBarElementRef(e) }),
+                React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" }, this.props.cancelButtonText || "取消"),
+                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.confirm() }, this.props.confirmButtonText || "确定")));
+    }
+}
+exports.DataSourceDialog = DataSourceDialog;
+_pagingBarElement = new WeakMap(), _dialog = new WeakMap();
+
+
+/***/ }),
+
+/***/ "./out/dialogs/modal-dialog.js":
+/*!*************************************!*\
+  !*** ./out/dialogs/modal-dialog.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+};
+var _element;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ModalDialog = void 0;
+const maishu_ui_toolkit_1 = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
+const React = __webpack_require__(/*! react */ "react");
+class ModalDialog extends React.Component {
+    constructor() {
+        super(...arguments);
+        _element.set(this, void 0);
+    }
+    /** 显示对话框 */
+    show() {
+        maishu_ui_toolkit_1.showDialog(__classPrivateFieldGet(this, _element));
+    }
+    /** 隐藏对话框 */
+    hide() {
+        maishu_ui_toolkit_1.hideDialog(__classPrivateFieldGet(this, _element));
+    }
+    render() {
+        return React.createElement("div", { className: "modal fade", ref: e => __classPrivateFieldSet(this, _element, e || __classPrivateFieldGet(this, _element)) },
+            React.createElement("div", { className: `modal-dialog ${this.props.isLarge ? "modal-lg" : ""}` },
+                React.createElement("div", { className: "modal-content" },
+                    this.header(),
+                    this.body(),
+                    this.footer())));
+    }
+    findChild(filter) {
+        return this.findChildren(filter)[0];
+    }
+    findChildren(filter) {
+        if (this.props.children == null)
+            return [];
+        let elements = (Array.isArray(this.props.children) ? this.props.children : [this.props.children]);
+        let r = elements.filter(filter);
+        return r;
+    }
+    footer() {
+        let footer = this.findChild((o) => { var _a; return ((_a = o.props) === null || _a === void 0 ? void 0 : _a.className) == "modal-footer"; });
+        if (footer == null) {
+            footer = React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
+                React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" }, this.props.cancelButtonText || "取消"),
+                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.props.onConfirm ? this.props.onConfirm() : null }, this.props.confirmButtonText || "确定"));
+        }
+        return footer;
+    }
+    header() {
+        let header = this.findChild((o) => { var _a; return ((_a = o.props) === null || _a === void 0 ? void 0 : _a.className) == "modal-header"; });
+        if (header == null) {
+            header = React.createElement("div", { className: "modal-header" },
+                React.createElement("button", { type: "button", className: "btn close", "data-dismiss": "modal" },
+                    React.createElement("span", { "aria-hidden": "true" }, "\u00D7"),
+                    React.createElement("span", { className: "sr-only" }, "Close")),
+                React.createElement("h4", { className: "modal-title" }, this.props.title || ""));
+        }
+        return header;
+    }
+    body() {
+        let body = this.findChild((o) => { var _a; return o.type == "div" && ((_a = o.props) === null || _a === void 0 ? void 0 : _a.className) == "modal-body"; });
+        if (body == null) {
+            let excludeClassNames = ["modal-header", "modal-body", "modal-footer"];
+            let children = this.findChildren((o) => { var _a; return excludeClassNames.indexOf((_a = o.props) === null || _a === void 0 ? void 0 : _a.className) < 0; });
+            body = React.createElement("div", { className: "modal-body" }, children);
+        }
+        return body;
+    }
+}
+exports.ModalDialog = ModalDialog;
+_element = new WeakMap();
+
+
+/***/ }),
+
 /***/ "./out/errors.js":
 /*!***********************!*\
   !*** ./out/errors.js ***!
@@ -1352,7 +1546,7 @@ exports.default = ImageUpload;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
+exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
 var image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
 Object.defineProperty(exports, "ImageThumber", { enumerable: true, get: function () { return image_thumber_1.default; } });
 var image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
@@ -1361,6 +1555,11 @@ var image_manager_1 = __webpack_require__(/*! ./image-manager */ "./out/image-ma
 Object.defineProperty(exports, "showImageDialog", { enumerable: true, get: function () { return image_manager_1.showImageDialog; } });
 var image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
 Object.defineProperty(exports, "ImageService", { enumerable: true, get: function () { return image_service_1.ImageService; } });
+var modal_dialog_1 = __webpack_require__(/*! ./dialogs/modal-dialog */ "./out/dialogs/modal-dialog.js");
+Object.defineProperty(exports, "ModalDialog", { enumerable: true, get: function () { return modal_dialog_1.ModalDialog; } });
+var data_source_dialog_1 = __webpack_require__(/*! ./dialogs/data-source-dialog */ "./out/dialogs/data-source-dialog.js");
+Object.defineProperty(exports, "DataSourceDialog", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialog; } });
+Object.defineProperty(exports, "DataSourceDialogContext", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialogContext; } });
 
 
 /***/ }),
@@ -1702,7 +1901,9 @@ let chinese = {
     confirm: "确定",
     deleteImageConfirm: "确定删除该图片吗？",
     imageUpload: "图片上传",
-    noImageText: "暂无图片"
+    noImageText: "暂无图片",
+    dataLoading: "数据正在加载中...",
+    dataEmpty: "暂无所要展示的数据"
 };
 let english = {
     selectImage: "Select Image",
@@ -1711,7 +1912,9 @@ let english = {
     confirm: "Confirm",
     deleteImageConfirm: "Are you sure delete the image?",
     imageUpload: "Image Upload",
-    noImageText: "NO IMAGE"
+    noImageText: "NO IMAGE",
+    dataLoading: "Data is loading...",
+    dataEmpty: "Data is empty"
 };
 let strings = { chinese, english, };
 function getStrings(language) {
