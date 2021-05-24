@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.4.3
+ *  maishu-image-components v1.5.0
  * 
  * 
  */
@@ -102,6 +102,34 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ({
 
+/***/ "./content/data-source-dialog.less":
+/*!*****************************************!*\
+  !*** ./content/data-source-dialog.less ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_less_loader_dist_cjs_js_data_source_dialog_less__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!../node_modules/less-loader/dist/cjs.js!./data-source-dialog.less */ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./content/data-source-dialog.less");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_node_modules_less_loader_dist_cjs_js_data_source_dialog_less__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_node_modules_css_loader_dist_cjs_js_node_modules_less_loader_dist_cjs_js_data_source_dialog_less__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./content/image-manager.less":
 /*!************************************!*\
   !*** ./content/image-manager.less ***!
@@ -186,6 +214,31 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./content/data-source-dialog.less":
+/*!**********************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./content/data-source-dialog.less ***!
+  \**********************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+// Module
+___CSS_LOADER_EXPORT___.push([module.i, ".data-source-dialog .modal-footer .pagination {\n  float: left;\n  margin: 0;\n}\n.data-source-dialog .modal-body {\n  min-height: 300px;\n}\n.data-source-dialog .empty {\n  text-align: center;\n  padding: 120px;\n  width: 100%;\n}\n", "",{"version":3,"sources":["webpack://./content/data-source-dialog.less"],"names":[],"mappings":"AAAA;EACE,WAAW;EACX,SAAS;AACX;AACA;EACE,iBAAiB;AACnB;AACA;EACE,kBAAkB;EAClB,cAAc;EACd,WAAW;AACb","sourcesContent":[".data-source-dialog .modal-footer .pagination {\n  float: left;\n  margin: 0;\n}\n.data-source-dialog .modal-body {\n  min-height: 300px;\n}\n.data-source-dialog .empty {\n  text-align: center;\n  padding: 120px;\n  width: 100%;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./content/image-manager.less":
 /*!*****************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./content/image-manager.less ***!
@@ -229,7 +282,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".image-thumber {\n  position: relative;\n}\n.image-thumber .item {\n  border: solid 1px #ccc;\n}\n.image-thumber .item .bottom {\n  display: block;\n  overflow: hidden;\n  white-space: nowrap;\n  -webkit-text-overflow: ellipsis;\n  -ms-text-overflow: ellipsis;\n  -o-text-overflow: ellipsis;\n  text-overflow: ellipsis;\n  position: absolute;\n  bottom: 0;\n  padding: 4px 8px 0px 8px;\n  font-size: 12px;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.55);\n  color: white;\n  width: calc(100% - 2px);\n  height: 24px;\n}\n.image-thumber .item .bottom button {\n  color: white;\n}\n.image-thumber .item .top {\n  position: absolute;\n  height: 18px;\n  margin-top: -18px;\n  padding-top: 18px;\n  color: white;\n  font-size: 12px;\n  font-weight: bold;\n  text-align: right;\n  width: calc(100% - 2px);\n}\n.image-thumber .item.selected {\n  border-color: blue;\n}\n.image-thumber .item.selected .triangle {\n  position: relative;\n  top: 19px;\n  left: calc(100% - 19px);\n  width: 20px;\n  height: 20px;\n  margin-top: -40px;\n  background: transparent;\n  border-top: 20px solid transparent;\n  border-bottom: 20px solid blue;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  transform: rotate(45deg);\n}\n.image-thumber .item.selected:hover .remove {\n  display: none;\n}\n.image-thumber .item .remove {\n  display: none;\n}\n.image-thumber .item:hover .remove {\n  position: relative;\n  left: calc(100% - 20px);\n  top: 20px;\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  margin-top: -20px;\n  display: block;\n  background-color: rgba(0, 0, 0, 0.55);\n}\n.image-thumber .item:hover .remove i {\n  color: white;\n}\n.image-thumber .item .disabled {\n  position: absolute;\n  width: calc(100% - 2px);\n  height: calc(100% - 2px);\n  background-color: gray;\n  top: 0px;\n  opacity: 0.3;\n}\n", "",{"version":3,"sources":["webpack://./content/image-thumber.less"],"names":[],"mappings":"AAAA;EACE,kBAAkB;AACpB;AACA;EACE,sBAAsB;AACxB;AACA;EACE,cAAc;EACd,gBAAgB;EAChB,mBAAmB;EACnB,+BAA+B;EAC/B,2BAA2B;EAC3B,0BAA0B;EAC1B,uBAAuB;EACvB,kBAAkB;EAClB,SAAS;EACT,wBAAwB;EACxB,eAAe;EACf,kBAAkB;EAClB,qCAAqC;EACrC,YAAY;EACZ,uBAAuB;EACvB,YAAY;AACd;AACA;EACE,YAAY;AACd;AACA;EACE,kBAAkB;EAClB,YAAY;EACZ,iBAAiB;EACjB,iBAAiB;EACjB,YAAY;EACZ,eAAe;EACf,iBAAiB;EACjB,iBAAiB;EACjB,uBAAuB;AACzB;AACA;EACE,kBAAkB;AACpB;AACA;EACE,kBAAkB;EAClB,SAAS;EACT,uBAAuB;EACvB,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,uBAAuB;EACvB,kCAAkC;EAClC,8BAA8B;EAC9B,mCAAmC;EACnC,oCAAoC;EACpC,wBAAwB;AAC1B;AACA;EACE,aAAa;AACf;AACA;EACE,aAAa;AACf;AACA;EACE,kBAAkB;EAClB,uBAAuB;EACvB,SAAS;EACT,WAAW;EACX,YAAY;EACZ,mBAAmB;EACnB,iBAAiB;EACjB,cAAc;EACd,qCAAqC;AACvC;AACA;EACE,YAAY;AACd;AACA;EACE,kBAAkB;EAClB,uBAAuB;EACvB,wBAAwB;EACxB,sBAAsB;EACtB,QAAQ;EACR,YAAY;AACd","sourcesContent":[".image-thumber {\n  position: relative;\n}\n.image-thumber .item {\n  border: solid 1px #ccc;\n}\n.image-thumber .item .bottom {\n  display: block;\n  overflow: hidden;\n  white-space: nowrap;\n  -webkit-text-overflow: ellipsis;\n  -ms-text-overflow: ellipsis;\n  -o-text-overflow: ellipsis;\n  text-overflow: ellipsis;\n  position: absolute;\n  bottom: 0;\n  padding: 4px 8px 0px 8px;\n  font-size: 12px;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.55);\n  color: white;\n  width: calc(100% - 2px);\n  height: 24px;\n}\n.image-thumber .item .bottom button {\n  color: white;\n}\n.image-thumber .item .top {\n  position: absolute;\n  height: 18px;\n  margin-top: -18px;\n  padding-top: 18px;\n  color: white;\n  font-size: 12px;\n  font-weight: bold;\n  text-align: right;\n  width: calc(100% - 2px);\n}\n.image-thumber .item.selected {\n  border-color: blue;\n}\n.image-thumber .item.selected .triangle {\n  position: relative;\n  top: 19px;\n  left: calc(100% - 19px);\n  width: 20px;\n  height: 20px;\n  margin-top: -40px;\n  background: transparent;\n  border-top: 20px solid transparent;\n  border-bottom: 20px solid blue;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  transform: rotate(45deg);\n}\n.image-thumber .item.selected:hover .remove {\n  display: none;\n}\n.image-thumber .item .remove {\n  display: none;\n}\n.image-thumber .item:hover .remove {\n  position: relative;\n  left: calc(100% - 20px);\n  top: 20px;\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  margin-top: -20px;\n  display: block;\n  background-color: rgba(0, 0, 0, 0.55);\n}\n.image-thumber .item:hover .remove i {\n  color: white;\n}\n.image-thumber .item .disabled {\n  position: absolute;\n  width: calc(100% - 2px);\n  height: calc(100% - 2px);\n  background-color: gray;\n  top: 0px;\n  opacity: 0.3;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, ".image-thumber {\n  position: relative;\n}\n.image-thumber .item {\n  border: solid 1px #ccc;\n  height: calc(100% - 2px);\n}\n.image-thumber .item .bottom {\n  display: block;\n  overflow: hidden;\n  white-space: nowrap;\n  -webkit-text-overflow: ellipsis;\n  -ms-text-overflow: ellipsis;\n  -o-text-overflow: ellipsis;\n  text-overflow: ellipsis;\n  position: absolute;\n  bottom: 0;\n  padding: 4px 8px 0px 8px;\n  font-size: 12px;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.55);\n  color: white;\n  width: calc(100% - 2px);\n  height: 24px;\n}\n.image-thumber .item .bottom button {\n  color: white;\n}\n.image-thumber .item .top {\n  position: absolute;\n  height: 18px;\n  margin-top: -18px;\n  padding-top: 18px;\n  color: white;\n  font-size: 12px;\n  font-weight: bold;\n  text-align: right;\n  width: calc(100% - 2px);\n}\n.image-thumber .item.selected {\n  border-color: blue;\n}\n.image-thumber .item.selected .triangle {\n  position: relative;\n  top: 19px;\n  left: calc(100% - 19px);\n  width: 20px;\n  height: 20px;\n  margin-top: -40px;\n  background: transparent;\n  border-top: 20px solid transparent;\n  border-bottom: 20px solid blue;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  transform: rotate(45deg);\n}\n.image-thumber .item.selected:hover .remove {\n  display: none;\n}\n.image-thumber .item .remove {\n  display: none;\n}\n.image-thumber .item:hover .remove {\n  position: relative;\n  left: calc(100% - 20px);\n  top: 20px;\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  margin-top: -20px;\n  display: block;\n  background-color: rgba(0, 0, 0, 0.55);\n}\n.image-thumber .item:hover .remove i {\n  color: white;\n}\n.image-thumber .item .disabled {\n  position: absolute;\n  width: calc(100% - 2px);\n  height: calc(100% - 2px);\n  background-color: gray;\n  top: 0px;\n  opacity: 0.3;\n}\n", "",{"version":3,"sources":["webpack://./content/image-thumber.less"],"names":[],"mappings":"AAAA;EACE,kBAAkB;AACpB;AACA;EACE,sBAAsB;EACtB,wBAAwB;AAC1B;AACA;EACE,cAAc;EACd,gBAAgB;EAChB,mBAAmB;EACnB,+BAA+B;EAC/B,2BAA2B;EAC3B,0BAA0B;EAC1B,uBAAuB;EACvB,kBAAkB;EAClB,SAAS;EACT,wBAAwB;EACxB,eAAe;EACf,kBAAkB;EAClB,qCAAqC;EACrC,YAAY;EACZ,uBAAuB;EACvB,YAAY;AACd;AACA;EACE,YAAY;AACd;AACA;EACE,kBAAkB;EAClB,YAAY;EACZ,iBAAiB;EACjB,iBAAiB;EACjB,YAAY;EACZ,eAAe;EACf,iBAAiB;EACjB,iBAAiB;EACjB,uBAAuB;AACzB;AACA;EACE,kBAAkB;AACpB;AACA;EACE,kBAAkB;EAClB,SAAS;EACT,uBAAuB;EACvB,WAAW;EACX,YAAY;EACZ,iBAAiB;EACjB,uBAAuB;EACvB,kCAAkC;EAClC,8BAA8B;EAC9B,mCAAmC;EACnC,oCAAoC;EACpC,wBAAwB;AAC1B;AACA;EACE,aAAa;AACf;AACA;EACE,aAAa;AACf;AACA;EACE,kBAAkB;EAClB,uBAAuB;EACvB,SAAS;EACT,WAAW;EACX,YAAY;EACZ,mBAAmB;EACnB,iBAAiB;EACjB,cAAc;EACd,qCAAqC;AACvC;AACA;EACE,YAAY;AACd;AACA;EACE,kBAAkB;EAClB,uBAAuB;EACvB,wBAAwB;EACxB,sBAAsB;EACtB,QAAQ;EACR,YAAY;AACd","sourcesContent":[".image-thumber {\n  position: relative;\n}\n.image-thumber .item {\n  border: solid 1px #ccc;\n  height: calc(100% - 2px);\n}\n.image-thumber .item .bottom {\n  display: block;\n  overflow: hidden;\n  white-space: nowrap;\n  -webkit-text-overflow: ellipsis;\n  -ms-text-overflow: ellipsis;\n  -o-text-overflow: ellipsis;\n  text-overflow: ellipsis;\n  position: absolute;\n  bottom: 0;\n  padding: 4px 8px 0px 8px;\n  font-size: 12px;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.55);\n  color: white;\n  width: calc(100% - 2px);\n  height: 24px;\n}\n.image-thumber .item .bottom button {\n  color: white;\n}\n.image-thumber .item .top {\n  position: absolute;\n  height: 18px;\n  margin-top: -18px;\n  padding-top: 18px;\n  color: white;\n  font-size: 12px;\n  font-weight: bold;\n  text-align: right;\n  width: calc(100% - 2px);\n}\n.image-thumber .item.selected {\n  border-color: blue;\n}\n.image-thumber .item.selected .triangle {\n  position: relative;\n  top: 19px;\n  left: calc(100% - 19px);\n  width: 20px;\n  height: 20px;\n  margin-top: -40px;\n  background: transparent;\n  border-top: 20px solid transparent;\n  border-bottom: 20px solid blue;\n  border-left: 20px solid transparent;\n  border-right: 20px solid transparent;\n  transform: rotate(45deg);\n}\n.image-thumber .item.selected:hover .remove {\n  display: none;\n}\n.image-thumber .item .remove {\n  display: none;\n}\n.image-thumber .item:hover .remove {\n  position: relative;\n  left: calc(100% - 20px);\n  top: 20px;\n  width: 20px;\n  height: 20px;\n  border-radius: 10px;\n  margin-top: -20px;\n  display: block;\n  background-color: rgba(0, 0, 0, 0.55);\n}\n.image-thumber .item:hover .remove i {\n  color: white;\n}\n.image-thumber .item .disabled {\n  position: absolute;\n  width: calc(100% - 2px);\n  height: calc(100% - 2px);\n  background-color: gray;\n  top: 0px;\n  opacity: 0.3;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -742,22 +795,25 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     privateMap.set(receiver, value);
     return value;
 };
-var _pagingBarElement, _dialog;
+var _pagingBar, _dialog;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSourceDialog = exports.DataSourceDialogContext = void 0;
 const React = __webpack_require__(/*! react */ "react");
 const number_paging_bar_1 = __webpack_require__(/*! ../number-paging-bar */ "./out/number-paging-bar.js");
 const strings_1 = __webpack_require__(/*! ../strings */ "./out/strings.js");
 const modal_dialog_1 = __webpack_require__(/*! ./modal-dialog */ "./out/dialogs/modal-dialog.js");
-__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'content/data-source-dialog.less'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+__webpack_require__(/*! ../../content/data-source-dialog.less */ "./content/data-source-dialog.less");
 let strings = strings_1.getStrings();
 exports.DataSourceDialogContext = React.createContext({ dataItem: null });
 class DataSourceDialog extends React.Component {
     constructor(props) {
         super(props);
-        _pagingBarElement.set(this, void 0);
+        _pagingBar.set(this, void 0);
         _dialog.set(this, void 0);
         this.state = {};
+        this.props.dataSource.selecting.add(e => {
+            this.setState({ items: undefined });
+        });
         this.props.dataSource.selected.add(e => {
             this.setState({ items: e.selectResult.dataItems });
         });
@@ -775,11 +831,10 @@ class DataSourceDialog extends React.Component {
     }
     confirm() {
     }
-    pagingBarElementRef(e) {
-        if (!e || __classPrivateFieldGet(this, _pagingBarElement))
+    pagingBarRef(e) {
+        if (!e || __classPrivateFieldGet(this, _pagingBar))
             return;
-        __classPrivateFieldSet(this, _pagingBarElement, e);
-        new number_paging_bar_1.DataSourcePagingBar({
+        __classPrivateFieldSet(this, _pagingBar, new number_paging_bar_1.DataSourcePagingBar({
             dataSource: this.props.dataSource,
             element: e,
             pagerSettings: {
@@ -788,7 +843,7 @@ class DataSourceDialog extends React.Component {
                 buttonContainerWraper: 'ul',
                 showTotal: false
             },
-        });
+        }));
         let ul = e.querySelector('ul');
         if (ul)
             ul.className = "pagination";
@@ -806,16 +861,15 @@ class DataSourceDialog extends React.Component {
     componentDidMount() {
     }
     render() {
-        return React.createElement(modal_dialog_1.ModalDialog, Object.assign({}, this.props, { ref: e => __classPrivateFieldSet(this, _dialog, e || __classPrivateFieldGet(this, _dialog)) }),
+        return React.createElement(modal_dialog_1.ModalDialog, Object.assign({}, this.props, { className: "data-source-dialog", ref: e => __classPrivateFieldSet(this, _dialog, e || __classPrivateFieldGet(this, _dialog)) }),
             React.createElement("div", { className: "modal-body" }, this.renderBody()),
-            React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
-                React.createElement("div", { className: "pull-left", ref: (e) => this.pagingBarElementRef(e) }),
+            React.createElement("div", { className: "modal-footer", style: { marginTop: 0 }, ref: e => this.pagingBarRef(e) },
                 React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" }, this.props.cancelButtonText || "取消"),
                 React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.confirm() }, this.props.confirmButtonText || "确定")));
     }
 }
 exports.DataSourceDialog = DataSourceDialog;
-_pagingBarElement = new WeakMap(), _dialog = new WeakMap();
+_pagingBar = new WeakMap(), _dialog = new WeakMap();
 
 
 /***/ }),
@@ -861,7 +915,7 @@ class ModalDialog extends React.Component {
         maishu_ui_toolkit_1.hideDialog(__classPrivateFieldGet(this, _element));
     }
     render() {
-        return React.createElement("div", { className: "modal fade", ref: e => __classPrivateFieldSet(this, _element, e || __classPrivateFieldGet(this, _element)) },
+        return React.createElement("div", { className: `modal fade ${this.props.className || ""}`, ref: e => __classPrivateFieldSet(this, _element, e || __classPrivateFieldGet(this, _element)) },
             React.createElement("div", { className: `modal-dialog ${this.props.isLarge ? "modal-lg" : ""}` },
                 React.createElement("div", { className: "modal-content" },
                     this.header(),
@@ -962,12 +1016,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.showImageDialog = void 0;
 const image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
 const image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
-// import * as wuzhui from 'maishu-wuzhui-helper';
 const React = __webpack_require__(/*! react */ "react");
 const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
 const common_1 = __webpack_require__(/*! ./common */ "./out/common.js");
 const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
-// import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
@@ -1401,7 +1453,7 @@ class ImageThumber extends React.Component {
                 this.props.remove ?
                     React.createElement("div", { className: "remove" },
                         React.createElement("i", { className: "fa fa-remove", ref: (e) => this.setDeleteButton(e, imagePath) })) : null,
-                React.createElement("img", { className: "img-responsive", src: imagePath, ref: (e) => e ? ui.renderImage(e, { imageSize: { width: 150, height: 150 } }) : null }),
+                React.createElement("img", { className: "img-responsive", src: imagePath }),
                 text ? React.createElement("div", { className: "bottom" }, text) : null,
                 disabled ? React.createElement("div", { className: "disabled" }) : null,
                 this.props.children)));

@@ -1,11 +1,9 @@
 import ImageUpload from './image-upload';
 import ImageThumber from './image-thumber';
-// import * as wuzhui from 'maishu-wuzhui-helper';
 import React = require('react');
 import ReactDOM = require('react-dom');
 import { createDialogElement } from './common';
 import * as ui from "maishu-ui-toolkit";
-// import { DataSourceSelectArguments } from 'maishu-wuzhui-helper';
 import { ImageService } from "./image-service";
 import { getStrings } from "./strings";
 import { DataSource, DataSourceSelectArguments } from "maishu-toolkit";
