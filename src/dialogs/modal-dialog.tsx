@@ -13,6 +13,10 @@ interface Props {
 export class ModalDialog extends React.Component<Props> {
     #element: HTMLElement;
 
+    get element() {
+        return this.#element;
+    }
+
     /** 显示对话框 */
     show() {
         showDialog(this.#element);

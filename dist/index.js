@@ -906,6 +906,9 @@ class ModalDialog extends React.Component {
         super(...arguments);
         _element.set(this, void 0);
     }
+    get element() {
+        return __classPrivateFieldGet(this, _element);
+    }
     /** 显示对话框 */
     show() {
         maishu_ui_toolkit_1.showDialog(__classPrivateFieldGet(this, _element));
