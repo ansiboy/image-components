@@ -1,7 +1,7 @@
-import { Service } from "maishu-chitu";
+import { Service } from "maishu-chitu-service";
 import { DataSourceSelectArguments, DataSourceSelectResult } from "maishu-toolkit";
 import { pathConcat } from "maishu-toolkit";
-import * as ui from "maishu-ui-toolkit";
+import { errorHandle } from "./error-handle";
 import { getStrings } from "./strings";
 
 let strings = getStrings();
@@ -46,12 +46,9 @@ export class ImageService extends Service {
 
     static serviceHost: string;
 
-    static errorHandle = (err: Error) => {
-        ui.alert({ title: "错误", message: err.message });
-    }
-
     constructor() {
-        super(err => ImageService.errorHandle(err))
+        super(err => errorHandle(err))
+
     }
 
     protected url(path: string) {
