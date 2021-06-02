@@ -25,8 +25,8 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
     /** 控件高度 */
     height?: number,
 
-    /** 控件图片 */
-    imageSource?: string,
+    // /** 控件图片 */
+    // imageSource?: string,
 
     /** 图片显示设置 */
     displayImage?: {
@@ -34,6 +34,8 @@ interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
         fixed?: boolean,
         /** 图片最大宽度，仅当 fixed 为 true 有效 */
         maxWidth?: number,
+        /** 图片路径 */
+        source?: string,
     }
 }
 
@@ -52,7 +54,7 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
     constructor(props: ImageUploadProps) {
         super(props);
 
-        this.state = { imageSource: props.imageSource };
+        this.state = { imageSource: props.displayImage?.source };
     }
 
     updloadImage(imageFile: File) {
@@ -70,9 +72,6 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
             if (e.files != null && e.files.length > 0)
                 this.updloadImage(e.files[0]);
         }
-    }
-    componentDidMount() {
-        // this.setSizes();
     }
 
     setSizes() {
@@ -106,18 +105,6 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
         title = title || strings.imageUpload;
         className = className || '';
 
-        // if (imageSource != null && !this.props.displayImage?.fixed)
-
-        // return <div className={`image-upload ${className}`} style={this.props.style}  >
-        //     <div className="item" ref={e => this.itemElement = e || this.itemElement}>
-        //         {imageSource ? <img src={imageSource} style={{ width: "100%", height: "100%" }} /> : <>
-        //             <i className="fa fa-plus fa-4x"></i>
-        //             <div>{title}</div>
-        //         </>}
-        //         <input type="file" style={{}}
-        //             ref={(e: HTMLInputElement) => this.setFileInput(e)} />
-        //     </div>
-        // </div>
         if (imageSource == null || this.props.displayImage == null) {
             return <div className={`image-upload ${className}`} style={this.props.style}  >
                 <div className="item" ref={e => this.itemElement = e || this.itemElement}>
@@ -135,6 +122,8 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
             return <div className={`image-upload ${className}`} style={this.props.style}  >
                 <div className="item" ref={e => this.itemElement = e || this.itemElement}>
                     <img src={imageSource} style={{ width: "100%", height: "100%" }} />
+                    <input type="file" style={{}}
+                        ref={(e: HTMLInputElement) => this.setFileInput(e)} />
                 </div>
             </div>
         }
