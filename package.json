@@ -1,6 +1,6 @@
 {
   "name": "maishu-image-components",
-  "version": "1.5.2",
+  "version": "1.5.5",
   "description": "",
   "main": "index.js",
   "types": "out/index.d.ts",
@@ -37,7 +37,7 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "maishu-chitu-service": "^1.31.0",
+    "maishu-chitu-service": "^1.32.0",
     "maishu-toolkit": "^1.6.7",
     "maishu-ui-toolkit": "^1.10.0",
     "react": "^16.7.0",
