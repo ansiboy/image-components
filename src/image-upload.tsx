@@ -128,7 +128,7 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
             </div>
         }
 
-        return <div ref={div => {
+        return <div className={`image-upload ${className}`} ref={div => {
             if (!div) return;
 
             let imageElement = document.createElement("img") as HTMLImageElement;
