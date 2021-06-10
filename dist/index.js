@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.5.5
+ *  maishu-image-components v1.5.8
  * 
  * 
  */
@@ -307,7 +307,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".image-upload {\n  cursor: pointer;\n}\n.image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n", "",{"version":3,"sources":["webpack://./content/image-upload.less"],"names":[],"mappings":"AAAA;EACE,eAAe;AACjB;AACA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,UAAU;EACV,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,WAAW;EACX,eAAe;AACjB;AACA;EACE,gBAAgB;AAClB","sourcesContent":[".image-upload {\n  cursor: pointer;\n}\n.image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, ".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n", "",{"version":3,"sources":["webpack://./content/image-upload.less"],"names":[],"mappings":"AAAA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,UAAU;EACV,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,WAAW;EACX,eAAe;AACjB;AACA;EACE,gBAAgB;AAClB","sourcesContent":[".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -443,7 +443,7 @@ module.exports = function cssWithMappingToString(item) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*!
  * ~
- *  maishu-chitu-service v1.30.0
+ *  maishu-chitu-service v1.32.0
  *  
  *  Copyright (c) 2016-2018, shu mai <ansiboy@163.com>
  *  Licensed under the MIT License.
@@ -585,8 +585,6 @@ function Callbacks() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Errors", function() { return Errors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "errors", function() { return errors; });
-// import { Errors } from "maishu-toolkit";
-// export { Errors } from "maishu-toolkit";
 class Errors {
     unexpectedNullValue(name) {
         let msg = `variable ${name} is unexpected null value.`;
@@ -668,6 +666,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 class Service {
     constructor(handleError) {
         this.error = Object(_callback__WEBPACK_IMPORTED_MODULE_0__["Callbacks"])();
+        this.headers = {};
         if (handleError) {
             this.error.add((sender, err) => {
                 handleError(err, this);
@@ -679,7 +678,7 @@ class Service {
             options = {};
         let data = options.data;
         let method = options.method;
-        let headers = Object.assign({}, Service.headers, options.headers || {});
+        let headers = Object.assign({}, Service.headers, this.headers, options.headers || {});
         let body;
         if (data != null) {
             let is_json = (headers['content-type'] || '').indexOf('json') >= 0;
@@ -2096,7 +2095,7 @@ let strings = strings_1.getStrings();
 class ImageThumber extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { selectedText: '' };
+        this.state = { selectedText: props.selectedText };
     }
     setDeleteButton(e, imagePath) {
         if (!e)
@@ -2112,13 +2111,16 @@ class ImageThumber extends React.Component {
         });
     }
     render() {
-        let { imagePath, className, onClick, selectedText, text, title, disabled } = this.props;
+        let { imagePath, onClick, title, disabled } = this.props;
+        let { selectedText } = this.state;
+        let className = this.props.className;
+        let text = this.props.text;
         className = className || '';
         text = text || '';
         return (React.createElement("div", { className: `image-thumber ${className}`, title: title, "data-url": imagePath, onClick: (e) => {
                 if (disabled)
                     return;
-                this.props.onClick ? this.props.onClick(this, e) : null;
+                onClick ? onClick(this, e) : null;
             } },
             React.createElement("div", { className: `item text-center  ${selectedText ? 'selected' : ''}` },
                 React.createElement("div", { className: "triangle" }),
