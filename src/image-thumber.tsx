@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ui from "maishu-ui-toolkit";
 
-type ImageThumberProps = React.Props<ImageThumber> & {
+type ImageThumberProps = React.ClassAttributes<ImageThumber> & {
     imagePath: string, remove?: (imagePath: string) => Promise<any>,
     className?: string, onClick?: (sender: ImageThumber, e: React.MouseEvent) => void,
     selectedText?: string,
@@ -10,16 +10,17 @@ type ImageThumberProps = React.Props<ImageThumber> & {
 }
 
 type ImageThumberState = {
+    selectedText?: string;
 }
 
 import "../content/image-thumber.less";
 import { getStrings } from "./strings";
 
 let strings = getStrings();
-export default class ImageThumber extends React.Component<ImageThumberProps, ImageThumberState>{
-    constructor(props: ImageThumberProps) {
+export default class ImageThumber<P = {}> extends React.Component<ImageThumberProps & P, ImageThumberState>{
+    constructor(props: ImageThumberProps & P) {
         super(props);
-        this.state = { selectedText: '' }
+        this.state = { selectedText: props.selectedText }
     }
     private setDeleteButton(e: HTMLButtonElement, imagePath: string) {
         if (!e) return;
@@ -37,16 +38,20 @@ export default class ImageThumber extends React.Component<ImageThumberProps, Ima
             });
     }
     render() {
-        let { imagePath, className, onClick, selectedText, text, title, disabled } = this.props;
+        let { imagePath, onClick, title, disabled } = this.props;
+        let { selectedText } = this.state;
+        let className = this.props.className as string;
+        let text = this.props.text as string;
         className = className || '';
         text = text || '';
+
         return (
             <div className={`image-thumber ${className}`} title={title} data-url={imagePath}
                 onClick={(e) => {
                     if (disabled)
                         return
 
-                    this.props.onClick ? this.props.onClick(this, e) : null
+                    onClick ? onClick(this, e) : null
                 }}>
                 <div className={`item text-center  ${selectedText ? 'selected' : ''}`}>
                     <div className="triangle"></div>
