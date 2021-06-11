@@ -11,7 +11,10 @@ export default function () {
     return <div className="container dialog-data-source">
         <h2>数据源对话框</h2>
         <hr />
-        <DataSourceDialog title="图片选择" pageItemsCount={15} dataSource={createImageDataSource()} isLarge={true} ref={e => dialog = e || dialog}>
+        <DataSourceDialog title="图片选择" pageItemsCount={15} dataSource={createImageDataSource()} isLarge={true} ref={e => dialog = e || dialog}
+            onConfirm={() => {
+
+            }}>
             <DataSourceDialogContext.Consumer>
                 {args => <ImageThumber<{ id: string }> key={args.dataItem.id} imagePath={imageService.imageSource(args.dataItem.id, 120, 120)} id={args.dataItem.id}
                     onClick={(e: ImageThumber<{ id: string }>) => {

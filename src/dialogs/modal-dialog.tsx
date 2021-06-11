@@ -5,7 +5,7 @@ interface Props {
     title?: string
     cancelButtonText?: string
     confirmButtonText?: string
-    onConfirm?(): void
+    onConfirm?(sender: any): void
     isLarge?: boolean
     className?: string
 }
@@ -60,7 +60,7 @@ export class ModalDialog extends React.Component<Props> {
                     {this.props.cancelButtonText || "取消"}
                 </button>
                 <button type="button" className="btn btn-primary"
-                    onClick={() => this.props.onConfirm ? this.props.onConfirm() : null}>
+                    onClick={() => this.props.onConfirm ? this.props.onConfirm(this) : null}>
                     {this.props.confirmButtonText || "确定"}
                 </button>
             </div>

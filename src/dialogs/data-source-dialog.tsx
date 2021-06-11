@@ -3,6 +3,7 @@ import * as React from "react";
 import { DataSourcePagingBar } from "../number-paging-bar";
 import { getStrings } from "../strings";
 import { ModalDialog, ModalDialogProps } from "./modal-dialog";
+import { PagingBar } from "../paging-bar";
 import "../../content/data-source-dialog.less";
 
 interface Props<T> extends Exclude<ModalDialogProps, "onConfirm"> {
@@ -50,8 +51,14 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
         this.#dialog.show();
     }
 
-    confirm() {
+    hide() {
+        this.#dialog.hide();
+    }
 
+    confirm() {
+        if (this.props.onConfirm) {
+            this.props.onConfirm(this)
+        }
     }
 
 
@@ -104,7 +111,8 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
             <div className="modal-body">
                 {this.renderBody()}
             </div>
-            <div className="modal-footer" style={{ marginTop: 0 }} ref={e => this.pagingBarRef(e)}>
+            <div className="modal-footer" style={{ marginTop: 0 }}>
+                <PagingBar<T> dataSource={this.props.dataSource} />
                 <button type="button" className="btn btn-default" data-dismiss="modal">
                     {this.props.cancelButtonText || "取消"}
                 </button>

@@ -5,3 +5,4 @@ export { showImageDialog } from "./image-manager";
 export { ImageService } from './image-service';
 export { ModalDialog, ModalDialogProps } from "./dialogs/modal-dialog";
 export { DataSourceDialog, DataSourceDialogProps, DataSourceDialogContext } from "./dialogs/data-source-dialog";
+export { PagingBar } from "./paging-bar";

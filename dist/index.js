@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.5.8
+ *  maishu-image-components v1.5.11
  * 
  * 
  */
@@ -1448,6 +1448,7 @@ const React = __webpack_require__(/*! react */ "react");
 const number_paging_bar_1 = __webpack_require__(/*! ../number-paging-bar */ "./out/number-paging-bar.js");
 const strings_1 = __webpack_require__(/*! ../strings */ "./out/strings.js");
 const modal_dialog_1 = __webpack_require__(/*! ./modal-dialog */ "./out/dialogs/modal-dialog.js");
+const paging_bar_1 = __webpack_require__(/*! ../paging-bar */ "./out/paging-bar.js");
 __webpack_require__(/*! ../../content/data-source-dialog.less */ "./content/data-source-dialog.less");
 let strings = strings_1.getStrings();
 exports.DataSourceDialogContext = React.createContext({ dataItem: null });
@@ -1475,7 +1476,13 @@ class DataSourceDialog extends React.Component {
         });
         __classPrivateFieldGet(this, _dialog).show();
     }
+    hide() {
+        __classPrivateFieldGet(this, _dialog).hide();
+    }
     confirm() {
+        if (this.props.onConfirm) {
+            this.props.onConfirm(this);
+        }
     }
     pagingBarRef(e) {
         if (!e || __classPrivateFieldGet(this, _pagingBar))
@@ -1509,7 +1516,8 @@ class DataSourceDialog extends React.Component {
     render() {
         return React.createElement(modal_dialog_1.ModalDialog, Object.assign({}, this.props, { className: "data-source-dialog", ref: e => __classPrivateFieldSet(this, _dialog, e || __classPrivateFieldGet(this, _dialog)) }),
             React.createElement("div", { className: "modal-body" }, this.renderBody()),
-            React.createElement("div", { className: "modal-footer", style: { marginTop: 0 }, ref: e => this.pagingBarRef(e) },
+            React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
+                React.createElement(paging_bar_1.PagingBar, { dataSource: this.props.dataSource }),
                 React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" }, this.props.cancelButtonText || "取消"),
                 React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.confirm() }, this.props.confirmButtonText || "确定")));
     }
@@ -1586,7 +1594,7 @@ class ModalDialog extends React.Component {
         if (footer == null) {
             footer = React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
                 React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" }, this.props.cancelButtonText || "取消"),
-                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.props.onConfirm ? this.props.onConfirm() : null }, this.props.confirmButtonText || "确定"));
+                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.props.onConfirm ? this.props.onConfirm(this) : null }, this.props.confirmButtonText || "确定"));
         }
         return footer;
     }
@@ -2594,6 +2602,65 @@ DataSourcePagingBar.defaultPagerSettings = {
     previousPageText: '...',
     showTotal: true,
 };
+
+
+/***/ }),
+
+/***/ "./out/paging-bar.js":
+/*!***************************!*\
+  !*** ./out/paging-bar.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+};
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+};
+var _pagingBar;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PagingBar = void 0;
+const React = __webpack_require__(/*! react */ "react");
+const number_paging_bar_1 = __webpack_require__(/*! ./number-paging-bar */ "./out/number-paging-bar.js");
+class PagingBar extends React.Component {
+    constructor() {
+        super(...arguments);
+        _pagingBar.set(this, void 0);
+    }
+    pagingBarRef(e) {
+        if (!e || __classPrivateFieldGet(this, _pagingBar))
+            return;
+        __classPrivateFieldSet(this, _pagingBar, new number_paging_bar_1.DataSourcePagingBar({
+            dataSource: this.props.dataSource,
+            element: e,
+            pagerSettings: {
+                activeButtonClassName: 'active',
+                buttonWrapper: 'li',
+                buttonContainerWraper: 'ul',
+                showTotal: false
+            },
+        }));
+        let ul = e.querySelector('ul');
+        if (ul)
+            ul.className = "pagination";
+    }
+    render() {
+        return React.createElement("div", { ref: e => this.pagingBarRef(e) });
+    }
+}
+exports.PagingBar = PagingBar;
+_pagingBar = new WeakMap();
 
 
 /***/ }),
