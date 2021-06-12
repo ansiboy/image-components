@@ -52,6 +52,10 @@ export class ImageService extends Service {
     }
 
     protected url(path: string) {
+        return ImageService.url(path);
+    }
+
+    protected static url(path: string) {
         return pathConcat(ImageService.serviceHost, path);
     }
 
@@ -61,6 +65,15 @@ export class ImageService extends Service {
      * @param height 图片的高度，如果不指定则为实际图片的高度
      */
     imageSource(id: string, width?: number, height?: number) {
+        return ImageService.imageSource(id, width, height);
+    }
+
+    /** 获取图片的 URL
+     * @param id 图片的 ID
+     * @param width 图片的宽度，如果不指定则为实际图片的宽度
+     * @param height 图片的高度，如果不指定则为实际图片的高度
+     */
+    static imageSource(id: string, width?: number, height?: number) {
         if (!id) {
             width = width == null ? 200 : width
             height = height == null ? 200 : height
@@ -73,7 +86,7 @@ export class ImageService extends Service {
             return id;
         }
 
-        if (id != null && (id.startsWith("http://") || id.startsWith("https://")))
+        if (id != null && (id.startsWith("http://") || id.startsWith("https://")) || id.startsWith("//"))
             return id;
 
         if (id != null && id.indexOf("/") >= 0) {
@@ -105,9 +118,9 @@ export class ImageService extends Service {
         return url
     }
 
-    private generateImageBase64(width: number, height: number, text: string, options?: DrawOption): string
-    private generateImageBase64(width: number, height: number, draw: CanvasDraw): string
-    private generateImageBase64(width: number, height: number, obj: CanvasDraw | string, options?: DrawOption): string {
+    private static generateImageBase64(width: number, height: number, text: string, options?: DrawOption): string
+    private static generateImageBase64(width: number, height: number, draw: CanvasDraw): string
+    private static generateImageBase64(width: number, height: number, obj: CanvasDraw | string, options?: DrawOption): string {
         if (document == null) {
             throw errors.notSupportedInNode()
         }
