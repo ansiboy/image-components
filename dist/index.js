@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.5.11
+ *  maishu-image-components v1.5.13
  * 
  * 
  */
@@ -1914,6 +1914,9 @@ class ImageService extends maishu_chitu_service_1.Service {
         super(err => error_handle_1.errorHandle(err));
     }
     url(path) {
+        return ImageService.url(path);
+    }
+    static url(path) {
         return maishu_toolkit_1.pathConcat(ImageService.serviceHost, path);
     }
     /** 获取图片的 URL
@@ -1922,6 +1925,14 @@ class ImageService extends maishu_chitu_service_1.Service {
      * @param height 图片的高度，如果不指定则为实际图片的高度
      */
     imageSource(id, width, height) {
+        return ImageService.imageSource(id, width, height);
+    }
+    /** 获取图片的 URL
+     * @param id 图片的 ID
+     * @param width 图片的宽度，如果不指定则为实际图片的宽度
+     * @param height 图片的高度，如果不指定则为实际图片的高度
+     */
+    static imageSource(id, width, height) {
         if (!id) {
             width = width == null ? 200 : width;
             height = height == null ? 200 : height;
@@ -1932,7 +1943,7 @@ class ImageService extends maishu_chitu_service_1.Service {
         if (isBase64) {
             return id;
         }
-        if (id != null && (id.startsWith("http://") || id.startsWith("https://")))
+        if (id != null && (id.startsWith("http://") || id.startsWith("https://")) || id.startsWith("//"))
             return id;
         if (id != null && id.indexOf("/") >= 0) {
             let r = maishu_toolkit_1.pathConcat(ImageService.serviceHost, id);
@@ -1955,7 +1966,7 @@ class ImageService extends maishu_chitu_service_1.Service {
             url = url + `&height=${height}`;
         return url;
     }
-    generateImageBase64(width, height, obj, options) {
+    static generateImageBase64(width, height, obj, options) {
         if (document == null) {
             throw exports.errors.notSupportedInNode();
         }
@@ -2269,7 +2280,7 @@ exports.default = ImageUpload;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
+exports.PagingBar = exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
 var image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
 Object.defineProperty(exports, "ImageThumber", { enumerable: true, get: function () { return image_thumber_1.default; } });
 var image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
@@ -2283,6 +2294,8 @@ Object.defineProperty(exports, "ModalDialog", { enumerable: true, get: function 
 var data_source_dialog_1 = __webpack_require__(/*! ./dialogs/data-source-dialog */ "./out/dialogs/data-source-dialog.js");
 Object.defineProperty(exports, "DataSourceDialog", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialog; } });
 Object.defineProperty(exports, "DataSourceDialogContext", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialogContext; } });
+var paging_bar_1 = __webpack_require__(/*! ./paging-bar */ "./out/paging-bar.js");
+Object.defineProperty(exports, "PagingBar", { enumerable: true, get: function () { return paging_bar_1.PagingBar; } });
 
 
 /***/ }),
