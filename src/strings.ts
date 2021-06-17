@@ -9,6 +9,7 @@ interface Strings {
     noImageText: string;
     dataLoading: string;
     dataEmpty: string;
+    imageSelectMax: string;
 }
 
 let chinese: Strings = {
@@ -20,7 +21,8 @@ let chinese: Strings = {
     imageUpload: "图片上传",
     noImageText: "暂无图片",
     dataLoading: "数据正在加载中...",
-    dataEmpty: "暂无所要展示的数据"
+    dataEmpty: "暂无所要展示的数据",
+    imageSelectMax: "最多选择 {0} 张图片"
 }
 
 let english: Strings = {
@@ -32,7 +34,8 @@ let english: Strings = {
     imageUpload: "Image Upload",
     noImageText: "NO IMAGE",
     dataLoading: "Data is loading...",
-    dataEmpty: "Data is empty"
+    dataEmpty: "Data is empty",
+    imageSelectMax: "Choose up to {0} pictures"
 }
 
 let strings = { chinese, english, }

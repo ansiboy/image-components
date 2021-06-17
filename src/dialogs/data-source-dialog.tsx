@@ -16,11 +16,10 @@ interface State<T> {
 }
 
 let strings = getStrings();
-export let DataSourceDialogContext = React.createContext<{ dataItem: any }>({ dataItem: null });
+export let DataSourceDialogContext = React.createContext<{ dataItem: any, index: number }>({ dataItem: null, index: -1 });
 
 
 export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
-    #pagingBar: DataSourcePagingBar;
     #dialog: ModalDialog;
 
     constructor(props: Props<T>) {
@@ -42,12 +41,15 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
         })
     }
 
+    get element() {
+        return this.#dialog.element;
+    }
+
     show() {
 
         this.props.dataSource.select({
             maximumRows: this.props.pageItemsCount,
         })
-
         this.#dialog.show();
     }
 
@@ -59,27 +61,6 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
         if (this.props.onConfirm) {
             this.props.onConfirm(this)
         }
-    }
-
-
-
-    private pagingBarRef(e: HTMLElement | null) {
-        if (!e || this.#pagingBar) return;
-
-        this.#pagingBar = new DataSourcePagingBar({
-            dataSource: this.props.dataSource,
-            element: e,
-            pagerSettings: {
-                activeButtonClassName: 'active',
-                buttonWrapper: 'li',
-                buttonContainerWraper: 'ul',
-                showTotal: false
-            },
-        });
-
-        let ul = e.querySelector('ul');
-        if (ul)
-            ul.className = "pagination";
     }
 
     renderBody() {
@@ -96,7 +77,7 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
             </div>
         }
 
-        return items.map((o, i) => <DataSourceDialogContext.Provider key={i} value={{ dataItem: o }}>
+        return items.map((o, i) => <DataSourceDialogContext.Provider key={i} value={{ dataItem: o, index: i }}>
             {this.props.children}
         </DataSourceDialogContext.Provider>);
 

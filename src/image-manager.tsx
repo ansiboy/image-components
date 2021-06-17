@@ -1,15 +1,12 @@
-import ImageUpload from './image-upload';
 import ImageThumber from './image-thumber';
 import React = require('react');
 import ReactDOM = require('react-dom');
-import { createDialogElement } from './common';
-import * as ui from "maishu-ui-toolkit";
 import { ImageService } from "./image-service";
 import { getStrings } from "./strings";
-import { DataSource, DataSourceSelectArguments } from "maishu-toolkit";
+import { DataSource, formatString } from "maishu-toolkit";
 
 import "../content/image-manager.less";
-import { DataSourcePagingBar } from './number-paging-bar';
+import { DataSourceDialog, DataSourceDialogContext } from './dialogs/data-source-dialog';
 
 let strings = getStrings();
 type SiteImageData = {
@@ -18,24 +15,22 @@ type SiteImageData = {
 
 type State = {
     images: SiteImageData[],
-    selectedItems: string[],
     selectedMax?: number
 }
 
-type Props = { element: HTMLElement } & React.Props<ImageManager>;
+type Props = { title?: string } & React.ClassAttributes<ImageManager>;
 class ImageManager extends React.Component<Props, State> {
 
-    private showDialogCallback: ((imageIds: string[]) => void) | undefined;
     private dataSource: DataSource<SiteImageData>;
-    private pagingBarElement: HTMLElement;
-    private selectArguments: DataSourceSelectArguments;
-    private imageService: ImageService;
+    private dialog: DataSourceDialog<SiteImageData> | null;
+    private selectedItems: ImageThumber<{ id: string }>[] = [];
+    private showCallback: ((imageIds: string[]) => void) | undefined;
+    private selectedMax?: number;
 
     constructor(props: Props) {
         super(props);
 
-        this.state = { images: [], selectedItems: [] };
-        this.selectArguments = { maximumRows: 17 };
+        this.state = { images: [] };
         this.dataSource = createImageDataSource();
         this.dataSource.selected.add(args => {
             this.setState({ images: args.selectResult.dataItems })
@@ -44,35 +39,13 @@ class ImageManager extends React.Component<Props, State> {
             this.state.images.push(args.dataItem);
             this.setState({ images: this.state.images })
         })
-        this.imageService = new ImageService();
     }
 
-    async componentDidMount() {
-
-        new DataSourcePagingBar({
-            dataSource: this.dataSource,
-            element: this.pagingBarElement,
-            pagerSettings: {
-                activeButtonClassName: 'active',
-                buttonWrapper: 'li',
-                buttonContainerWraper: 'ul',
-                showTotal: false
-            },
-        });
-
-        let ul = this.pagingBarElement.querySelector('ul');
-        if (ul)
-            ul.className = "pagination";
-
-    }
-
-    show(selectedMax: number | undefined, callback?: (imageIds: string[]) => void) {
-        this.showDialogCallback = callback;
-        this.selectArguments.startRowIndex = 0;
-        this.dataSource.select(this.selectArguments);
-
-        this.setState({ selectedItems: [], selectedMax })
-        ui.showDialog(this.props.element);
+    show(selectedMax?: number, callback?: (imageIds: string[]) => void) {
+        this.selectedMax = selectedMax;
+        this.showCallback = callback;
+        this.selectedItems = [];
+        this.dialog?.show();
     }
 
     async saveImage(data: string) {
@@ -86,79 +59,61 @@ class ImageManager extends React.Component<Props, State> {
         this.setState({ images });
     }
 
+    private onConfirm() {
+        if (this.showCallback) {
+            let imageIds = this.selectedItems.map(o => o.props.imagePath);
+            this.showCallback(imageIds);
+        }
+        this.dialog?.hide();
+    }
+
+    componentDidMount() {
+        let footerElement = this.dialog?.element.querySelector(".modal-footer") as HTMLElement;
+        let cancelElement = this.dialog?.element.querySelector(".btn-default") as HTMLElement;
+        let tipsElement = document.createElement("div");
+        tipsElement.style.float = "left";
+
+        footerElement.insertBefore(tipsElement, cancelElement);
+        if (this.selectedMax) {
+            tipsElement.innerHTML = formatString(strings.imageSelectMax);
+        }
+    }
+
     render() {
-        let { images, selectedItems, selectedMax } = this.state;
-        let element = this.props.element;
-        return (
-            <div className="modal-dialog modal-lg">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <button type="button" className="btn close"
-                            onClick={() => ui.hideDialog(element)}>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 className="modal-title">{strings.selectImage}</h4>
-                    </div>
-                    <div className="modal-body">
-                        {images.map((o) => {
-                            let selectedText = selectedItems.indexOf(o.id) >= 0 ? `${selectedItems.indexOf(o.id) + 1}` : ''
-                            let selectedAll = selectedItems.length == selectedMax
-                            let thumber = <ImageThumber key={o.id} imagePath={this.imageService.imageSource(o.id, 150, 150)}
-                                remove={() => this.removeImage(o)}
-                                selectedText={selectedText}
-                                disabled={selectedAll && !selectedText}
-                                text={o.width != null && o.height != null ? `${o.width} X ${o.height}` : " "}
-                                onClick={() => {
-                                    let selectedItems: string[] = this.state.selectedItems
-                                    if (selectedItems.indexOf(o.id) >= 0) {
-                                        selectedItems = selectedItems.filter(c => c != o.id);
-                                    }
-                                    else {
-                                        if (selectedItems.length == selectedMax)
-                                            return
+        let props = this.props;
+        return <DataSourceDialog<SiteImageData> dataSource={this.dataSource} pageItemsCount={17} isLarge={true}
+            title={props.title} onConfirm={() => this.onConfirm()}
+            ref={e => this.dialog = e || this.dialog}>
+            <DataSourceDialogContext.Consumer>
+                {args => {
+                    let dataItem = args.dataItem as SiteImageData;
+                    return <ImageThumber<{ id: string }> key={`${dataItem.id}`} id={dataItem.id} imagePath={ImageService.imageSource(dataItem.id, 120, 120)}
+                        onClick={e => {
+                            let selecteIds = this.selectedItems.map(o => o.props.id);
+                            let exists = selecteIds.indexOf(dataItem.id) >= 0;
+                            if (exists) {
+                                this.selectedItems = this.selectedItems.filter(o => o.props.id != dataItem.id);
+                                e.setState({ selectedText: "" });
+                            }
+                            else {
+                                this.selectedItems.push(e as ImageThumber<{ id: string }>);
+                            }
 
-                                        selectedItems.push(o.id);
-                                    }
-                                    this.setState({ selectedItems });
-                                }} />
+                            for (let i = 0; i < this.selectedItems.length; i++) {
+                                this.selectedItems[i].setState({ selectedText: `${i + 1}` });
+                            }
 
-                            return thumber;
-                        })}
-                        <ImageUpload saveImage={(data) => this.saveImage(data.base64)}
-                            width={400} />
-                        <div className="clearfix" />
-                    </div>
-                    <div className="modal-footer">
-                        <div className="pull-left"
-                            ref={(e) => this.pagingBarElement = e || this.pagingBarElement}>
-                        </div>
-                        {selectedMax ? <div className="pull-left" style={{ paddingTop: 8, paddingLeft: 10 }}>
-                            {strings.selectMax}<b style={{ padding: '0 2px 0 2px' }}>{selectedMax}</b>张</div> : null}
-                        <button name="cancel" type="button" className="btn btn-default"
-                            onClick={() => ui.hideDialog(element)}>
-                            {strings.cancel}
-                        </button>
-                        <button name="ok" type="button" className="btn btn-primary"
-                            disabled={selectedItems.length == 0}
-                            onClick={() => {
-                                if (this.showDialogCallback) {
-                                    let imageIds = this.state.selectedItems.map(o => o);
-                                    this.showDialogCallback(imageIds);
-                                }
-                                ui.hideDialog(element);
-                            }}>
-                            {strings.confirm}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        )
+                        }} />
+                }}
+            </DataSourceDialogContext.Consumer>
+        </DataSourceDialog>
     }
 }
 
-let element = createDialogElement('image-manager');
-
-let instance: ImageManager = ReactDOM.render(<ImageManager element={element} />, element) as any;
+let element = document.createElement("div");
+element.className = "image-manager";
+document.body.append(element);
+let instance: ImageManager = ReactDOM.render(<ImageManager />, element) as any;
 
 export default {
     show(callback?: (imageIds: string[]) => void) {
