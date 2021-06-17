@@ -1,5 +1,5 @@
-import { ModalDialog, DataSourceDialog, ImageService, ImageThumber, DataSourceDialogContext } from "maishu-image-components";
-import { DataSource, guid } from "maishu-toolkit";
+import { DataSourceDialog, ImageService, ImageThumber, DataSourceDialogContext } from "maishu-image-components";
+import { DataSource } from "maishu-toolkit";
 import * as React from "react";
 import "./dialog-data-source.scss";
 
@@ -18,11 +18,9 @@ export default function () {
             <DataSourceDialogContext.Consumer>
                 {args => <ImageThumber<{ id: string }> key={args.dataItem.id} imagePath={imageService.imageSource(args.dataItem.id, 120, 120)} id={args.dataItem.id}
                     onClick={(e: ImageThumber<{ id: string }>) => {
-
                         if (selectedItems[e.props.id]) {
                             delete selectedItems[e.props.id];
                             Object.keys(selectedItems).forEach((key, i) => {
-                                // selectedIds[key] = i + 1
                                 selectedItems[key].setState({ selectedText: `${i + 1}` })
                             })
                             e.setState({ selectedText: null });
@@ -43,7 +41,7 @@ export default function () {
             </DataSourceDialogContext.Consumer>
         </DataSourceDialog>
         <button className="btn btn-primary" onClick={() => dialog.show()}>显示对话框</button>
-    </div >
+    </div>
 }
 
 function createImageDataSource() {

@@ -1,6 +1,6 @@
 {
   "name": "maishu-image-components",
-  "version": "1.5.13",
+  "version": "1.5.15",
   "description": "",
   "main": "index.js",
   "types": "out/index.d.ts",

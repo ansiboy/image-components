@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.5.13
+ *  maishu-image-components v1.5.14
  * 
  * 
  */
@@ -257,7 +257,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n", "",{"version":3,"sources":["webpack://./content/image-manager.less"],"names":[],"mappings":"AAAA;EACE,YAAY;AACd;AACA;EACE,eAAe;EACf,kBAAkB;AACpB;AACA;EACE,SAAS;AACX;AACA;EACE,SAAS;AACX;AACA;EACE,YAAY;EACZ,WAAW;EACX,kBAAkB;AACpB;AACA;EACE,YAAY;EACZ,WAAW;AACb","sourcesContent":[".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, ".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n", "",{"version":3,"sources":["webpack://./content/image-manager.less"],"names":[],"mappings":"AAAA;EACE,YAAY;AACd;AACA;EACE,WAAW;EACX,cAAc;AAChB;AACA;EACE,eAAe;EACf,kBAAkB;AACpB;AACA;EACE,SAAS;AACX;AACA;EACE,SAAS;AACX;AACA;EACE,YAAY;EACZ,WAAW;EACX,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,YAAY;EACZ,WAAW;AACb","sourcesContent":[".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -1360,65 +1360,6 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./out/common.js":
-/*!***********************!*\
-  !*** ./out/common.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createDialogElement = exports.imageUrl = void 0;
-function imageUrl(path, width, height) {
-    if (!path)
-        return path;
-    if (path.startsWith('data:image'))
-        return path;
-    if (path.indexOf(',') > 0) {
-        path = path.split(',')[0];
-    }
-    let HTTP = 'http://';
-    if (path.startsWith(HTTP)) {
-        path = path.substr(HTTP.length);
-        let index = path.indexOf('/');
-        console.assert(index > 0);
-        path = path.substr(index);
-    }
-    else if (path[0] == '/') {
-        path = path.substr(1);
-    }
-    let urlParams = new Array();
-    let protocol = location.protocol;
-    let url = `${path}`;
-    if (width) {
-        // url = url + '?width=' + width;
-        urlParams.push({ name: 'width', value: width.toString() });
-        if (height)
-            urlParams.push({ name: 'height', value: height.toString() });
-    }
-    if (navigator.userAgent.indexOf('chrome') < 0) {
-        urlParams.push({ name: 'type', value: 'jpeg' });
-    }
-    if (urlParams.length > 0) {
-        url = url + '?' + urlParams.map(o => `${o.name}=${o.value}`).join('&');
-    }
-    return url;
-}
-exports.imageUrl = imageUrl;
-function createDialogElement(className) {
-    let element = document.createElement('div');
-    element.className = 'modal fade ' + className;
-    element.style.zIndex = '1000';
-    document.body.appendChild(element);
-    return element;
-}
-exports.createDialogElement = createDialogElement;
-
-
-/***/ }),
-
 /***/ "./out/dialogs/data-source-dialog.js":
 /*!*******************************************!*\
   !*** ./out/dialogs/data-source-dialog.js ***!
@@ -1697,17 +1638,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.showImageDialog = void 0;
-const image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
 const image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
 const React = __webpack_require__(/*! react */ "react");
 const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
-const common_1 = __webpack_require__(/*! ./common */ "./out/common.js");
-const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
 const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 __webpack_require__(/*! ../content/image-manager.less */ "./content/image-manager.less");
-const number_paging_bar_1 = __webpack_require__(/*! ./number-paging-bar */ "./out/number-paging-bar.js");
+// import { DataSourcePagingBar } from './number-paging-bar';
+const data_source_dialog_1 = __webpack_require__(/*! ./dialogs/data-source-dialog */ "./out/dialogs/data-source-dialog.js");
 let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
@@ -1722,31 +1661,31 @@ class ImageManager extends React.Component {
             this.state.images.push(args.dataItem);
             this.setState({ images: this.state.images });
         });
-        this.imageService = new image_service_1.ImageService();
+        // this.imageService = new ImageService();
     }
-    componentDidMount() {
-        return __awaiter(this, void 0, void 0, function* () {
-            new number_paging_bar_1.DataSourcePagingBar({
-                dataSource: this.dataSource,
-                element: this.pagingBarElement,
-                pagerSettings: {
-                    activeButtonClassName: 'active',
-                    buttonWrapper: 'li',
-                    buttonContainerWraper: 'ul',
-                    showTotal: false
-                },
-            });
-            let ul = this.pagingBarElement.querySelector('ul');
-            if (ul)
-                ul.className = "pagination";
-        });
-    }
+    // async componentDidMount() {
+    //     new DataSourcePagingBar({
+    //         dataSource: this.dataSource,
+    //         element: this.pagingBarElement,
+    //         pagerSettings: {
+    //             activeButtonClassName: 'active',
+    //             buttonWrapper: 'li',
+    //             buttonContainerWraper: 'ul',
+    //             showTotal: false
+    //         },
+    //     });
+    //     let ul = this.pagingBarElement.querySelector('ul');
+    //     if (ul)
+    //         ul.className = "pagination";
+    // }
     show(selectedMax, callback) {
-        this.showDialogCallback = callback;
-        this.selectArguments.startRowIndex = 0;
-        this.dataSource.select(this.selectArguments);
-        this.setState({ selectedItems: [], selectedMax });
-        ui.showDialog(this.props.element);
+        // this.showDialogCallback = callback;
+        // this.selectArguments.startRowIndex = 0;
+        // this.dataSource.select(this.selectArguments);
+        var _a;
+        // this.setState({ selectedItems: [], selectedMax })
+        // ui.showDialog(this.props.element);
+        (_a = this.dialog) === null || _a === void 0 ? void 0 : _a.show();
     }
     saveImage(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1760,52 +1699,18 @@ class ImageManager extends React.Component {
         this.setState({ images });
     }
     render() {
-        let { images, selectedItems, selectedMax } = this.state;
-        let element = this.props.element;
-        return (React.createElement("div", { className: "modal-dialog modal-lg" },
-            React.createElement("div", { className: "modal-content" },
-                React.createElement("div", { className: "modal-header" },
-                    React.createElement("button", { type: "button", className: "btn close", onClick: () => ui.hideDialog(element) },
-                        React.createElement("span", { "aria-hidden": "true" }, "\u00D7")),
-                    React.createElement("h4", { className: "modal-title" }, strings.selectImage)),
-                React.createElement("div", { className: "modal-body" },
-                    images.map((o) => {
-                        let selectedText = selectedItems.indexOf(o.id) >= 0 ? `${selectedItems.indexOf(o.id) + 1}` : '';
-                        let selectedAll = selectedItems.length == selectedMax;
-                        let thumber = React.createElement(image_thumber_1.default, { key: o.id, imagePath: this.imageService.imageSource(o.id, 150, 150), remove: () => this.removeImage(o), selectedText: selectedText, disabled: selectedAll && !selectedText, text: o.width != null && o.height != null ? `${o.width} X ${o.height}` : " ", onClick: () => {
-                                let selectedItems = this.state.selectedItems;
-                                if (selectedItems.indexOf(o.id) >= 0) {
-                                    selectedItems = selectedItems.filter(c => c != o.id);
-                                }
-                                else {
-                                    if (selectedItems.length == selectedMax)
-                                        return;
-                                    selectedItems.push(o.id);
-                                }
-                                this.setState({ selectedItems });
-                            } });
-                        return thumber;
-                    }),
-                    React.createElement(image_upload_1.default, { saveImage: (data) => this.saveImage(data.base64), width: 400 }),
-                    React.createElement("div", { className: "clearfix" })),
-                React.createElement("div", { className: "modal-footer" },
-                    React.createElement("div", { className: "pull-left", ref: (e) => this.pagingBarElement = e || this.pagingBarElement }),
-                    selectedMax ? React.createElement("div", { className: "pull-left", style: { paddingTop: 8, paddingLeft: 10 } },
-                        strings.selectMax,
-                        React.createElement("b", { style: { padding: '0 2px 0 2px' } }, selectedMax),
-                        "\u5F20") : null,
-                    React.createElement("button", { name: "cancel", type: "button", className: "btn btn-default", onClick: () => ui.hideDialog(element) }, strings.cancel),
-                    React.createElement("button", { name: "ok", type: "button", className: "btn btn-primary", disabled: selectedItems.length == 0, onClick: () => {
-                            if (this.showDialogCallback) {
-                                let imageIds = this.state.selectedItems.map(o => o);
-                                this.showDialogCallback(imageIds);
-                            }
-                            ui.hideDialog(element);
-                        } }, strings.confirm)))));
+        let props = this.props;
+        return React.createElement(data_source_dialog_1.DataSourceDialog, { dataSource: this.dataSource, pageItemsCount: 17, isLarge: true, title: props.title, ref: e => this.dialog = e || this.dialog },
+            React.createElement(data_source_dialog_1.DataSourceDialogContext.Consumer, null, args => {
+                let dataItem = args.dataItem;
+                return React.createElement(image_thumber_1.default, { key: dataItem.id, imagePath: image_service_1.ImageService.imageSource(dataItem.id, 120, 120) });
+            }));
     }
 }
-let element = common_1.createDialogElement('image-manager');
-let instance = ReactDOM.render(React.createElement(ImageManager, { element: element }), element);
+let element = document.createElement("div");
+element.className = "image-manager";
+document.body.append(element);
+let instance = ReactDOM.render(React.createElement(ImageManager, null), element);
 exports.default = {
     show(callback) {
         instance.show(undefined, callback);
@@ -1825,8 +1730,9 @@ function createImageDataSource() {
         primaryKeys: ['id'],
         select(args) {
             return __awaiter(this, void 0, void 0, function* () {
-                let result = yield station.list(args); //, 140, 140
-                return result;
+                // let result = await station.list(args);//, 140, 140
+                // return result;
+                return new Promise((resolve, reject) => { });
             });
         },
         delete(item) {
