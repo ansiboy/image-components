@@ -44,7 +44,27 @@ export let errors = {
 /** 图片服务，实现图片的上传，获取 */
 export class ImageService extends Service {
 
-    static serviceHost: string;
+    static _serviceHost: string;
+    static _imageUploadUrl: string;
+
+    static get serviceHost() {
+        return this._serviceHost;
+    }
+
+    static set serviceHost(value: string) {
+        this._serviceHost = value;
+    }
+
+    static get imageUploadUrl() {
+        if (!this._imageUploadUrl) {
+            return this.url("upload")
+        }
+
+        return this._imageUploadUrl;
+    }
+    static set imageUploadUrl(value: string) {
+        this._imageUploadUrl = value;
+    }
 
     constructor() {
         super(err => errorHandle(err))
@@ -125,9 +145,17 @@ export class ImageService extends Service {
             throw errors.notSupportedInNode()
         }
 
-        var canvas = document.createElement('canvas');
-        canvas.width = width; //img_width;
-        canvas.height = height; //img_height;
+        var canvas: HTMLCanvasElement;
+        if (typeof document != "undefined") {
+            canvas = document.createElement('canvas');
+            canvas.width = width; //img_width;
+            canvas.height = height; //img_height;
+        }
+        else {
+            let canvasModule = require("canvas");
+            canvas = canvasModule.createCanvas(200, 200);
+        }
+
         var ctx = canvas.getContext('2d');
         if (ctx == null) throw new Error('ccreate canvas context fail.')
         let draw = typeof obj == 'string' ? draws.text(obj, options) : obj;
@@ -195,7 +223,7 @@ export class ImageService extends Service {
     async upload(imageBase64: string) {
         if (!imageBase64) throw errors.argumentNull('imageBase64')
 
-        let url = this.url('upload')
+        let url = ImageService.imageUploadUrl;//this.url('upload')
 
         let imageSize = await this.getImageSize(imageBase64)
         let maxWidth = 800

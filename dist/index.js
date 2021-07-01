@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.5.14
+ *  maishu-image-components v1.6.0
  * 
  * 
  */
@@ -214,6 +214,166 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/canvas/browser.js":
+/*!****************************************!*\
+  !*** ./node_modules/canvas/browser.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals document, ImageData */
+
+const parseFont = __webpack_require__(/*! ./lib/parse-font */ "./node_modules/canvas/lib/parse-font.js")
+
+exports.parseFont = parseFont
+
+exports.createCanvas = function (width, height) {
+  return Object.assign(document.createElement('canvas'), { width: width, height: height })
+}
+
+exports.createImageData = function (array, width, height) {
+  // Browser implementation of ImageData looks at the number of arguments passed
+  switch (arguments.length) {
+    case 0: return new ImageData()
+    case 1: return new ImageData(array)
+    case 2: return new ImageData(array, width)
+    default: return new ImageData(array, width, height)
+  }
+}
+
+exports.loadImage = function (src, options) {
+  return new Promise(function (resolve, reject) {
+    const image = Object.assign(document.createElement('img'), options)
+
+    function cleanup () {
+      image.onload = null
+      image.onerror = null
+    }
+
+    image.onload = function () { cleanup(); resolve(image) }
+    image.onerror = function () { cleanup(); reject(new Error('Failed to load the image "' + src + '"')) }
+
+    image.src = src
+  })
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/canvas/lib/parse-font.js":
+/*!***********************************************!*\
+  !*** ./node_modules/canvas/lib/parse-font.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Font RegExp helpers.
+ */
+
+const weights = 'bold|bolder|lighter|[1-9]00'
+  , styles = 'italic|oblique'
+  , variants = 'small-caps'
+  , stretches = 'ultra-condensed|extra-condensed|condensed|semi-condensed|semi-expanded|expanded|extra-expanded|ultra-expanded'
+  , units = 'px|pt|pc|in|cm|mm|%|em|ex|ch|rem|q'
+  , string = '\'([^\']+)\'|"([^"]+)"|[\\w\\s-]+'
+
+// [ [ <‘font-style’> || <font-variant-css21> || <‘font-weight’> || <‘font-stretch’> ]?
+//    <‘font-size’> [ / <‘line-height’> ]? <‘font-family’> ]
+// https://drafts.csswg.org/css-fonts-3/#font-prop
+const weightRe = new RegExp('(' + weights + ') +', 'i')
+const styleRe = new RegExp('(' + styles + ') +', 'i')
+const variantRe = new RegExp('(' + variants + ') +', 'i')
+const stretchRe = new RegExp('(' + stretches + ') +', 'i')
+const sizeFamilyRe = new RegExp(
+  '([\\d\\.]+)(' + units + ') *'
+  + '((?:' + string + ')( *, *(?:' + string + '))*)')
+
+/**
+ * Cache font parsing.
+ */
+
+const cache = {}
+
+const defaultHeight = 16 // pt, common browser default
+
+/**
+ * Parse font `str`.
+ *
+ * @param {String} str
+ * @return {Object} Parsed font. `size` is in device units. `unit` is the unit
+ *   appearing in the input string.
+ * @api private
+ */
+
+module.exports = function (str) {
+  // Cached
+  if (cache[str]) return cache[str]
+
+  // Try for required properties first.
+  const sizeFamily = sizeFamilyRe.exec(str)
+  if (!sizeFamily) return // invalid
+
+  // Default values and required properties
+  const font = {
+    weight: 'normal',
+    style: 'normal',
+    stretch: 'normal',
+    variant: 'normal',
+    size: parseFloat(sizeFamily[1]),
+    unit: sizeFamily[2],
+    family: sizeFamily[3].replace(/["']/g, '').replace(/ *, */g, ',')
+  }
+
+  // Optional, unordered properties.
+  let weight, style, variant, stretch
+  // Stop search at `sizeFamily.index`
+  let substr = str.substring(0, sizeFamily.index)
+  if ((weight = weightRe.exec(substr))) font.weight = weight[1]
+  if ((style = styleRe.exec(substr))) font.style = style[1]
+  if ((variant = variantRe.exec(substr))) font.variant = variant[1]
+  if ((stretch = stretchRe.exec(substr))) font.stretch = stretch[1]
+
+  // Convert to device units. (`font.unit` is the original unit)
+  // TODO: ch, ex
+  switch (font.unit) {
+    case 'pt':
+      font.size /= 0.75
+      break
+    case 'pc':
+      font.size *= 16
+      break
+    case 'in':
+      font.size *= 96
+      break
+    case 'cm':
+      font.size *= 96.0 / 2.54
+      break
+    case 'mm':
+      font.size *= 96.0 / 25.4
+      break
+    case '%':
+      // TODO disabled because existing unit tests assume 100
+      // font.size *= defaultHeight / 100 / 0.75
+      break
+    case 'em':
+    case 'rem':
+      font.size *= defaultHeight / 0.75
+      break
+    case 'q':
+      font.size *= 96 / 25.4 / 4
+      break
+  }
+
+  return (cache[str] = font)
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./content/data-source-dialog.less":
 /*!**********************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/less-loader/dist/cjs.js!./content/data-source-dialog.less ***!
@@ -257,7 +417,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n", "",{"version":3,"sources":["webpack://./content/image-manager.less"],"names":[],"mappings":"AAAA;EACE,YAAY;AACd;AACA;EACE,WAAW;EACX,cAAc;AAChB;AACA;EACE,eAAe;EACf,kBAAkB;AACpB;AACA;EACE,SAAS;AACX;AACA;EACE,SAAS;AACX;AACA;EACE,YAAY;EACZ,WAAW;EACX,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,YAAY;EACZ,WAAW;AACb","sourcesContent":[".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, ".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n  width: 100%;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  cursor: pointer;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n", "",{"version":3,"sources":["webpack://./content/image-manager.less"],"names":[],"mappings":"AAAA;EACE,YAAY;AACd;AACA;EACE,WAAW;EACX,cAAc;EACd,WAAW;AACb;AACA;EACE,eAAe;EACf,kBAAkB;AACpB;AACA;EACE,SAAS;AACX;AACA;EACE,SAAS;AACX;AACA;EACE,YAAY;EACZ,WAAW;EACX,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,eAAe;AACjB;AACA;EACE,YAAY;EACZ,WAAW;AACb","sourcesContent":[".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n  width: 100%;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  cursor: pointer;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -1382,21 +1542,19 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
     privateMap.set(receiver, value);
     return value;
 };
-var _pagingBar, _dialog;
+var _dialog;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataSourceDialog = exports.DataSourceDialogContext = void 0;
 const React = __webpack_require__(/*! react */ "react");
-const number_paging_bar_1 = __webpack_require__(/*! ../number-paging-bar */ "./out/number-paging-bar.js");
 const strings_1 = __webpack_require__(/*! ../strings */ "./out/strings.js");
 const modal_dialog_1 = __webpack_require__(/*! ./modal-dialog */ "./out/dialogs/modal-dialog.js");
 const paging_bar_1 = __webpack_require__(/*! ../paging-bar */ "./out/paging-bar.js");
 __webpack_require__(/*! ../../content/data-source-dialog.less */ "./content/data-source-dialog.less");
 let strings = strings_1.getStrings();
-exports.DataSourceDialogContext = React.createContext({ dataItem: null });
+exports.DataSourceDialogContext = React.createContext({ dataItem: null, index: -1 });
 class DataSourceDialog extends React.Component {
     constructor(props) {
         super(props);
-        _pagingBar.set(this, void 0);
         _dialog.set(this, void 0);
         this.state = {};
         this.props.dataSource.selecting.add(e => {
@@ -1410,6 +1568,9 @@ class DataSourceDialog extends React.Component {
             (_a = this.state.items) === null || _a === void 0 ? void 0 : _a.push(args.dataItem);
             this.setState({ items: this.state.items });
         });
+    }
+    get element() {
+        return __classPrivateFieldGet(this, _dialog).element;
     }
     show() {
         this.props.dataSource.select({
@@ -1425,23 +1586,6 @@ class DataSourceDialog extends React.Component {
             this.props.onConfirm(this);
         }
     }
-    pagingBarRef(e) {
-        if (!e || __classPrivateFieldGet(this, _pagingBar))
-            return;
-        __classPrivateFieldSet(this, _pagingBar, new number_paging_bar_1.DataSourcePagingBar({
-            dataSource: this.props.dataSource,
-            element: e,
-            pagerSettings: {
-                activeButtonClassName: 'active',
-                buttonWrapper: 'li',
-                buttonContainerWraper: 'ul',
-                showTotal: false
-            },
-        }));
-        let ul = e.querySelector('ul');
-        if (ul)
-            ul.className = "pagination";
-    }
     renderBody() {
         let { items } = this.state;
         if (items === undefined) {
@@ -1450,7 +1594,7 @@ class DataSourceDialog extends React.Component {
         if (items == null || items.length == 0) {
             return React.createElement("div", { className: "empty" }, strings.dataEmpty);
         }
-        return items.map((o, i) => React.createElement(exports.DataSourceDialogContext.Provider, { key: i, value: { dataItem: o } }, this.props.children));
+        return items.map((o, i) => React.createElement(exports.DataSourceDialogContext.Provider, { key: i, value: { dataItem: o, index: i } }, this.props.children));
     }
     componentDidMount() {
     }
@@ -1464,7 +1608,7 @@ class DataSourceDialog extends React.Component {
     }
 }
 exports.DataSourceDialog = DataSourceDialog;
-_pagingBar = new WeakMap(), _dialog = new WeakMap();
+_dialog = new WeakMap();
 
 
 /***/ }),
@@ -1645,14 +1789,13 @@ const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 __webpack_require__(/*! ../content/image-manager.less */ "./content/image-manager.less");
-// import { DataSourcePagingBar } from './number-paging-bar';
 const data_source_dialog_1 = __webpack_require__(/*! ./dialogs/data-source-dialog */ "./out/dialogs/data-source-dialog.js");
 let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { images: [], selectedItems: [] };
-        this.selectArguments = { maximumRows: 17 };
+        this.selectedItems = [];
+        this.state = { images: [] };
         this.dataSource = createImageDataSource();
         this.dataSource.selected.add(args => {
             this.setState({ images: args.selectResult.dataItems });
@@ -1661,30 +1804,12 @@ class ImageManager extends React.Component {
             this.state.images.push(args.dataItem);
             this.setState({ images: this.state.images });
         });
-        // this.imageService = new ImageService();
     }
-    // async componentDidMount() {
-    //     new DataSourcePagingBar({
-    //         dataSource: this.dataSource,
-    //         element: this.pagingBarElement,
-    //         pagerSettings: {
-    //             activeButtonClassName: 'active',
-    //             buttonWrapper: 'li',
-    //             buttonContainerWraper: 'ul',
-    //             showTotal: false
-    //         },
-    //     });
-    //     let ul = this.pagingBarElement.querySelector('ul');
-    //     if (ul)
-    //         ul.className = "pagination";
-    // }
     show(selectedMax, callback) {
-        // this.showDialogCallback = callback;
-        // this.selectArguments.startRowIndex = 0;
-        // this.dataSource.select(this.selectArguments);
         var _a;
-        // this.setState({ selectedItems: [], selectedMax })
-        // ui.showDialog(this.props.element);
+        this.selectedMax = selectedMax;
+        this.showCallback = callback;
+        this.selectedItems = [];
         (_a = this.dialog) === null || _a === void 0 ? void 0 : _a.show();
     }
     saveImage(data) {
@@ -1698,12 +1823,44 @@ class ImageManager extends React.Component {
         images = images.filter(o => o.id != item.id);
         this.setState({ images });
     }
+    onConfirm() {
+        var _a;
+        if (this.showCallback) {
+            let imageIds = this.selectedItems.map(o => o.props.imagePath);
+            this.showCallback(imageIds);
+        }
+        (_a = this.dialog) === null || _a === void 0 ? void 0 : _a.hide();
+    }
+    componentDidMount() {
+        var _a, _b;
+        let footerElement = (_a = this.dialog) === null || _a === void 0 ? void 0 : _a.element.querySelector(".modal-footer");
+        let cancelElement = (_b = this.dialog) === null || _b === void 0 ? void 0 : _b.element.querySelector(".btn-default");
+        let tipsElement = document.createElement("div");
+        tipsElement.style.float = "left";
+        footerElement.insertBefore(tipsElement, cancelElement);
+        if (this.selectedMax) {
+            tipsElement.innerHTML = maishu_toolkit_1.formatString(strings.imageSelectMax);
+        }
+    }
     render() {
         let props = this.props;
-        return React.createElement(data_source_dialog_1.DataSourceDialog, { dataSource: this.dataSource, pageItemsCount: 17, isLarge: true, title: props.title, ref: e => this.dialog = e || this.dialog },
+        return React.createElement(data_source_dialog_1.DataSourceDialog, { dataSource: this.dataSource, pageItemsCount: 17, isLarge: true, title: props.title, onConfirm: () => this.onConfirm(), ref: e => this.dialog = e || this.dialog },
             React.createElement(data_source_dialog_1.DataSourceDialogContext.Consumer, null, args => {
                 let dataItem = args.dataItem;
-                return React.createElement(image_thumber_1.default, { key: dataItem.id, imagePath: image_service_1.ImageService.imageSource(dataItem.id, 120, 120) });
+                return React.createElement(image_thumber_1.default, { key: `${dataItem.id}`, id: dataItem.id, imagePath: image_service_1.ImageService.imageSource(dataItem.id, 120, 120), onClick: e => {
+                        let selecteIds = this.selectedItems.map(o => o.props.id);
+                        let exists = selecteIds.indexOf(dataItem.id) >= 0;
+                        if (exists) {
+                            this.selectedItems = this.selectedItems.filter(o => o.props.id != dataItem.id);
+                            e.setState({ selectedText: "" });
+                        }
+                        else {
+                            this.selectedItems.push(e);
+                        }
+                        for (let i = 0; i < this.selectedItems.length; i++) {
+                            this.selectedItems[i].setState({ selectedText: `${i + 1}` });
+                        }
+                    } });
             }));
     }
 }
@@ -1730,9 +1887,8 @@ function createImageDataSource() {
         primaryKeys: ['id'],
         select(args) {
             return __awaiter(this, void 0, void 0, function* () {
-                // let result = await station.list(args);//, 140, 140
-                // return result;
-                return new Promise((resolve, reject) => { });
+                let result = yield station.list(args); //, 140, 140
+                return result;
             });
         },
         delete(item) {
@@ -1819,6 +1975,21 @@ class ImageService extends maishu_chitu_service_1.Service {
     constructor() {
         super(err => error_handle_1.errorHandle(err));
     }
+    static get serviceHost() {
+        return this._serviceHost;
+    }
+    static set serviceHost(value) {
+        this._serviceHost = value;
+    }
+    static get imageUploadUrl() {
+        if (!this._imageUploadUrl) {
+            return this.url("upload");
+        }
+        return this._imageUploadUrl;
+    }
+    static set imageUploadUrl(value) {
+        this._imageUploadUrl = value;
+    }
     url(path) {
         return ImageService.url(path);
     }
@@ -1876,9 +2047,16 @@ class ImageService extends maishu_chitu_service_1.Service {
         if (document == null) {
             throw exports.errors.notSupportedInNode();
         }
-        var canvas = document.createElement('canvas');
-        canvas.width = width; //img_width;
-        canvas.height = height; //img_height;
+        var canvas;
+        if (typeof document != "undefined") {
+            canvas = document.createElement('canvas');
+            canvas.width = width; //img_width;
+            canvas.height = height; //img_height;
+        }
+        else {
+            let canvasModule = __webpack_require__(/*! canvas */ "./node_modules/canvas/browser.js");
+            canvas = canvasModule.createCanvas(200, 200);
+        }
         var ctx = canvas.getContext('2d');
         if (ctx == null)
             throw new Error('ccreate canvas context fail.');
@@ -1944,7 +2122,7 @@ class ImageService extends maishu_chitu_service_1.Service {
         return __awaiter(this, void 0, void 0, function* () {
             if (!imageBase64)
                 throw exports.errors.argumentNull('imageBase64');
-            let url = this.url('upload');
+            let url = ImageService.imageUploadUrl; //this.url('upload')
             let imageSize = yield this.getImageSize(imageBase64);
             let maxWidth = 800;
             let maxHeight = 800;
@@ -2186,7 +2364,7 @@ exports.default = ImageUpload;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PagingBar = exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
+exports.DataSourcePagingBar = exports.PagingBar = exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
 var image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
 Object.defineProperty(exports, "ImageThumber", { enumerable: true, get: function () { return image_thumber_1.default; } });
 var image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
@@ -2202,6 +2380,8 @@ Object.defineProperty(exports, "DataSourceDialog", { enumerable: true, get: func
 Object.defineProperty(exports, "DataSourceDialogContext", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialogContext; } });
 var paging_bar_1 = __webpack_require__(/*! ./paging-bar */ "./out/paging-bar.js");
 Object.defineProperty(exports, "PagingBar", { enumerable: true, get: function () { return paging_bar_1.PagingBar; } });
+var number_paging_bar_1 = __webpack_require__(/*! ./number-paging-bar */ "./out/number-paging-bar.js");
+Object.defineProperty(exports, "DataSourcePagingBar", { enumerable: true, get: function () { return number_paging_bar_1.DataSourcePagingBar; } });
 
 
 /***/ }),
@@ -2604,7 +2784,8 @@ let chinese = {
     imageUpload: "图片上传",
     noImageText: "暂无图片",
     dataLoading: "数据正在加载中...",
-    dataEmpty: "暂无所要展示的数据"
+    dataEmpty: "暂无所要展示的数据",
+    imageSelectMax: "最多选择 {0} 张图片"
 };
 let english = {
     selectImage: "Select Image",
@@ -2615,7 +2796,8 @@ let english = {
     imageUpload: "Image Upload",
     noImageText: "NO IMAGE",
     dataLoading: "Data is loading...",
-    dataEmpty: "Data is empty"
+    dataEmpty: "Data is empty",
+    imageSelectMax: "Choose up to {0} pictures"
 };
 let strings = { chinese, english, };
 function getStrings(language) {
