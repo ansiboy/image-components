@@ -237,7 +237,11 @@ export class ImageService extends Service {
             imageBase64 = await this.resize(imageBase64, width, maxHeight)
         }
 
-        return this.postByJson<{ id: string }>(url, { image: imageBase64 })
+        let arr = imageBase64.split(",");
+        console.assert(arr.length == 2);
+        let blob = b64toBlob(arr[1], "image")
+
+        return this.postByFormData(url, { image: blob });
     }
 
     /**
@@ -286,3 +290,22 @@ let draws = {
     }
 };
 
+function b64toBlob(b64Data: string, contentType = '', sliceSize = 512) {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+}

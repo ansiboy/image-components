@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "canvas": "^2.8.0",
-    "maishu-chitu-service": "^1.32.0",
+    "maishu-chitu-service": "^1.40.0",
     "maishu-toolkit": "^1.6.7",
     "maishu-ui-toolkit": "^1.10.0",
     "react": "^16.7.0",

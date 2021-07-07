@@ -47,7 +47,7 @@ export default class ImageUploadPage extends React.Component<{}, State> {
             <br />
             <label>默认</label>
             <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} />`}</pre>
-            <ImageUpload saveImage={(data) => this.uploadImage(data.base64)} />
+            <ImageUpload saveImage={(data, file) => this.uploadImage(data.base64)} />
             {messageElement}
             {/* <hr />
             <label>设置默认图片</label>

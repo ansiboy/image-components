@@ -8,7 +8,7 @@ let strings = getStrings();
 
 interface ImageUploadProps extends React.ClassAttributes<ImageUpload> {
 
-    saveImage: (data: ui.ImageFileToBase64Result) => Promise<any>,
+    saveImage: (data: ui.ImageFileToBase64Result, file: File) => Promise<any>,
 
     /** 控件样式 */
     style?: React.CSSProperties,
@@ -61,7 +61,7 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
         let { width, height } = this.props;
         ui.imageFileToBase64(imageFile)
             .then(data => {
-                this.props.saveImage(data);
+                this.props.saveImage(data, imageFile);
                 this.setState({ imageSource: data.base64 });
             });
     }
