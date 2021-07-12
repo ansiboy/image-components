@@ -110,15 +110,31 @@ class ImageManager extends React.Component<Props, State> {
     }
 }
 
-let element = document.createElement("div");
-element.className = "image-manager";
-document.body.append(element);
-let instance: ImageManager = ReactDOM.render(<ImageManager />, element) as any;
+// let element = document.createElement("div");
+// element.className = "image-manager";
+// document.body.append(element);
+// let instance: ImageManager = ReactDOM.render(<ImageManager />, element) as any;
+
+let imageManager: ImageManager;
+function getImageManager() {
+    if (imageManager)
+        return imageManager;
+
+    let element = document.createElement("div");
+    element.className = "image-manager";
+    document.body.append(element);
+    imageManager = ReactDOM.render(<ImageManager />, element) as any;
+    return imageManager;
+}
 
 export default {
+
     show(callback?: (imageIds: string[]) => void) {
+        let instance = getImageManager();
         instance.show(undefined, callback);
     }
+
+
 }
 
 export function showImageDialog(maxImagesCount: number, callback: (imageIds: string[]) => void): void
@@ -128,6 +144,7 @@ export function showImageDialog(maxImagesCount: any, callback?: any) {
         maxImagesCount = null
         callback = maxImagesCount
     }
+    let instance = getImageManager();
     instance.show(maxImagesCount, callback)
 }
 

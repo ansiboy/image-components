@@ -1,6 +1,5 @@
 import { DataSource } from "maishu-toolkit";
 import * as React from "react";
-import { DataSourcePagingBar } from "../number-paging-bar";
 import { getStrings } from "../strings";
 import { ModalDialog, ModalDialogProps } from "./modal-dialog";
 import { PagingBar } from "../paging-bar";

@@ -220,28 +220,32 @@ export class ImageService extends Service {
      * 上传图片
      * @param imageBase64 图片的 base64 数据
      */
-    async upload(imageBase64: string) {
-        if (!imageBase64) throw errors.argumentNull('imageBase64')
+    async upload(fileData: string | File) {
+        if (!fileData) throw errors.argumentNull("fileData");
+        let url = ImageService.imageUploadUrl;
+        if (typeof fileData == "string") {
+            let imageBase64 = fileData;
+            if (!imageBase64) throw errors.argumentNull('imageBase64')
+            let imageSize = await this.getImageSize(imageBase64)
+            let maxWidth = 800
+            let maxHeight = 800
+            if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
+                let height = imageSize.height / imageSize.width * maxWidth
+                imageBase64 = await this.resize(imageBase64, maxWidth, height)
+            }
+            else if (imageSize.height > maxHeight) {
+                let width = imageSize.width / imageSize.height * maxHeight
+                imageBase64 = await this.resize(imageBase64, width, maxHeight)
+            }
 
-        let url = ImageService.imageUploadUrl;//this.url('upload')
+            let arr = imageBase64.split(",");
+            console.assert(arr.length == 2);
+            let blob = b64toBlob(arr[1], "image")
 
-        let imageSize = await this.getImageSize(imageBase64)
-        let maxWidth = 800
-        let maxHeight = 800
-        if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
-            let height = imageSize.height / imageSize.width * maxWidth
-            imageBase64 = await this.resize(imageBase64, maxWidth, height)
+            return this.postByFormData<{ id: string }>(url, { image: blob });
         }
-        else if (imageSize.height > maxHeight) {
-            let width = imageSize.width / imageSize.height * maxHeight
-            imageBase64 = await this.resize(imageBase64, width, maxHeight)
-        }
 
-        let arr = imageBase64.split(",");
-        console.assert(arr.length == 2);
-        let blob = b64toBlob(arr[1], "image")
-
-        return this.postByFormData(url, { image: blob });
+        return this.postByFormData<{ id: string }>(url, { image: fileData });
     }
 
     /**
