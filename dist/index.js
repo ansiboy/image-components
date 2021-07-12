@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.6.3
+ *  maishu-image-components v1.6.8
  * 
  * 
  */
@@ -1750,12 +1750,23 @@ class ImageManager extends React.Component {
             }));
     }
 }
-let element = document.createElement("div");
-element.className = "image-manager";
-document.body.append(element);
-let instance = ReactDOM.render(React.createElement(ImageManager, null), element);
+// let element = document.createElement("div");
+// element.className = "image-manager";
+// document.body.append(element);
+// let instance: ImageManager = ReactDOM.render(<ImageManager />, element) as any;
+let imageManager;
+function getImageManager() {
+    if (imageManager)
+        return imageManager;
+    let element = document.createElement("div");
+    element.className = "image-manager";
+    document.body.append(element);
+    imageManager = ReactDOM.render(React.createElement(ImageManager, null), element);
+    return imageManager;
+}
 exports.default = {
     show(callback) {
+        let instance = getImageManager();
         instance.show(undefined, callback);
     }
 };
@@ -1764,6 +1775,7 @@ function showImageDialog(maxImagesCount, callback) {
         maxImagesCount = null;
         callback = maxImagesCount;
     }
+    let instance = getImageManager();
     instance.show(maxImagesCount, callback);
 }
 exports.showImageDialog = showImageDialog;
@@ -2004,26 +2016,32 @@ class ImageService extends maishu_chitu_service_1.Service {
      * 上传图片
      * @param imageBase64 图片的 base64 数据
      */
-    upload(imageBase64) {
+    upload(fileData) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!imageBase64)
-                throw exports.errors.argumentNull('imageBase64');
-            let url = ImageService.imageUploadUrl; //this.url('upload')
-            let imageSize = yield this.getImageSize(imageBase64);
-            let maxWidth = 800;
-            let maxHeight = 800;
-            if (imageSize.width > maxWidth) { // || imageSize.height > maxHeight
-                let height = imageSize.height / imageSize.width * maxWidth;
-                imageBase64 = yield this.resize(imageBase64, maxWidth, height);
+            if (!fileData)
+                throw exports.errors.argumentNull("fileData");
+            let url = ImageService.imageUploadUrl;
+            if (typeof fileData == "string") {
+                let imageBase64 = fileData;
+                if (!imageBase64)
+                    throw exports.errors.argumentNull('imageBase64');
+                let imageSize = yield this.getImageSize(imageBase64);
+                let maxWidth = 800;
+                let maxHeight = 800;
+                if (imageSize.width > maxWidth) { // || imageSize.height > maxHeight
+                    let height = imageSize.height / imageSize.width * maxWidth;
+                    imageBase64 = yield this.resize(imageBase64, maxWidth, height);
+                }
+                else if (imageSize.height > maxHeight) {
+                    let width = imageSize.width / imageSize.height * maxHeight;
+                    imageBase64 = yield this.resize(imageBase64, width, maxHeight);
+                }
+                let arr = imageBase64.split(",");
+                console.assert(arr.length == 2);
+                let blob = b64toBlob(arr[1], "image");
+                return this.postByFormData(url, { image: blob });
             }
-            else if (imageSize.height > maxHeight) {
-                let width = imageSize.width / imageSize.height * maxHeight;
-                imageBase64 = yield this.resize(imageBase64, width, maxHeight);
-            }
-            let arr = imageBase64.split(",");
-            console.assert(arr.length == 2);
-            let blob = b64toBlob(arr[1], "image");
-            return this.postByFormData(url, { image: blob });
+            return this.postByFormData(url, { image: fileData });
         });
     }
     /**
