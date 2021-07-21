@@ -37,10 +37,6 @@ export let errors = {
     }
 }
 
-// export let settings = {
-//     noImageText: "暂无图片"
-// }
-
 /** 图片服务，实现图片的上传，获取 */
 export class ImageService extends Service {
 

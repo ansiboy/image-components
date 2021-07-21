@@ -57,10 +57,12 @@ export class ModalDialog extends React.Component<Props> {
         if (footer == null) {
             footer = <div className="modal-footer" style={{ marginTop: 0 }}>
                 <button type="button" className="btn btn-default" data-dismiss="modal">
+                    <i className="glyphicon glyphicon-repeat" />
                     {this.props.cancelButtonText || "取消"}
                 </button>
                 <button type="button" className="btn btn-primary"
                     onClick={() => this.props.onConfirm ? this.props.onConfirm(this) : null}>
+                    <i className="glyphicon glyphicon-ok" />
                     {this.props.confirmButtonText || "确定"}
                 </button>
             </div>

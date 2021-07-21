@@ -94,10 +94,12 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
             <div className="modal-footer" style={{ marginTop: 0 }}>
                 <PagingBar<T> dataSource={this.props.dataSource} />
                 <button type="button" className="btn btn-default" data-dismiss="modal">
+                    <i className="glyphicon glyphicon-repeat" />
                     {this.props.cancelButtonText || "取消"}
                 </button>
                 <button type="button" className="btn btn-primary"
                     onClick={() => this.confirm()}>
+                    <i className="glyphicon glyphicon-ok" />
                     {this.props.confirmButtonText || "确定"}
                 </button>
             </div>
