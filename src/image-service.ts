@@ -37,18 +37,32 @@ export let errors = {
     }
 }
 
+// export let settings = {
+//     noImageText: "暂无图片"
+// }
+
 /** 图片服务，实现图片的上传，获取 */
+
+const SERVICE_HOST = "image-service-host";
 export class ImageService extends Service {
 
-    static _serviceHost: string;
+    // static _serviceHost: string;
     static _imageUploadUrl: string;
 
     static get serviceHost() {
-        return this._serviceHost;
+        if (typeof window != "undefined")
+            return (window as any)[SERVICE_HOST];
+
+        return (global as any)[SERVICE_HOST];
     }
 
     static set serviceHost(value: string) {
-        this._serviceHost = value;
+        if (typeof window != "undefined") {
+            (window as any)[SERVICE_HOST] = value;
+            return;
+        }
+
+        (global as any)[SERVICE_HOST] = value;
     }
 
     static get imageUploadUrl() {
