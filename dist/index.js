@@ -1,19 +1,19 @@
 /*!
  * 
- *  maishu-image-components v1.6.8
+ *  maishu-image-components v1.6.13
  * 
  * 
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("maishu-toolkit"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
+		module.exports = factory(require("maishu-chitu-service"), require("maishu-toolkit"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
 	else if(typeof define === 'function' && define.amd)
-		define(["maishu-toolkit", "maishu-ui-toolkit", "react", "react-dom"], factory);
+		define(["maishu-chitu-service", "maishu-toolkit", "maishu-ui-toolkit", "react", "react-dom"], factory);
 	else if(typeof exports === 'object')
-		exports["image-components"] = factory(require("maishu-toolkit"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
+		exports["image-components"] = factory(require("maishu-chitu-service"), require("maishu-toolkit"), require("maishu-ui-toolkit"), require("react"), require("react-dom"));
 	else
-		root["image-components"] = factory(root["maishu-toolkit"], root["maishu-ui-toolkit"], root["react"], root["react-dom"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE_maishu_toolkit__, __WEBPACK_EXTERNAL_MODULE_maishu_ui_toolkit__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
+		root["image-components"] = factory(root["maishu-chitu-service"], root["maishu-toolkit"], root["maishu-ui-toolkit"], root["react"], root["react-dom"]);
+})(window, function(__WEBPACK_EXTERNAL_MODULE_maishu_chitu_service__, __WEBPACK_EXTERNAL_MODULE_maishu_toolkit__, __WEBPACK_EXTERNAL_MODULE_maishu_ui_toolkit__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -594,538 +594,6 @@ module.exports = function cssWithMappingToString(item) {
 
 /***/ }),
 
-/***/ "./node_modules/maishu-chitu-service/out/callback.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/maishu-chitu-service/out/callback.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Callbacks = exports.Callback = void 0;
-class Callback {
-    constructor() {
-        this.funcs = new Array();
-    }
-    add(func) {
-        this.funcs.push(func);
-    }
-    remove(func) {
-        this.funcs = this.funcs.filter(o => o != func);
-    }
-    fire(...args) {
-        this.funcs.forEach(o => o(...args));
-    }
-}
-exports.Callback = Callback;
-function Callbacks() {
-    return new Callback();
-}
-exports.Callbacks = Callbacks;
-//# sourceMappingURL=callback.js.map
-
-/***/ }),
-
-/***/ "./node_modules/maishu-chitu-service/out/errors.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/maishu-chitu-service/out/errors.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.errors = exports.Errors = void 0;
-class Errors {
-    unexpectedNullValue(name) {
-        let msg = `variable ${name} is unexpected null value.`;
-        return new Error(msg);
-    }
-    parseJSONFail(text) {
-        let msg = `Parse json string fail:\r\n${text}`;
-        return new Error(msg);
-    }
-}
-exports.Errors = Errors;
-exports.errors = new Errors();
-//# sourceMappingURL=errors.js.map
-
-/***/ }),
-
-/***/ "./node_modules/maishu-chitu-service/out/index.js":
-/*!********************************************************!*\
-  !*** ./node_modules/maishu-chitu-service/out/index.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.StatusCode = exports.StatusCodes = exports.CookieValueStore = exports.LocalValueStore = exports.ValueStore = exports.Callbacks = exports.Callback = exports.formatData = exports.Service = void 0;
-var service_1 = __webpack_require__(/*! ./service */ "./node_modules/maishu-chitu-service/out/service.js");
-Object.defineProperty(exports, "Service", { enumerable: true, get: function () { return service_1.Service; } });
-Object.defineProperty(exports, "formatData", { enumerable: true, get: function () { return service_1.formatData; } });
-var callback_1 = __webpack_require__(/*! ./callback */ "./node_modules/maishu-chitu-service/out/callback.js");
-Object.defineProperty(exports, "Callback", { enumerable: true, get: function () { return callback_1.Callback; } });
-Object.defineProperty(exports, "Callbacks", { enumerable: true, get: function () { return callback_1.Callbacks; } });
-var value_store_1 = __webpack_require__(/*! ./value-store */ "./node_modules/maishu-chitu-service/out/value-store.js");
-Object.defineProperty(exports, "ValueStore", { enumerable: true, get: function () { return value_store_1.ValueStore; } });
-Object.defineProperty(exports, "LocalValueStore", { enumerable: true, get: function () { return value_store_1.LocalValueStore; } });
-Object.defineProperty(exports, "CookieValueStore", { enumerable: true, get: function () { return value_store_1.CookieValueStore; } });
-var status_code_1 = __webpack_require__(/*! ./status-code */ "./node_modules/maishu-chitu-service/out/status-code.js");
-Object.defineProperty(exports, "StatusCodes", { enumerable: true, get: function () { return status_code_1.StatusCode; } });
-Object.defineProperty(exports, "StatusCode", { enumerable: true, get: function () { return status_code_1.StatusCode; } });
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/maishu-chitu-service/out/service.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/maishu-chitu-service/out/service.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatData = exports.Service = void 0;
-const callback_1 = __webpack_require__(/*! ./callback */ "./node_modules/maishu-chitu-service/out/callback.js");
-const errors_1 = __webpack_require__(/*! ./errors */ "./node_modules/maishu-chitu-service/out/errors.js");
-let methods = {
-    get: "get",
-    put: "put",
-    post: "post",
-    delete: "delete"
-};
-class Service {
-    constructor(handleError) {
-        this.error = callback_1.Callbacks();
-        this.headers = {};
-        if (handleError) {
-            this.error.add((sender, err) => {
-                handleError(err, this);
-            });
-        }
-    }
-    ajax(url, options) {
-        if (options === undefined)
-            options = {};
-        let data = options.data;
-        let method = options.method || methods.get;
-        let headers = Object.assign({}, Service.headers, this.headers, options.headers || {});
-        let body;
-        if (data != null) {
-            let is_json = (headers['content-type'] || '').indexOf('json') >= 0;
-            let is_formdata = (headers['content-type'] || '').indexOf('form-data') >= 0;
-            if (is_json) {
-                body = JSON.stringify(data);
-            }
-            else if (is_formdata) {
-                delete headers["content-type"];
-                body = new FormData();
-                for (let key in data) {
-                    body.append(key, data[key]);
-                }
-            }
-            else {
-                body = new URLSearchParams();
-                for (let key in data) {
-                    body.append(key, data[key]);
-                }
-            }
-        }
-        return new Promise((reslove, reject) => {
-            let options = method == methods.get ? { headers, method } : { headers, body, method };
-            let timeId;
-            if (options == null)
-                throw errors_1.errors.unexpectedNullValue('options');
-            if (method == methods.get) {
-                timeId = setTimeout(() => {
-                    console.warn(`timeout url: ${url}`);
-                    let err = new Error(); //new AjaxError(options.method);
-                    err.name = 'timeout';
-                    err.message = `Connect timeout, url: ${url}`;
-                    reject(err);
-                    this.error.fire(this, err);
-                    clearTimeout(timeId);
-                }, Service.settings.ajaxTimeout * 1000);
-            }
-            ajax(url, options)
-                .then(data => {
-                reslove(data);
-                if (timeId)
-                    clearTimeout(timeId);
-            })
-                .catch(err => {
-                if (typeof err == "object") {
-                    err.detail = `Execute url '${url}' by method ${options.method} fail.`;
-                }
-                this.error.fire(this, err);
-                if (err.processed !== undefined) {
-                    reslove(err.processed);
-                }
-                else {
-                    reject(err);
-                }
-                if (timeId)
-                    clearTimeout(timeId);
-            });
-        });
-    }
-    /**
-     * 创建服务
-     * @param type 服务类型
-     */
-    createService(type) {
-        type = type || Service;
-        let service = new type();
-        service.error.add((sender, error) => {
-            this.error.fire(service, error);
-        });
-        return service;
-    }
-    getByJson(url, data, headers) {
-        if (data && Object.getOwnPropertyNames(data).length > 0) {
-            url = `${url}?${encodeURIComponent(JSON.stringify(data))}`;
-        }
-        headers = headers || {};
-        headers["content-type"] = "application/json";
-        return this.ajax(url, { headers, method: methods.get });
-    }
-    putByJson(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "application/json";
-        return this.ajax(url, { headers, data, method: methods.put });
-    }
-    postByJson(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "application/json";
-        return this.ajax(url, { headers, data, method: methods.post });
-    }
-    deleteByJson(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "application/json";
-        return this.ajax(url, { headers, data, method: methods.delete });
-    }
-    putByFormData(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "multipart/form-data";
-        return this.ajax(url, { headers, data, method: methods.put });
-    }
-    postByFormData(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "multipart/form-data";
-        return this.ajax(url, { headers, data, method: methods.post });
-    }
-    deleteByFormData(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "multipart/form-data";
-        return this.ajax(url, { headers, data, method: methods.delete });
-    }
-    isEncoded(uri) {
-        try {
-            uri = uri || '';
-            return uri !== decodeURIComponent(uri);
-        }
-        catch (e) {
-            return false;
-        }
-    }
-    get(url, data, headers) {
-        data = data || {};
-        let params = "";
-        for (let key in data) {
-            if (data[key] == null)
-                continue;
-            let value = `${data[key]}`;
-            if (!this.isEncoded(value)) {
-                value = encodeURIComponent(value);
-            }
-            params = params ? `${params}&${key}=${value}` : `${key}=${value}`;
-        }
-        if (params) {
-            url = `${url}?${params}`;
-        }
-        return this.ajax(url, { headers, method: methods.get });
-    }
-    put(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "application/x-www-form-urlencoded";
-        return this.ajax(url, { headers, data, method: methods.put });
-    }
-    post(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "application/x-www-form-urlencoded";
-        return this.ajax(url, { headers, data, method: methods.post, });
-    }
-    delete(url, data, headers) {
-        headers = headers || {};
-        headers["content-type"] = "application/x-www-form-urlencoded";
-        return this.ajax(url, { headers, data, method: methods.delete });
-    }
-}
-exports.Service = Service;
-Service.settings = {
-    ajaxTimeout: 30,
-};
-Service.headers = {};
-function formatData(data) {
-    if (typeof data == "object") {
-        for (let key in data) {
-            data[key] = formatData(data[key]);
-        }
-        return data;
-    }
-    let datePattern = /^\d{4}-\d{1,2}-\d{1,2}T\d{1,2}:\d{1,2}:\d{1,2}/;
-    if (typeof data == "string" && datePattern.test(data)) {
-        return new Date(data);
-    }
-    return data;
-}
-exports.formatData = formatData;
-function ajax(url, options) {
-    return __awaiter(this, void 0, void 0, function* () {
-        let response;
-        if (typeof window === 'undefined') {
-            // 使用 global['require'] 而不是 require ，避免 webpack 处理 node-fetch
-            response = yield eval('require')('node-fetch')(url, options);
-        }
-        else {
-            response = yield fetch(url, options);
-        }
-        let responseText = response.text();
-        let p;
-        if (typeof responseText == 'string') {
-            p = new Promise((reslove, reject) => {
-                reslove(responseText);
-            });
-        }
-        else {
-            p = responseText;
-        }
-        let text = yield responseText;
-        let textObject;
-        let isJSONContextType = (response.headers.get('content-type') || '').indexOf('json') >= 0;
-        if (isJSONContextType) {
-            try {
-                textObject = text ? JSON.parse(text) : {};
-            }
-            catch (_a) {
-                let err = errors_1.errors.parseJSONFail(text);
-                console.error(err);
-                textObject = text;
-            }
-        }
-        else {
-            textObject = text;
-        }
-        if (response.status >= 300) {
-            let err = new Error();
-            err.method = options.method;
-            err.name = `${response.status}`;
-            err.message = typeof textObject == "string" ? textObject : (textObject.Message || textObject.message || '');
-            err.message = err.message || response.statusText;
-            throw err;
-        }
-        textObject = formatData(textObject);
-        return textObject;
-    });
-}
-//# sourceMappingURL=service.js.map
-
-/***/ }),
-
-/***/ "./node_modules/maishu-chitu-service/out/status-code.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/maishu-chitu-service/out/status-code.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.StatusCode = void 0;
-var StatusCode;
-(function (StatusCode) {
-    //=============================================
-    // 成功的状态码，必须大于 200
-    StatusCode[StatusCode["Login"] = 282] = "Login";
-    StatusCode[StatusCode["Logout"] = 283] = "Logout";
-    //=============================================
-    StatusCode[StatusCode["NotFound"] = 404] = "NotFound";
-    StatusCode[StatusCode["OK"] = 200] = "OK";
-    StatusCode[StatusCode["Redirect"] = 301] = "Redirect";
-    StatusCode[StatusCode["BadRequest"] = 400] = "BadRequest";
-    StatusCode[StatusCode["Forbidden"] = 403] = "Forbidden";
-    //=============================================
-    // 失败的状态码，必须小于或等于 700
-    StatusCode[StatusCode["CustomError"] = 700] = "CustomError";
-    StatusCode[StatusCode["ArgumentNull"] = 705] = "ArgumentNull";
-    /** 字段为空 */
-    StatusCode[StatusCode["FieldNull"] = 709] = "FieldNull";
-    StatusCode[StatusCode["ArgumentTypeIncorrect"] = 710] = "ArgumentTypeIncorrect";
-    /** 用户未登录 */
-    StatusCode[StatusCode["UserNotLogin"] = 718] = "UserNotLogin";
-    /** 没有权限 */
-    StatusCode[StatusCode["NoPermission"] = 726] = "NoPermission";
-    StatusCode[StatusCode["UserIdNull"] = 727] = "UserIdNull";
-    /** 指定 ID 的对象不存在 */
-    StatusCode[StatusCode["ObjectNotExistWithId"] = 728] = "ObjectNotExistWithId";
-})(StatusCode = exports.StatusCode || (exports.StatusCode = {}));
-//# sourceMappingURL=status-code.js.map
-
-/***/ }),
-
-/***/ "./node_modules/maishu-chitu-service/out/value-store.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/maishu-chitu-service/out/value-store.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CookieValueStore = exports.LocalValueStore = exports.ValueStore = void 0;
-/**
- * 实现数据的存储，以及数据修改的通知
- */
-class ValueStore {
-    constructor(value) {
-        this.items = new Array();
-        this._value = value;
-    }
-    attach(func, sender) {
-        if (this.value !== undefined) {
-            func(this.value, sender);
-        }
-        return this.add(func, sender);
-    }
-    add(func, sender) {
-        this.items.push({ func, sender });
-        return func;
-    }
-    remove(func) {
-        this.items = this.items.filter(o => o.func != func);
-    }
-    fire(value) {
-        this.items.forEach(o => o.func(value, o.sender));
-    }
-    get value() {
-        if (this._value === undefined)
-            return null;
-        return this._value;
-    }
-    set value(value) {
-        this._value = value || undefined;
-        this.fire(value);
-    }
-}
-exports.ValueStore = ValueStore;
-class LocalValueStore extends ValueStore {
-    constructor(storageName) {
-        super(LocalValueStore.loadValue(storageName));
-        this.storageName = storageName;
-    }
-    get value() {
-        return super.value;
-    }
-    set value(value) {
-        super.value = value;
-        LocalValueStore.saveValue(this.storageName, value);
-    }
-    static loadValue(storageName) {
-        let text = localStorage.getItem(storageName);
-        if (text == null)
-            return undefined;
-        return JSON.parse(text);
-    }
-    static saveValue(storageName, value) {
-        if (value == null) {
-            localStorage.removeItem(storageName);
-            return;
-        }
-        localStorage.setItem(storageName, JSON.stringify(value));
-    }
-}
-exports.LocalValueStore = LocalValueStore;
-class CookieValueStore extends ValueStore {
-    constructor(storageName) {
-        super(CookieValueStore.loadValue(storageName));
-        this.storageName = storageName;
-    }
-    get value() {
-        return super.value;
-    }
-    set value(value) {
-        super.value = value;
-        CookieValueStore.saveValue(this.storageName, value);
-    }
-    static loadValue(storageName) {
-        let text = CookieValueStore.getCookie(storageName);
-        if (text == null)
-            return undefined;
-        return JSON.parse(text);
-    }
-    static saveValue(storageName, value) {
-        if (value == null) {
-            CookieValueStore.removeCookie(storageName);
-            return;
-        }
-        // localStorage.setItem(this.storageName, JSON.stringify(value));
-        CookieValueStore.setCookie(storageName, JSON.stringify(value));
-    }
-    static setCookie(name, value, days) {
-        // nodejs 没有 document
-        if (typeof document == 'undefined')
-            return;
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-    static getCookie(name) {
-        if (typeof document == 'undefined')
-            return null;
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ')
-                c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0)
-                return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
-    static removeCookie(name) {
-        // document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        this.setCookie(name, '');
-    }
-}
-exports.CookieValueStore = CookieValueStore;
-//# sourceMappingURL=value-store.js.map
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -1406,6 +874,37 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
 /***/ "./out/dialogs/data-source-dialog.js":
 /*!*******************************************!*\
   !*** ./out/dialogs/data-source-dialog.js ***!
@@ -1489,8 +988,12 @@ class DataSourceDialog extends React.Component {
             React.createElement("div", { className: "modal-body" }, this.renderBody()),
             React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
                 React.createElement(paging_bar_1.PagingBar, { dataSource: this.props.dataSource }),
-                React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" }, this.props.cancelButtonText || "取消"),
-                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.confirm() }, this.props.confirmButtonText || "确定")));
+                React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
+                    React.createElement("i", { className: "glyphicon glyphicon-repeat" }),
+                    this.props.cancelButtonText || "取消"),
+                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.confirm() },
+                    React.createElement("i", { className: "glyphicon glyphicon-ok" }),
+                    this.props.confirmButtonText || "确定")));
     }
 }
 exports.DataSourceDialog = DataSourceDialog;
@@ -1564,8 +1067,12 @@ class ModalDialog extends React.Component {
         let footer = this.findChild((o) => { var _a; return ((_a = o.props) === null || _a === void 0 ? void 0 : _a.className) == "modal-footer"; });
         if (footer == null) {
             footer = React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
-                React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" }, this.props.cancelButtonText || "取消"),
-                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.props.onConfirm ? this.props.onConfirm(this) : null }, this.props.confirmButtonText || "确定"));
+                React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
+                    React.createElement("i", { className: "glyphicon glyphicon-repeat" }),
+                    this.props.cancelButtonText || "取消"),
+                React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.props.onConfirm ? this.props.onConfirm(this) : null },
+                    React.createElement("i", { className: "glyphicon glyphicon-ok" }),
+                    this.props.confirmButtonText || "确定"));
         }
         return footer;
     }
@@ -1818,7 +1325,7 @@ function createImageDataSource() {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(global) {
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -1830,7 +1337,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageService = exports.errors = void 0;
-const maishu_chitu_service_1 = __webpack_require__(/*! maishu-chitu-service */ "./node_modules/maishu-chitu-service/out/index.js");
+const maishu_chitu_service_1 = __webpack_require__(/*! maishu-chitu-service */ "maishu-chitu-service");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 const error_handle_1 = __webpack_require__(/*! ./error-handle */ "./out/error-handle.js");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
@@ -1869,15 +1376,22 @@ exports.errors = {
 //     noImageText: "暂无图片"
 // }
 /** 图片服务，实现图片的上传，获取 */
+const SERVICE_HOST = "image-service-host";
 class ImageService extends maishu_chitu_service_1.Service {
     constructor() {
         super(err => error_handle_1.errorHandle(err));
     }
     static get serviceHost() {
-        return this._serviceHost;
+        if (typeof window != "undefined")
+            return window[SERVICE_HOST];
+        return global[SERVICE_HOST];
     }
     static set serviceHost(value) {
-        this._serviceHost = value;
+        if (typeof window != "undefined") {
+            window[SERVICE_HOST] = value;
+            return;
+        }
+        global[SERVICE_HOST] = value;
     }
     static get imageUploadUrl() {
         if (!this._imageUploadUrl) {
@@ -2099,6 +1613,7 @@ function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
     return blob;
 }
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -2737,6 +2252,17 @@ function getLanguage() {
     return language;
 }
 
+
+/***/ }),
+
+/***/ "maishu-chitu-service":
+/*!***************************************!*\
+  !*** external "maishu-chitu-service" ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_maishu_chitu_service__;
 
 /***/ }),
 

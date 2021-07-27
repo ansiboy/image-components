@@ -7,14 +7,16 @@ import { DataSource, formatString } from "maishu-toolkit";
 
 import "../content/image-manager.less";
 import { DataSourceDialog, DataSourceDialogContext } from './dialogs/data-source-dialog';
+import ImageUpload from './image-upload';
 
 let strings = getStrings();
 type SiteImageData = {
-    id: string, width?: number, height?: number
+    id: string, width?: number, height?: number,
+    data?: string,
 }
 
 type State = {
-    images: SiteImageData[],
+    // images: SiteImageData[],
     selectedMax?: number
 }
 
@@ -30,15 +32,7 @@ class ImageManager extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
-        this.state = { images: [] };
         this.dataSource = createImageDataSource();
-        this.dataSource.selected.add(args => {
-            this.setState({ images: args.selectResult.dataItems })
-        })
-        this.dataSource.inserted.add(args => {
-            this.state.images.push(args.dataItem);
-            this.setState({ images: this.state.images })
-        })
     }
 
     show(selectedMax?: number, callback?: (imageIds: string[]) => void) {
@@ -52,12 +46,12 @@ class ImageManager extends React.Component<Props, State> {
         this.dataSource.insert({ data } as any);
     }
 
-    removeImage(item: { id: string }): any {
-        this.dataSource.delete(item);
-        let images = this.state.images;
-        images = images.filter(o => o.id != item.id);
-        this.setState({ images });
-    }
+    // removeImage(item: { id: string }): any {
+    //     this.dataSource.delete(item);
+    //     let images = this.state.images;
+    //     images = images.filter(o => o.id != item.id);
+    //     this.setState({ images });
+    // }
 
     private onConfirm() {
         if (this.showCallback) {
@@ -87,7 +81,9 @@ class ImageManager extends React.Component<Props, State> {
             <DataSourceDialogContext.Consumer>
                 {args => {
                     let dataItem = args.dataItem as SiteImageData;
-                    return <ImageThumber<{ id: string }> key={`${dataItem.id}`} id={dataItem.id} imagePath={ImageService.imageSource(dataItem.id, 120, 120)}
+                    let index = args.index;
+                    let isLast = index >= (this.dialog?.state.items || []).length - 1;
+                    let imageThumber = <ImageThumber<{ id: string }> key={`${dataItem.id}`} id={dataItem.id} imagePath={ImageService.imageSource(dataItem.id, 120, 120)}
                         onClick={e => {
                             let selecteIds = this.selectedItems.map(o => o.props.id);
                             let exists = selecteIds.indexOf(dataItem.id) >= 0;
@@ -103,17 +99,20 @@ class ImageManager extends React.Component<Props, State> {
                                 this.selectedItems[i].setState({ selectedText: `${i + 1}` });
                             }
 
+                        }} />;
+
+                    return isLast ? <>
+                        {imageThumber}
+                        <ImageUpload saveImage={async e => {
+                            this.dataSource.insert({ data: e.base64 } as SiteImageData);
                         }} />
+                    </> : imageThumber;
                 }}
             </DataSourceDialogContext.Consumer>
         </DataSourceDialog>
     }
 }
 
-// let element = document.createElement("div");
-// element.className = "image-manager";
-// document.body.append(element);
-// let instance: ImageManager = ReactDOM.render(<ImageManager />, element) as any;
 
 let imageManager: ImageManager;
 function getImageManager() {
@@ -162,8 +161,11 @@ function createImageDataSource() {
             return result;
         },
         async insert(item) {
-            console.assert((item as any).data != null);
-            let result = await station.upload((item as any).data);
+            console.assert(item.data != null);
+            if (!item.data)
+                throw new Error("Data is null");
+
+            let result = await station.upload(item.data);
             Object.assign(item, result);
             return result;
         }

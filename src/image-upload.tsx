@@ -112,7 +112,7 @@ class ImageUpload extends React.Component<ImageUploadProps, ImageUploadState> {
                         <i className="fa fa-plus fa-4x"></i>
                         <div>{title}</div>
                     </>
-                    <input type="file" style={{}}
+                    <input type="file" style={{}} accept="image/*"
                         ref={(e: HTMLInputElement) => this.setFileInput(e)} />
                 </div>
             </div>
