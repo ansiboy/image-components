@@ -46,13 +46,6 @@ class ImageManager extends React.Component<Props, State> {
         this.dataSource.insert({ data } as any);
     }
 
-    // removeImage(item: { id: string }): any {
-    //     this.dataSource.delete(item);
-    //     let images = this.state.images;
-    //     images = images.filter(o => o.id != item.id);
-    //     this.setState({ images });
-    // }
-
     private onConfirm() {
         if (this.showCallback) {
             let imageIds = this.selectedItems.map(o => o.props.imagePath);
@@ -140,8 +133,8 @@ export function showImageDialog(maxImagesCount: number, callback: (imageIds: str
 export function showImageDialog(callback: (imageIds: string[]) => void): void
 export function showImageDialog(maxImagesCount: any, callback?: any) {
     if (typeof maxImagesCount == 'function') {
-        maxImagesCount = null
-        callback = maxImagesCount
+        callback = maxImagesCount;
+        maxImagesCount = null;
     }
     let instance = getImageManager();
     instance.show(maxImagesCount, callback)

@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.6.13
+ *  maishu-image-components v1.6.14
  * 
  * 
  */
@@ -417,7 +417,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n  width: 100%;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  cursor: pointer;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n", "",{"version":3,"sources":["webpack://./content/image-manager.less"],"names":[],"mappings":"AAAA;EACE,YAAY;AACd;AACA;EACE,WAAW;EACX,cAAc;EACd,WAAW;AACb;AACA;EACE,eAAe;EACf,kBAAkB;AACpB;AACA;EACE,SAAS;AACX;AACA;EACE,SAAS;AACX;AACA;EACE,YAAY;EACZ,WAAW;EACX,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,eAAe;AACjB;AACA;EACE,YAAY;EACZ,WAAW;AACb","sourcesContent":[".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n  width: 100%;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  cursor: pointer;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, ".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n  width: 100%;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  cursor: pointer;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n.image-manager i {\n  margin-right: 5px;\n}\n", "",{"version":3,"sources":["webpack://./content/image-manager.less"],"names":[],"mappings":"AAAA;EACE,YAAY;AACd;AACA;EACE,WAAW;EACX,cAAc;EACd,WAAW;AACb;AACA;EACE,eAAe;EACf,kBAAkB;AACpB;AACA;EACE,SAAS;AACX;AACA;EACE,SAAS;AACX;AACA;EACE,YAAY;EACZ,WAAW;EACX,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,eAAe;AACjB;AACA;EACE,YAAY;EACZ,WAAW;AACb;AACA;EACE,iBAAiB;AACnB","sourcesContent":[".image-manager {\n  z-index: 800;\n}\n.image-manager .modal-body {\n  clear: both;\n  display: table;\n  width: 100%;\n}\n.image-manager .modal-body .col-xs-2 {\n  margin-top: 6px;\n  margin-bottom: 6px;\n}\n.image-manager .modal-footer .pagination {\n  margin: 0;\n}\n.image-manager .modal-header h4 {\n  margin: 0;\n}\n.image-manager .image-thumber {\n  margin: 10px;\n  float: left;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  cursor: pointer;\n}\n.image-manager .image-upload {\n  margin: 10px;\n  float: left;\n}\n.image-manager i {\n  margin-right: 5px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -990,10 +990,10 @@ class DataSourceDialog extends React.Component {
                 React.createElement(paging_bar_1.PagingBar, { dataSource: this.props.dataSource }),
                 React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
                     React.createElement("i", { className: "glyphicon glyphicon-repeat" }),
-                    this.props.cancelButtonText || "取消"),
+                    React.createElement("span", null, this.props.cancelButtonText || "取消")),
                 React.createElement("button", { type: "button", className: "btn btn-primary", onClick: () => this.confirm() },
                     React.createElement("i", { className: "glyphicon glyphicon-ok" }),
-                    this.props.confirmButtonText || "确定")));
+                    React.createElement("span", null, this.props.confirmButtonText || "确定"))));
     }
 }
 exports.DataSourceDialog = DataSourceDialog;
@@ -1183,20 +1183,13 @@ const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 __webpack_require__(/*! ../content/image-manager.less */ "./content/image-manager.less");
 const data_source_dialog_1 = __webpack_require__(/*! ./dialogs/data-source-dialog */ "./out/dialogs/data-source-dialog.js");
+const image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
 let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
         super(props);
         this.selectedItems = [];
-        this.state = { images: [] };
         this.dataSource = createImageDataSource();
-        this.dataSource.selected.add(args => {
-            this.setState({ images: args.selectResult.dataItems });
-        });
-        this.dataSource.inserted.add(args => {
-            this.state.images.push(args.dataItem);
-            this.setState({ images: this.state.images });
-        });
     }
     show(selectedMax, callback) {
         var _a;
@@ -1209,12 +1202,6 @@ class ImageManager extends React.Component {
         return __awaiter(this, void 0, void 0, function* () {
             this.dataSource.insert({ data });
         });
-    }
-    removeImage(item) {
-        this.dataSource.delete(item);
-        let images = this.state.images;
-        images = images.filter(o => o.id != item.id);
-        this.setState({ images });
     }
     onConfirm() {
         var _a;
@@ -1239,8 +1226,11 @@ class ImageManager extends React.Component {
         let props = this.props;
         return React.createElement(data_source_dialog_1.DataSourceDialog, { dataSource: this.dataSource, pageItemsCount: 17, isLarge: true, title: props.title, onConfirm: () => this.onConfirm(), ref: e => this.dialog = e || this.dialog },
             React.createElement(data_source_dialog_1.DataSourceDialogContext.Consumer, null, args => {
+                var _a;
                 let dataItem = args.dataItem;
-                return React.createElement(image_thumber_1.default, { key: `${dataItem.id}`, id: dataItem.id, imagePath: image_service_1.ImageService.imageSource(dataItem.id, 120, 120), onClick: e => {
+                let index = args.index;
+                let isLast = index >= (((_a = this.dialog) === null || _a === void 0 ? void 0 : _a.state.items) || []).length - 1;
+                let imageThumber = React.createElement(image_thumber_1.default, { key: `${dataItem.id}`, id: dataItem.id, imagePath: image_service_1.ImageService.imageSource(dataItem.id, 120, 120), onClick: e => {
                         let selecteIds = this.selectedItems.map(o => o.props.id);
                         let exists = selecteIds.indexOf(dataItem.id) >= 0;
                         if (exists) {
@@ -1254,13 +1244,14 @@ class ImageManager extends React.Component {
                             this.selectedItems[i].setState({ selectedText: `${i + 1}` });
                         }
                     } });
+                return isLast ? React.createElement(React.Fragment, null,
+                    imageThumber,
+                    React.createElement(image_upload_1.default, { saveImage: (e) => __awaiter(this, void 0, void 0, function* () {
+                            this.dataSource.insert({ data: e.base64 });
+                        }) })) : imageThumber;
             }));
     }
 }
-// let element = document.createElement("div");
-// element.className = "image-manager";
-// document.body.append(element);
-// let instance: ImageManager = ReactDOM.render(<ImageManager />, element) as any;
 let imageManager;
 function getImageManager() {
     if (imageManager)
@@ -1279,8 +1270,8 @@ exports.default = {
 };
 function showImageDialog(maxImagesCount, callback) {
     if (typeof maxImagesCount == 'function') {
-        maxImagesCount = null;
         callback = maxImagesCount;
+        maxImagesCount = null;
     }
     let instance = getImageManager();
     instance.show(maxImagesCount, callback);
@@ -1305,6 +1296,8 @@ function createImageDataSource() {
         insert(item) {
             return __awaiter(this, void 0, void 0, function* () {
                 console.assert(item.data != null);
+                if (!item.data)
+                    throw new Error("Data is null");
                 let result = yield station.upload(item.data);
                 Object.assign(item, result);
                 return result;
@@ -1751,7 +1744,7 @@ class ImageUpload extends React.Component {
                     React.createElement(React.Fragment, null,
                         React.createElement("i", { className: "fa fa-plus fa-4x" }),
                         React.createElement("div", null, title)),
-                    React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
+                    React.createElement("input", { type: "file", style: {}, accept: "image/*", ref: (e) => this.setFileInput(e) })));
         }
         if (this.props.displayImage.fixed) {
             return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
