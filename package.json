@@ -1,6 +1,6 @@
 {
   "name": "maishu-image-components",
-  "version": "1.6.14",
+  "version": "1.6.16",
   "description": "",
   "main": "index.js",
   "types": "out/index.d.ts",
@@ -39,6 +39,7 @@
   "dependencies": {
     "canvas": "^2.8.0",
     "maishu-chitu-service": "^1.40.2",
+    "maishu-image-service": "^1.12.0",
     "maishu-toolkit": "^1.6.7",
     "maishu-ui-toolkit": "^1.10.0",
     "react": "^16.7.0",

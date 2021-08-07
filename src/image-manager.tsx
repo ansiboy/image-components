@@ -7,7 +7,7 @@ import { DataSource, formatString } from "maishu-toolkit";
 
 import "../content/image-manager.less";
 import { DataSourceDialog, DataSourceDialogContext } from './dialogs/data-source-dialog';
-import ImageUpload from './image-upload';
+import ImageSelector from './image-selector';
 
 let strings = getStrings();
 type SiteImageData = {
@@ -96,7 +96,7 @@ class ImageManager extends React.Component<Props, State> {
 
                     return isLast ? <>
                         {imageThumber}
-                        <ImageUpload saveImage={async e => {
+                        <ImageSelector saveImage={async e => {
                             this.dataSource.insert({ data: e.base64 } as SiteImageData);
                         }} />
                     </> : imageThumber;

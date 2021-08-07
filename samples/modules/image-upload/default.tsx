@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImageService, ImageUpload, showImageDialog } from "maishu-image-components";
+import { ImageService, ImageSelector as ImageUpload, showImageDialog } from "maishu-image-components";
 
 let imageService = new ImageService();
 interface State {

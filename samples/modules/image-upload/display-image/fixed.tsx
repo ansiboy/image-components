@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImageService, ImageUpload, showImageDialog } from "maishu-image-components";
+import { ImageService, ImageSelector, showImageDialog } from "maishu-image-components";
 
 let imageService = new ImageService();
 interface State {
@@ -47,11 +47,11 @@ export default class ImageUploadPage extends React.Component<{}, State> {
             <br />
             <label>固定大小</label>
             <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: true }} />`}</pre>
-            <ImageUpload saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: true }} />
+            <ImageSelector saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: true }} />
             <hr />
             <label>不固定大小</label>
             <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: false }} />`}</pre>
-            <ImageUpload saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: false }} />
+            <ImageSelector saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: false }} />
             <hr />
             {messageElement}
         </div>;

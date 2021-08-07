@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.6.14
+ *  maishu-image-components v1.6.16
  * 
  * 
  */
@@ -467,7 +467,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n", "",{"version":3,"sources":["webpack://./content/image-upload.less"],"names":[],"mappings":"AAAA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,UAAU;EACV,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,WAAW;EACX,eAAe;AACjB;AACA;EACE,gBAAgB;AAClB","sourcesContent":[".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, ".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n.image-upload i.fa-spinner {\n  margin-top: 35px;\n}\n", "",{"version":3,"sources":["webpack://./content/image-upload.less"],"names":[],"mappings":"AAAA;EACE,yBAAyB;EACzB,kBAAkB;EAClB,aAAa;EACb,YAAY;AACd;AACA;EACE,UAAU;EACV,kBAAkB;EAClB,aAAa;EACb,YAAY;EACZ,WAAW;EACX,eAAe;AACjB;AACA;EACE,gBAAgB;AAClB;AACA;EACE,gBAAgB;AAClB","sourcesContent":[".image-upload .item {\n  border: 1px solid #cccccc;\n  text-align: center;\n  height: 120px;\n  width: 120px;\n}\n.image-upload input[type=\"file\"] {\n  opacity: 0;\n  position: relative;\n  height: 120px;\n  width: 120px;\n  top: -100px;\n  cursor: pointer;\n}\n.image-upload i {\n  margin-top: 20px;\n}\n.image-upload i.fa-spinner {\n  margin-top: 35px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -1183,7 +1183,7 @@ const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 __webpack_require__(/*! ../content/image-manager.less */ "./content/image-manager.less");
 const data_source_dialog_1 = __webpack_require__(/*! ./dialogs/data-source-dialog */ "./out/dialogs/data-source-dialog.js");
-const image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
+const image_selector_1 = __webpack_require__(/*! ./image-selector */ "./out/image-selector.js");
 let strings = strings_1.getStrings();
 class ImageManager extends React.Component {
     constructor(props) {
@@ -1246,7 +1246,7 @@ class ImageManager extends React.Component {
                     } });
                 return isLast ? React.createElement(React.Fragment, null,
                     imageThumber,
-                    React.createElement(image_upload_1.default, { saveImage: (e) => __awaiter(this, void 0, void 0, function* () {
+                    React.createElement(image_selector_1.default, { saveImage: (e) => __awaiter(this, void 0, void 0, function* () {
                             this.dataSource.insert({ data: e.base64 });
                         }) })) : imageThumber;
             }));
@@ -1306,6 +1306,118 @@ function createImageDataSource() {
     });
     return dataSource;
 }
+
+
+/***/ }),
+
+/***/ "./out/image-selector.js":
+/*!*******************************!*\
+  !*** ./out/image-selector.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = __webpack_require__(/*! react */ "react");
+const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
+__webpack_require__(/*! ../content/image-upload.less */ "./content/image-upload.less");
+const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
+const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
+let strings = strings_1.getStrings();
+class ImageSelector extends React.Component {
+    constructor(props) {
+        var _a;
+        super(props);
+        this.state = { imageSource: (_a = props.displayImage) === null || _a === void 0 ? void 0 : _a.source };
+    }
+    updloadImage(imageFile) {
+        let { width, height } = this.props;
+        ui.imageFileToBase64(imageFile)
+            .then(data => {
+            this.props.saveImage(data, imageFile);
+            this.setState({ imageSource: data.base64 });
+        });
+    }
+    setFileInput(e) {
+        if (!e || e.onchange)
+            return;
+        this.file = e;
+        e.onchange = () => {
+            if (e.files != null && e.files.length > 0)
+                this.updloadImage(e.files[0]);
+        };
+    }
+    setSizes() {
+        let width = this.itemElement.offsetWidth;
+        //==========================================
+        // 获取元素的宽带，作为高度，如果小于一个很小的数值，
+        // 比如 10，则认为元素没有渲染完成，稍后再获取
+        if (width < 10) {
+            setTimeout(() => {
+                this.setSizes();
+            }, 100);
+        }
+        //==========================================
+        let height = width;
+        let itemPaddingTop = 0;
+        this.itemElement.style.height = `${height}px`;
+        if (height > 80) {
+            itemPaddingTop = (height - 80) / 2;
+            this.itemElement.style.paddingTop = `${itemPaddingTop}px`;
+        }
+        this.file.style.marginTop = `-${height - itemPaddingTop}px`;
+        this.file.style.width = `${width}px`;
+        this.file.style.height = `${height}px`;
+    }
+    render() {
+        let { title, className } = this.props;
+        let { imageSource } = this.state || {};
+        title = title || strings.imageUpload;
+        className = className || '';
+        if (imageSource == null || this.props.displayImage == null) {
+            return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+                React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+                    React.createElement(React.Fragment, null,
+                        React.createElement("i", { className: "fa fa-plus fa-4x" }),
+                        React.createElement("div", null, title)),
+                    React.createElement("input", { type: "file", style: {}, accept: "image/*", ref: (e) => this.setFileInput(e) })));
+        }
+        if (this.props.displayImage.fixed) {
+            return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+                React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+                    React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } }),
+                    React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
+        }
+        return React.createElement("div", { className: `image-upload ${className}`, ref: div => {
+                if (!div)
+                    return;
+                let imageElement = document.createElement("img");
+                imageElement.src = imageSource;
+                imageElement.onload = (e) => {
+                    var _a;
+                    let width = e.target.width;
+                    let height = e.target.height;
+                    let maxWidth = (_a = this.props.displayImage) === null || _a === void 0 ? void 0 : _a.maxWidth;
+                    if (maxWidth) {
+                        let scale = height / width; //`${this.props.displayImage.maxWidth}px`;
+                        height = maxWidth * scale;
+                        width = maxWidth;
+                    }
+                    div.style.backgroundImage = `url(${e.target.src})`;
+                    div.style.backgroundSize = `${width}px ${height}px`;
+                    div.style.backgroundRepeat = "no-repeat";
+                    let fileElement = div.querySelector('[type="file"]');
+                    fileElement.style.width = `${width}px`;
+                    fileElement.style.height = `${height}px`;
+                };
+                ReactDOM.render(React.createElement(React.Fragment, null,
+                    React.createElement("input", { type: "file", style: { opacity: 0 }, ref: (e) => this.setFileInput(e) })), div);
+            } });
+    }
+}
+exports.default = ImageSelector;
 
 
 /***/ }),
@@ -1682,104 +1794,56 @@ exports.default = ImageThumber;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ImageUpload = void 0;
 const React = __webpack_require__(/*! react */ "react");
-const ui = __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit");
-__webpack_require__(/*! ../content/image-upload.less */ "./content/image-upload.less");
-const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
-const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
-let strings = strings_1.getStrings();
+const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
 class ImageUpload extends React.Component {
     constructor(props) {
-        var _a;
         super(props);
-        this.state = { imageSource: (_a = props.displayImage) === null || _a === void 0 ? void 0 : _a.source };
+        this.state = { isLoading: false, imageId: props.imageId || null };
     }
-    updloadImage(imageFile) {
-        let { width, height } = this.props;
-        ui.imageFileToBase64(imageFile)
-            .then(data => {
-            this.props.saveImage(data, imageFile);
-            this.setState({ imageSource: data.base64 });
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.imageId == prevState.imageId)
+            return null;
+        return { imageId: nextProps.imageId };
+    }
+    uploadFile(data) {
+        this.setState({ isLoading: true, imageId: null });
+        this.props.imageService.upload(data).then(r => {
+            this.setState({ isLoading: false, imageId: r.id });
+            if (this.props.onUploaded) {
+                this.props.onUploaded(r.id);
+            }
+        }).catch(err => {
+            this.setState({ isLoading: false });
         });
     }
-    setFileInput(e) {
-        if (!e || e.onchange)
-            return;
-        this.file = e;
-        e.onchange = () => {
-            if (e.files != null && e.files.length > 0)
-                this.updloadImage(e.files[0]);
-        };
-    }
-    setSizes() {
-        let width = this.itemElement.offsetWidth;
-        //==========================================
-        // 获取元素的宽带，作为高度，如果小于一个很小的数值，
-        // 比如 10，则认为元素没有渲染完成，稍后再获取
-        if (width < 10) {
-            setTimeout(() => {
-                this.setSizes();
-            }, 100);
-        }
-        //==========================================
-        let height = width;
-        let itemPaddingTop = 0;
-        this.itemElement.style.height = `${height}px`;
-        if (height > 80) {
-            itemPaddingTop = (height - 80) / 2;
-            this.itemElement.style.paddingTop = `${itemPaddingTop}px`;
-        }
-        this.file.style.marginTop = `-${height - itemPaddingTop}px`;
-        this.file.style.width = `${width}px`;
-        this.file.style.height = `${height}px`;
-    }
     render() {
-        let { title, className } = this.props;
-        let { imageSource } = this.state || {};
-        title = title || strings.imageUpload;
-        className = className || '';
-        if (imageSource == null || this.props.displayImage == null) {
-            return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
-                React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+        let isLoading = this.state.isLoading;
+        let imageId = this.state.imageId;
+        if (isLoading) {
+            return React.createElement("div", { className: "image-upload" },
+                React.createElement("div", { className: "item" },
+                    React.createElement("i", { className: "fa fa-spinner fa-spin fa-3x fa-fw" }),
+                    React.createElement("span", { className: "sr-only" }, "Loading...")));
+        }
+        return React.createElement("div", { className: "image-upload" },
+            React.createElement("div", { className: "item" },
+                imageId ? React.createElement("img", { src: image_service_1.ImageService.imageSource(imageId || "", 100, 100), style: { width: "100%", height: "100%" } }) :
                     React.createElement(React.Fragment, null,
                         React.createElement("i", { className: "fa fa-plus fa-4x" }),
-                        React.createElement("div", null, title)),
-                    React.createElement("input", { type: "file", style: {}, accept: "image/*", ref: (e) => this.setFileInput(e) })));
-        }
-        if (this.props.displayImage.fixed) {
-            return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
-                React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
-                    React.createElement("img", { src: imageSource, style: { width: "100%", height: "100%" } }),
-                    React.createElement("input", { type: "file", style: {}, ref: (e) => this.setFileInput(e) })));
-        }
-        return React.createElement("div", { className: `image-upload ${className}`, ref: div => {
-                if (!div)
-                    return;
-                let imageElement = document.createElement("img");
-                imageElement.src = imageSource;
-                imageElement.onload = (e) => {
-                    var _a;
-                    let width = e.target.width;
-                    let height = e.target.height;
-                    let maxWidth = (_a = this.props.displayImage) === null || _a === void 0 ? void 0 : _a.maxWidth;
-                    if (maxWidth) {
-                        let scale = height / width; //`${this.props.displayImage.maxWidth}px`;
-                        height = maxWidth * scale;
-                        width = maxWidth;
-                    }
-                    div.style.backgroundImage = `url(${e.target.src})`;
-                    div.style.backgroundSize = `${width}px ${height}px`;
-                    div.style.backgroundRepeat = "no-repeat";
-                    let fileElement = div.querySelector('[type="file"]');
-                    fileElement.style.width = `${width}px`;
-                    fileElement.style.height = `${height}px`;
-                };
-                ReactDOM.render(React.createElement(React.Fragment, null,
-                    React.createElement("input", { type: "file", style: { opacity: 0 }, ref: (e) => this.setFileInput(e) })), div);
-            } });
+                        React.createElement("div", null, this.props.text || "")),
+                React.createElement("input", { type: "file", multiple: false, accept: "image/*", onChange: e => {
+                        let selectedFile = (e.target.files || [])[0];
+                        if (selectedFile == null)
+                            return;
+                        this.uploadFile(selectedFile);
+                        e.target.value = "";
+                    } })));
     }
 }
-exports.default = ImageUpload;
+exports.ImageUpload = ImageUpload;
+ImageUpload.defaultProps = { text: "上传图片" };
 
 
 /***/ }),
@@ -1794,11 +1858,11 @@ exports.default = ImageUpload;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataSourcePagingBar = exports.PagingBar = exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageUpload = exports.ImageThumber = void 0;
+exports.ImageUpload = exports.DataSourcePagingBar = exports.PagingBar = exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageSelector = exports.ImageThumber = void 0;
 var image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
 Object.defineProperty(exports, "ImageThumber", { enumerable: true, get: function () { return image_thumber_1.default; } });
-var image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
-Object.defineProperty(exports, "ImageUpload", { enumerable: true, get: function () { return image_upload_1.default; } });
+var image_selector_1 = __webpack_require__(/*! ./image-selector */ "./out/image-selector.js");
+Object.defineProperty(exports, "ImageSelector", { enumerable: true, get: function () { return image_selector_1.default; } });
 var image_manager_1 = __webpack_require__(/*! ./image-manager */ "./out/image-manager.js");
 Object.defineProperty(exports, "showImageDialog", { enumerable: true, get: function () { return image_manager_1.showImageDialog; } });
 var image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
@@ -1812,6 +1876,8 @@ var paging_bar_1 = __webpack_require__(/*! ./paging-bar */ "./out/paging-bar.js"
 Object.defineProperty(exports, "PagingBar", { enumerable: true, get: function () { return paging_bar_1.PagingBar; } });
 var number_paging_bar_1 = __webpack_require__(/*! ./number-paging-bar */ "./out/number-paging-bar.js");
 Object.defineProperty(exports, "DataSourcePagingBar", { enumerable: true, get: function () { return number_paging_bar_1.DataSourcePagingBar; } });
+var image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
+Object.defineProperty(exports, "ImageUpload", { enumerable: true, get: function () { return image_upload_1.ImageUpload; } });
 
 
 /***/ }),

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImageService, ImageUpload, showImageDialog } from "maishu-image-components";
+import { ImageService, ImageSelector, showImageDialog } from "maishu-image-components";
 
 let imageService = new ImageService();
 interface State {
@@ -47,7 +47,7 @@ export default class ImageUploadPage extends React.Component<{}, State> {
             <br />
             <label>设置默认图片</label>
             <pre>{`<ImageUpload saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ source: "http://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" }} />`}</pre>
-            <ImageUpload saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: true, source: "http://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" }} />
+            <ImageSelector saveImage={(data) => this.uploadImage(data.base64)} displayImage={{ fixed: true, source: "http://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" }} />
             <hr />
         </div>;
 
