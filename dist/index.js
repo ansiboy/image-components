@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.6.16
+ *  maishu-image-components v1.6.18
  * 
  * 
  */
@@ -1827,7 +1827,7 @@ class ImageUpload extends React.Component {
                     React.createElement("i", { className: "fa fa-spinner fa-spin fa-3x fa-fw" }),
                     React.createElement("span", { className: "sr-only" }, "Loading...")));
         }
-        return React.createElement("div", { className: "image-upload" },
+        return React.createElement("div", { className: "image-upload", ref: e => this.element = e || this.element },
             React.createElement("div", { className: "item" },
                 imageId ? React.createElement("img", { src: image_service_1.ImageService.imageSource(imageId || "", 100, 100), style: { width: "100%", height: "100%" } }) :
                     React.createElement(React.Fragment, null,
@@ -1839,7 +1839,8 @@ class ImageUpload extends React.Component {
                             return;
                         this.uploadFile(selectedFile);
                         e.target.value = "";
-                    } })));
+                    } })),
+            this.props.children);
     }
 }
 exports.ImageUpload = ImageUpload;
