@@ -17,6 +17,8 @@ export class ImageUpload extends React.Component<ImageUploadProps, ImageUploadSt
 
     static defaultProps: Pick<ImageUploadProps, "text"> = { text: "上传图片" };
 
+    element: HTMLElement;
+
     constructor(props: ImageUploadProps) {
         super(props);
 
@@ -55,7 +57,7 @@ export class ImageUpload extends React.Component<ImageUploadProps, ImageUploadSt
             </div>
         }
 
-        return <div className="image-upload">
+        return <div className="image-upload" ref={e => this.element = e || this.element}>
             <div className="item">
                 {imageId ? <img src={ImageService.imageSource(imageId || "", 100, 100)} style={{ width: "100%", height: "100%" }} /> :
                     <>
@@ -71,6 +73,7 @@ export class ImageUpload extends React.Component<ImageUploadProps, ImageUploadSt
                     e.target.value = "";
                 }} />
             </div>
+            {this.props.children}
         </div>
     }
 }
