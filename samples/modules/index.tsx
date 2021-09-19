@@ -48,6 +48,9 @@ export default class IndexPage extends React.Component {
                 <li className="list-group-item">
                     <a href="#dialogs/image">图片对话框</a>
                 </li>
+                <li className="list-group-item">
+                    <a href="#video-upload/default">视频上传</a>
+                </li>
             </ul>
         </div>
     }

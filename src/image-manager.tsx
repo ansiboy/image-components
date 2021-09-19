@@ -1,7 +1,7 @@
 import ImageThumber from './image-thumber';
 import React = require('react');
 import ReactDOM = require('react-dom');
-import { ImageService } from "./image-service";
+import { ImageService } from "./services/image-service";
 import { getStrings } from "./strings";
 import { DataSource, formatString } from "maishu-toolkit";
 

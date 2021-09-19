@@ -1,8 +1,7 @@
 import { Service } from "maishu-chitu-service";
 import { DataSourceSelectArguments, DataSourceSelectResult } from "maishu-toolkit";
 import { pathConcat } from "maishu-toolkit";
-import { errorHandle } from "./error-handle";
-import { getStrings } from "./strings";
+import { getStrings } from "../strings";
 
 let strings = getStrings();
 
@@ -76,11 +75,6 @@ export class ImageService extends Service {
         this._imageUploadUrl = value;
     }
 
-    constructor() {
-        super(err => errorHandle(err))
-
-    }
-
     protected url(path: string) {
         return ImageService.url(path);
     }
@@ -115,6 +109,22 @@ export class ImageService extends Service {
         if (isBase64) {
             return id;
         }
+
+        //======================================================
+        // 如果多张图片，取第一张
+        if (id.indexOf(",") > 0) {
+            let arr = id.split(",").filter(o => o);
+            id = arr[0];
+        }
+        //======================================================
+
+        // 重路径提取图片 ID
+        let regex = /http\S+([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}_\d+_\d+)/i;
+        let m = regex.exec(id);
+        if (m) {
+            id = m[1];
+        }
+
 
         if (id != null && (id.startsWith("http://") || id.startsWith("https://")) || id.startsWith("//"))
             return id;
@@ -236,17 +246,17 @@ export class ImageService extends Service {
         if (typeof fileData == "string") {
             let imageBase64 = fileData;
             if (!imageBase64) throw errors.argumentNull('imageBase64')
-            let imageSize = await this.getImageSize(imageBase64)
-            let maxWidth = 800
-            let maxHeight = 800
-            if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
-                let height = imageSize.height / imageSize.width * maxWidth
-                imageBase64 = await this.resize(imageBase64, maxWidth, height)
-            }
-            else if (imageSize.height > maxHeight) {
-                let width = imageSize.width / imageSize.height * maxHeight
-                imageBase64 = await this.resize(imageBase64, width, maxHeight)
-            }
+            // let imageSize = await this.getImageSize(imageBase64)
+            // let maxWidth = 800
+            // let maxHeight = 800
+            // if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
+            //     let height = imageSize.height / imageSize.width * maxWidth
+            //     imageBase64 = await this.resize(imageBase64, maxWidth, height)
+            // }
+            // else if (imageSize.height > maxHeight) {
+            //     let width = imageSize.width / imageSize.height * maxHeight
+            //     imageBase64 = await this.resize(imageBase64, width, maxHeight)
+            // }
 
             let arr = imageBase64.split(",");
             console.assert(arr.length == 2);

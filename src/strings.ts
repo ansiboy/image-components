@@ -10,6 +10,8 @@ interface Strings {
     dataLoading: string;
     dataEmpty: string;
     imageSelectMax: string;
+    selectFile: string;
+    uploading: string;
 }
 
 let chinese: Strings = {
@@ -22,7 +24,9 @@ let chinese: Strings = {
     noImageText: "暂无图片",
     dataLoading: "数据正在加载中...",
     dataEmpty: "暂无所要展示的数据",
-    imageSelectMax: "最多选择 {0} 张图片"
+    imageSelectMax: "最多选择 {0} 张图片",
+    selectFile: "选择文件",
+    uploading: "正在上传中",
 }
 
 let english: Strings = {
@@ -35,7 +39,9 @@ let english: Strings = {
     noImageText: "NO IMAGE",
     dataLoading: "Data is loading...",
     dataEmpty: "Data is empty",
-    imageSelectMax: "Choose up to {0} pictures"
+    imageSelectMax: "Choose up to {0} pictures",
+    selectFile: "Select File",
+    uploading: "Uploading",
 }
 
 let strings = { chinese, english, }

@@ -1,4 +1,4 @@
-import { DataSourceDialog, ImageService, ImageThumber, DataSourceDialogContext } from "maishu-image-components";
+import { DataSourceDialog, ImageService, ImageThumber, DataSourceDialogContext, DataSourceDialogTop } from "maishu-image-components";
 import { DataSource } from "maishu-toolkit";
 import * as React from "react";
 import "./dialog-data-source.scss";
@@ -15,6 +15,16 @@ export default function () {
             onConfirm={() => {
 
             }}>
+            <DataSourceDialogTop.Consumer>
+                {args => <div className="input-group">
+                    <input className="input-control" />
+                    <div className="input-group-btn">
+                        <button type="button" className="btn btn-default dropdown-toggle" >
+                            搜索
+                        </button>
+                    </div>
+                </div>}
+            </DataSourceDialogTop.Consumer>
             <DataSourceDialogContext.Consumer>
                 {args => <ImageThumber<{ id: string }> key={args.dataItem.id} imagePath={imageService.imageSource(args.dataItem.id, 120, 120)} id={args.dataItem.id}
                     onClick={(e: ImageThumber<{ id: string }>) => {

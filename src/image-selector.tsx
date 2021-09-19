@@ -45,8 +45,6 @@ interface ImageSelectorState {
 
 class ImageSelector extends React.Component<ImageSelectorProps, ImageSelectorState> {
 
-    // static defaultProps: Pick<ImageUploadProps, "displayImage"> = { displayImage: { fixed: true } };
-
     itemElement: HTMLElement;
     file: HTMLInputElement;
     image: HTMLImageElement;

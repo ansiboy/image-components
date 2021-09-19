@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImageService } from "./image-service";
+import { ImageService } from "./services/image-service";
 
 interface ImageUploadProps {
     imageService: ImageService;
@@ -32,7 +32,7 @@ export class ImageUpload extends React.Component<ImageUploadProps, ImageUploadSt
         return { imageId: nextProps.imageId };
     }
 
-    private uploadFile(data: string | File) {
+    private uploadFile(data: File) {
         this.setState({ isLoading: true, imageId: null });
         this.props.imageService.upload(data).then(r => {
             this.setState({ isLoading: false, imageId: r.id });

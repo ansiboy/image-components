@@ -16,7 +16,8 @@ interface State<T> {
 
 let strings = getStrings();
 export let DataSourceDialogContext = React.createContext<{ dataItem: any, index: number }>({ dataItem: null, index: -1 });
-
+export let DataSourceDialogTop = React.createContext<{}>({});
+export let DataSourceDialogBottom = React.createContext<{}>({});
 
 export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
     #dialog: ModalDialog;
@@ -63,6 +64,11 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
     }
 
     renderBody() {
+        let children = this.props.children ? Array.isArray(this.props.children) ? this.props.children : [this.props.children] : [];
+        let itemElement = children.filter(o => (o as React.ReactElement).type == DataSourceDialogContext.Consumer)[0];
+        if (!itemElement)
+            return null;
+
         let { items } = this.state;
         if (items === undefined) {
             return <div className="empty">
@@ -77,7 +83,7 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
         }
 
         return items.map((o, i) => <DataSourceDialogContext.Provider key={i} value={{ dataItem: o, index: i }}>
-            {this.props.children}
+            {itemElement}
         </DataSourceDialogContext.Provider>);
 
     }
@@ -87,9 +93,25 @@ export class DataSourceDialog<T> extends React.Component<Props<T>, State<T>> {
     }
 
     render() {
+        let children = this.props.children ? Array.isArray(this.props.children) ? this.props.children : [this.props.children] : [];
+        let topElement = children.filter(o => (o as React.ReactElement).type == DataSourceDialogTop.Consumer)[0];
+        let bottomElement = children.filter(o => (o as React.ReactElement).type == DataSourceDialogBottom.Consumer)[0];
+
         return <ModalDialog {...this.props} className="data-source-dialog" ref={e => this.#dialog = e || this.#dialog}>
             <div className="modal-body">
-                {this.renderBody()}
+                <div className="form-group">
+                    <DataSourceDialogTop.Provider value={{}}>
+                        {topElement}
+                    </DataSourceDialogTop.Provider>
+                </div>
+                <div className="form-group">
+                    {this.renderBody()}
+                </div>
+                <div className="form-group">
+                    <DataSourceDialogBottom.Provider value={{}}>
+                        {bottomElement}
+                    </DataSourceDialogBottom.Provider>
+                </div>
             </div>
             <div className="modal-footer" style={{ marginTop: 0 }}>
                 <PagingBar<T> dataSource={this.props.dataSource} />

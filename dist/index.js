@@ -929,7 +929,7 @@ var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (
 };
 var _dialog;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataSourceDialog = exports.DataSourceDialogContext = void 0;
+exports.DataSourceDialog = exports.DataSourceDialogBottom = exports.DataSourceDialogTop = exports.DataSourceDialogContext = void 0;
 const React = __webpack_require__(/*! react */ "react");
 const strings_1 = __webpack_require__(/*! ../strings */ "./out/strings.js");
 const modal_dialog_1 = __webpack_require__(/*! ./modal-dialog */ "./out/dialogs/modal-dialog.js");
@@ -937,6 +937,8 @@ const paging_bar_1 = __webpack_require__(/*! ../paging-bar */ "./out/paging-bar.
 __webpack_require__(/*! ../../content/data-source-dialog.less */ "./content/data-source-dialog.less");
 let strings = strings_1.getStrings();
 exports.DataSourceDialogContext = React.createContext({ dataItem: null, index: -1 });
+exports.DataSourceDialogTop = React.createContext({});
+exports.DataSourceDialogBottom = React.createContext({});
 class DataSourceDialog extends React.Component {
     constructor(props) {
         super(props);
@@ -985,7 +987,10 @@ class DataSourceDialog extends React.Component {
     }
     render() {
         return React.createElement(modal_dialog_1.ModalDialog, Object.assign({}, this.props, { className: "data-source-dialog", ref: e => __classPrivateFieldSet(this, _dialog, e || __classPrivateFieldGet(this, _dialog)) }),
-            React.createElement("div", { className: "modal-body" }, this.renderBody()),
+            React.createElement("div", { className: "modal-body" },
+                React.createElement(exports.DataSourceDialogTop.Provider, { value: {} }),
+                this.renderBody(),
+                React.createElement(exports.DataSourceDialogBottom.Provider, { value: {} })),
             React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
                 React.createElement(paging_bar_1.PagingBar, { dataSource: this.props.dataSource }),
                 React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
@@ -1103,32 +1108,6 @@ _element = new WeakMap();
 
 /***/ }),
 
-/***/ "./out/error-handle.js":
-/*!*****************************!*\
-  !*** ./out/error-handle.js ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.errorHandle = void 0;
-function errorHandle(err) {
-    if (typeof window === "undefined") {
-        throw err;
-    }
-    else {
-        Promise.resolve().then(() => __webpack_require__(/*! maishu-ui-toolkit */ "maishu-ui-toolkit")).then((ui) => {
-            ui.alert({ title: "错误", message: err.message });
-        });
-    }
-}
-exports.errorHandle = errorHandle;
-
-
-/***/ }),
-
 /***/ "./out/errors.js":
 /*!***********************!*\
   !*** ./out/errors.js ***!
@@ -1151,6 +1130,71 @@ class Errors extends maishu_toolkit_1.Errors {
     }
 }
 exports.errors = new Errors();
+
+
+/***/ }),
+
+/***/ "./out/file-selector.js":
+/*!******************************!*\
+  !*** ./out/file-selector.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FileUpload = void 0;
+const React = __webpack_require__(/*! react */ "react");
+__webpack_require__(/*! ../content/image-upload.less */ "./content/image-upload.less");
+const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
+let strings = strings_1.getStrings();
+class FileUpload extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { uploading: false, display: props.display };
+    }
+    fileRef(e) {
+        if (!e)
+            return;
+        e.onchange = () => {
+            let files = [];
+            if (e.files != null && e.files.length > 0) {
+                let file = e.files.item(0);
+                if (file)
+                    files.push(file);
+            }
+            if (files.length > 0 && this.props.uploadFile) {
+                this.setState({ uploading: true });
+                this.props.uploadFile(files).then(r => {
+                    if (r) {
+                        this.setState({ display: r, uploading: false });
+                    }
+                }).finally(() => {
+                    this.setState({ uploading: false });
+                });
+            }
+            e.value = "";
+        };
+    }
+    render() {
+        let { title, className, accept, multiple } = this.props;
+        let { uploading, display } = this.state;
+        title = title || strings.selectFile;
+        className = className || '';
+        return React.createElement("div", { className: `image-upload ${className}`, style: this.props.style },
+            React.createElement("div", { className: "item", ref: e => this.itemElement = e || this.itemElement },
+                uploading ?
+                    React.createElement(React.Fragment, null,
+                        React.createElement("i", { className: "fa fa-spinner fa-spin fa-3x fa-fw" }),
+                        React.createElement("span", { className: "sr-only" }, strings.uploading)) :
+                    display || React.createElement(React.Fragment, null,
+                        React.createElement("i", { className: "fa fa-plus fa-4x" }),
+                        React.createElement("div", null, title)),
+                React.createElement("input", { type: "file", style: {}, accept: accept, ref: (e) => this.fileRef(e), multiple: multiple })));
+    }
+}
+exports.FileUpload = FileUpload;
 
 
 /***/ }),
@@ -1178,7 +1222,7 @@ exports.showImageDialog = void 0;
 const image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
 const React = __webpack_require__(/*! react */ "react");
 const ReactDOM = __webpack_require__(/*! react-dom */ "react-dom");
-const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
+const image_service_1 = __webpack_require__(/*! ./services/image-service */ "./out/services/image-service.js");
 const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
 const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
 __webpack_require__(/*! ../content/image-manager.less */ "./content/image-manager.less");
@@ -1422,306 +1466,6 @@ exports.default = ImageSelector;
 
 /***/ }),
 
-/***/ "./out/image-service.js":
-/*!******************************!*\
-  !*** ./out/image-service.js ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImageService = exports.errors = void 0;
-const maishu_chitu_service_1 = __webpack_require__(/*! maishu-chitu-service */ "maishu-chitu-service");
-const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
-const error_handle_1 = __webpack_require__(/*! ./error-handle */ "./out/error-handle.js");
-const strings_1 = __webpack_require__(/*! ./strings */ "./out/strings.js");
-let strings = strings_1.getStrings();
-exports.errors = {
-    serviceUrlCanntNull(serviceName) {
-        let msg = `Service '${serviceName}' base url can not null.`;
-        return new Error(msg);
-    },
-    unexpectedNullResult() {
-        let msg = `Null result is unexpected.`;
-        return new Error(msg);
-    },
-    unexpectedNullValue(name) {
-        let msg = `variable ${name} is unexpected null value.`;
-        return new Error(msg);
-    },
-    argumentNull(name) {
-        let msg = `Arugment ${name} cannt null or empty.`;
-        return new Error(msg);
-    },
-    fieldNull(field, itemName) {
-        let msg = `${itemName} ${field} cannt be null or empty`;
-        return new Error(msg);
-    },
-    instanceMessangerStart() {
-        let msg = `Instance messanger is start.`;
-        return new Error(msg);
-    },
-    notSupportedInNode() {
-        let msg = `Not implement in node environment.`;
-        return new Error(msg);
-    }
-};
-// export let settings = {
-//     noImageText: "暂无图片"
-// }
-/** 图片服务，实现图片的上传，获取 */
-const SERVICE_HOST = "image-service-host";
-class ImageService extends maishu_chitu_service_1.Service {
-    constructor() {
-        super(err => error_handle_1.errorHandle(err));
-    }
-    static get serviceHost() {
-        if (typeof window != "undefined")
-            return window[SERVICE_HOST];
-        return global[SERVICE_HOST];
-    }
-    static set serviceHost(value) {
-        if (typeof window != "undefined") {
-            window[SERVICE_HOST] = value;
-            return;
-        }
-        global[SERVICE_HOST] = value;
-    }
-    static get imageUploadUrl() {
-        if (!this._imageUploadUrl) {
-            return this.url("upload");
-        }
-        return this._imageUploadUrl;
-    }
-    static set imageUploadUrl(value) {
-        this._imageUploadUrl = value;
-    }
-    url(path) {
-        return ImageService.url(path);
-    }
-    static url(path) {
-        return maishu_toolkit_1.pathConcat(ImageService.serviceHost, path);
-    }
-    /** 获取图片的 URL
-     * @param id 图片的 ID
-     * @param width 图片的宽度，如果不指定则为实际图片的宽度
-     * @param height 图片的高度，如果不指定则为实际图片的高度
-     */
-    imageSource(id, width, height) {
-        return ImageService.imageSource(id, width, height);
-    }
-    /** 获取图片的 URL
-     * @param id 图片的 ID
-     * @param width 图片的宽度，如果不指定则为实际图片的宽度
-     * @param height 图片的高度，如果不指定则为实际图片的高度
-     */
-    static imageSource(id, width, height) {
-        if (!id) {
-            width = width == null ? 200 : width;
-            height = height == null ? 200 : height;
-            id = this.generateImageBase64(width, height, strings.noImageText);
-            return id;
-        }
-        let isBase64 = id.startsWith('data:image');
-        if (isBase64) {
-            return id;
-        }
-        if (id != null && (id.startsWith("http://") || id.startsWith("https://")) || id.startsWith("//"))
-            return id;
-        if (id != null && id.indexOf("/") >= 0) {
-            let r = maishu_toolkit_1.pathConcat(ImageService.serviceHost, id);
-            let q = "";
-            if (width != null)
-                q = q + `&width=${width}`;
-            if (height != null)
-                q = q + `&height=${height}`;
-            if (q.length > 0) {
-                q = q.substr(1);
-                r = r + "?" + q;
-            }
-            return r;
-        }
-        let url = this.url('image');
-        url = `${url}?id=${id}`;
-        if (width != null)
-            url = url + `&width=${width}`;
-        if (height != null)
-            url = url + `&height=${height}`;
-        return url;
-    }
-    static generateImageBase64(width, height, obj, options) {
-        if (document == null) {
-            throw exports.errors.notSupportedInNode();
-        }
-        var canvas;
-        if (typeof document != "undefined") {
-            canvas = document.createElement('canvas');
-            canvas.width = width; //img_width;
-            canvas.height = height; //img_height;
-        }
-        else {
-            let canvasModule = __webpack_require__(/*! canvas */ "./node_modules/canvas/browser.js");
-            canvas = canvasModule.createCanvas(200, 200);
-        }
-        var ctx = canvas.getContext('2d');
-        if (ctx == null)
-            throw new Error('ccreate canvas context fail.');
-        let draw = typeof obj == 'string' ? draws.text(obj, options) : obj;
-        draw(ctx, width, height);
-        return canvas.toDataURL();
-    }
-    getImageSize(imageBase64) {
-        if (!imageBase64)
-            throw exports.errors.argumentNull('imageBase64');
-        return new Promise((resolve, reject) => {
-            var i = new Image();
-            i.onload = function () {
-                resolve({ width: i.width, height: i.height });
-            };
-            i.src = imageBase64;
-        });
-    }
-    /**
-     * 对图片进行缩放
-     * @param imageBase64 图片 base64 格式数据
-     * @param width 目标图片的宽度
-     * @param height 目标图片的高度
-     */
-    resize(imageBase64, width, height) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!imageBase64)
-                throw exports.errors.argumentNull('imageBase64');
-            if (!width)
-                throw exports.errors.argumentNull('width');
-            if (!height)
-                throw exports.errors.argumentNull('height');
-            var canvas = document.createElement('canvas'); //.getElementById("canvas");
-            var ctx = canvas.getContext("2d");
-            canvas.width = width;
-            canvas.height = height;
-            return yield new Promise((resolve, reject) => {
-                var img = new Image();
-                img.src = imageBase64;
-                img.onload = function () {
-                    // width = img.width
-                    // height = img.height
-                    if (ctx == null)
-                        throw 'get canvas context fail';
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    resolve(canvas.toDataURL());
-                };
-            });
-        });
-    }
-    list(args) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let url = this.url("list"); //`${ImageService.baseUrl}/list`;
-            let result = yield this.postByJson(url, args);
-            return result;
-        });
-    }
-    /**
-     * 上传图片
-     * @param imageBase64 图片的 base64 数据
-     */
-    upload(fileData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!fileData)
-                throw exports.errors.argumentNull("fileData");
-            let url = ImageService.imageUploadUrl;
-            if (typeof fileData == "string") {
-                let imageBase64 = fileData;
-                if (!imageBase64)
-                    throw exports.errors.argumentNull('imageBase64');
-                let imageSize = yield this.getImageSize(imageBase64);
-                let maxWidth = 800;
-                let maxHeight = 800;
-                if (imageSize.width > maxWidth) { // || imageSize.height > maxHeight
-                    let height = imageSize.height / imageSize.width * maxWidth;
-                    imageBase64 = yield this.resize(imageBase64, maxWidth, height);
-                }
-                else if (imageSize.height > maxHeight) {
-                    let width = imageSize.width / imageSize.height * maxHeight;
-                    imageBase64 = yield this.resize(imageBase64, width, maxHeight);
-                }
-                let arr = imageBase64.split(",");
-                console.assert(arr.length == 2);
-                let blob = b64toBlob(arr[1], "image");
-                return this.postByFormData(url, { image: blob });
-            }
-            return this.postByFormData(url, { image: fileData });
-        });
-    }
-    /**
-     *
-     * @param id 删除图片
-     */
-    remove(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!id)
-                throw exports.errors.argumentNull('id');
-            let url = this.url("remove");
-            return this.postByJson(url, { id });
-        });
-    }
-}
-exports.ImageService = ImageService;
-let draws = {
-    text: (imageText, options) => {
-        return (ctx, canvasWidth, canvasHeight) => {
-            // let fontSize1 = Math.floor(canvasHeight / 3 * 0.8);
-            let fontSize = Math.floor((canvasWidth / imageText.length) * 0.6);
-            let bgColor = 'whitesmoke';
-            let textColor = '#999';
-            // let fontSize = Math.min(fontSize1, fontSize2);
-            options = options || {};
-            ctx.fillStyle = options.bgColor || bgColor; //'whitesmoke';
-            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-            // 设置字体
-            ctx.font = `Bold ${options.fontSize}px Arial`;
-            // 设置对齐方式
-            ctx.textAlign = "left";
-            // 设置填充颜色
-            ctx.fillStyle = options.textColor || textColor; //"#999";
-            let textWidth = fontSize * imageText.length;
-            let startX = Math.floor((canvasWidth - textWidth) * 0.5);
-            let startY = Math.floor((canvasHeight - (options.fontSize || fontSize)) * 0.3);
-            // 设置字体内容，以及在画布上的位置
-            ctx.fillText(imageText, startX, Math.floor(canvasHeight * 0.6));
-        };
-    }
-};
-function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        const slice = byteCharacters.slice(offset, offset + sliceSize);
-        const byteNumbers = new Array(slice.length);
-        for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        byteArrays.push(byteArray);
-    }
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
 /***/ "./out/image-thumber.js":
 /*!******************************!*\
   !*** ./out/image-thumber.js ***!
@@ -1796,7 +1540,7 @@ exports.default = ImageThumber;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageUpload = void 0;
 const React = __webpack_require__(/*! react */ "react");
-const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
+const image_service_1 = __webpack_require__(/*! ./services/image-service */ "./out/services/image-service.js");
 class ImageUpload extends React.Component {
     constructor(props) {
         super(props);
@@ -1859,26 +1603,32 @@ ImageUpload.defaultProps = { text: "上传图片" };
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImageUpload = exports.DataSourcePagingBar = exports.PagingBar = exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.ImageService = exports.showImageDialog = exports.ImageSelector = exports.ImageThumber = void 0;
+exports.FileUpload = exports.ImageUpload = exports.DataSourcePagingBar = exports.PagingBar = exports.DataSourceDialogBottom = exports.DataSourceDialogTop = exports.DataSourceDialogContext = exports.DataSourceDialog = exports.ModalDialog = exports.VideoService = exports.ImageService = exports.showImageDialog = exports.ImageSelector = exports.ImageThumber = void 0;
 var image_thumber_1 = __webpack_require__(/*! ./image-thumber */ "./out/image-thumber.js");
 Object.defineProperty(exports, "ImageThumber", { enumerable: true, get: function () { return image_thumber_1.default; } });
 var image_selector_1 = __webpack_require__(/*! ./image-selector */ "./out/image-selector.js");
 Object.defineProperty(exports, "ImageSelector", { enumerable: true, get: function () { return image_selector_1.default; } });
 var image_manager_1 = __webpack_require__(/*! ./image-manager */ "./out/image-manager.js");
 Object.defineProperty(exports, "showImageDialog", { enumerable: true, get: function () { return image_manager_1.showImageDialog; } });
-var image_service_1 = __webpack_require__(/*! ./image-service */ "./out/image-service.js");
+var image_service_1 = __webpack_require__(/*! ./services/image-service */ "./out/services/image-service.js");
 Object.defineProperty(exports, "ImageService", { enumerable: true, get: function () { return image_service_1.ImageService; } });
+var video_service_1 = __webpack_require__(/*! ./services/video-service */ "./out/services/video-service.js");
+Object.defineProperty(exports, "VideoService", { enumerable: true, get: function () { return video_service_1.VideoService; } });
 var modal_dialog_1 = __webpack_require__(/*! ./dialogs/modal-dialog */ "./out/dialogs/modal-dialog.js");
 Object.defineProperty(exports, "ModalDialog", { enumerable: true, get: function () { return modal_dialog_1.ModalDialog; } });
 var data_source_dialog_1 = __webpack_require__(/*! ./dialogs/data-source-dialog */ "./out/dialogs/data-source-dialog.js");
 Object.defineProperty(exports, "DataSourceDialog", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialog; } });
 Object.defineProperty(exports, "DataSourceDialogContext", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialogContext; } });
+Object.defineProperty(exports, "DataSourceDialogTop", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialogTop; } });
+Object.defineProperty(exports, "DataSourceDialogBottom", { enumerable: true, get: function () { return data_source_dialog_1.DataSourceDialogBottom; } });
 var paging_bar_1 = __webpack_require__(/*! ./paging-bar */ "./out/paging-bar.js");
 Object.defineProperty(exports, "PagingBar", { enumerable: true, get: function () { return paging_bar_1.PagingBar; } });
 var number_paging_bar_1 = __webpack_require__(/*! ./number-paging-bar */ "./out/number-paging-bar.js");
 Object.defineProperty(exports, "DataSourcePagingBar", { enumerable: true, get: function () { return number_paging_bar_1.DataSourcePagingBar; } });
 var image_upload_1 = __webpack_require__(/*! ./image-upload */ "./out/image-upload.js");
 Object.defineProperty(exports, "ImageUpload", { enumerable: true, get: function () { return image_upload_1.ImageUpload; } });
+var file_selector_1 = __webpack_require__(/*! ./file-selector */ "./out/file-selector.js");
+Object.defineProperty(exports, "FileUpload", { enumerable: true, get: function () { return file_selector_1.FileUpload; } });
 
 
 /***/ }),
@@ -2261,6 +2011,334 @@ _pagingBar = new WeakMap();
 
 /***/ }),
 
+/***/ "./out/services/image-service.js":
+/*!***************************************!*\
+  !*** ./out/services/image-service.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ImageService = exports.errors = void 0;
+const maishu_chitu_service_1 = __webpack_require__(/*! maishu-chitu-service */ "maishu-chitu-service");
+const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
+const strings_1 = __webpack_require__(/*! ../strings */ "./out/strings.js");
+let strings = strings_1.getStrings();
+exports.errors = {
+    serviceUrlCanntNull(serviceName) {
+        let msg = `Service '${serviceName}' base url can not null.`;
+        return new Error(msg);
+    },
+    unexpectedNullResult() {
+        let msg = `Null result is unexpected.`;
+        return new Error(msg);
+    },
+    unexpectedNullValue(name) {
+        let msg = `variable ${name} is unexpected null value.`;
+        return new Error(msg);
+    },
+    argumentNull(name) {
+        let msg = `Arugment ${name} cannt null or empty.`;
+        return new Error(msg);
+    },
+    fieldNull(field, itemName) {
+        let msg = `${itemName} ${field} cannt be null or empty`;
+        return new Error(msg);
+    },
+    instanceMessangerStart() {
+        let msg = `Instance messanger is start.`;
+        return new Error(msg);
+    },
+    notSupportedInNode() {
+        let msg = `Not implement in node environment.`;
+        return new Error(msg);
+    }
+};
+// export let settings = {
+//     noImageText: "暂无图片"
+// }
+/** 图片服务，实现图片的上传，获取 */
+const SERVICE_HOST = "image-service-host";
+class ImageService extends maishu_chitu_service_1.Service {
+    static get serviceHost() {
+        if (typeof window != "undefined")
+            return window[SERVICE_HOST];
+        return global[SERVICE_HOST];
+    }
+    static set serviceHost(value) {
+        if (typeof window != "undefined") {
+            window[SERVICE_HOST] = value;
+            return;
+        }
+        global[SERVICE_HOST] = value;
+    }
+    static get imageUploadUrl() {
+        if (!this._imageUploadUrl) {
+            return this.url("upload");
+        }
+        return this._imageUploadUrl;
+    }
+    static set imageUploadUrl(value) {
+        this._imageUploadUrl = value;
+    }
+    url(path) {
+        return ImageService.url(path);
+    }
+    static url(path) {
+        return maishu_toolkit_1.pathConcat(ImageService.serviceHost, path);
+    }
+    /** 获取图片的 URL
+     * @param id 图片的 ID
+     * @param width 图片的宽度，如果不指定则为实际图片的宽度
+     * @param height 图片的高度，如果不指定则为实际图片的高度
+     */
+    imageSource(id, width, height) {
+        return ImageService.imageSource(id, width, height);
+    }
+    /** 获取图片的 URL
+     * @param id 图片的 ID
+     * @param width 图片的宽度，如果不指定则为实际图片的宽度
+     * @param height 图片的高度，如果不指定则为实际图片的高度
+     */
+    static imageSource(id, width, height) {
+        if (!id) {
+            width = width == null ? 200 : width;
+            height = height == null ? 200 : height;
+            id = this.generateImageBase64(width, height, strings.noImageText);
+            return id;
+        }
+        let isBase64 = id.startsWith('data:image');
+        if (isBase64) {
+            return id;
+        }
+        if (id != null && (id.startsWith("http://") || id.startsWith("https://")) || id.startsWith("//"))
+            return id;
+        if (id != null && id.indexOf("/") >= 0) {
+            let r = maishu_toolkit_1.pathConcat(ImageService.serviceHost, id);
+            let q = "";
+            if (width != null)
+                q = q + `&width=${width}`;
+            if (height != null)
+                q = q + `&height=${height}`;
+            if (q.length > 0) {
+                q = q.substr(1);
+                r = r + "?" + q;
+            }
+            return r;
+        }
+        let url = this.url('image');
+        url = `${url}?id=${id}`;
+        if (width != null)
+            url = url + `&width=${width}`;
+        if (height != null)
+            url = url + `&height=${height}`;
+        return url;
+    }
+    static generateImageBase64(width, height, obj, options) {
+        if (document == null) {
+            throw exports.errors.notSupportedInNode();
+        }
+        var canvas;
+        if (typeof document != "undefined") {
+            canvas = document.createElement('canvas');
+            canvas.width = width; //img_width;
+            canvas.height = height; //img_height;
+        }
+        else {
+            let canvasModule = __webpack_require__(/*! canvas */ "./node_modules/canvas/browser.js");
+            canvas = canvasModule.createCanvas(200, 200);
+        }
+        var ctx = canvas.getContext('2d');
+        if (ctx == null)
+            throw new Error('ccreate canvas context fail.');
+        let draw = typeof obj == 'string' ? draws.text(obj, options) : obj;
+        draw(ctx, width, height);
+        return canvas.toDataURL();
+    }
+    getImageSize(imageBase64) {
+        if (!imageBase64)
+            throw exports.errors.argumentNull('imageBase64');
+        return new Promise((resolve, reject) => {
+            var i = new Image();
+            i.onload = function () {
+                resolve({ width: i.width, height: i.height });
+            };
+            i.src = imageBase64;
+        });
+    }
+    /**
+     * 对图片进行缩放
+     * @param imageBase64 图片 base64 格式数据
+     * @param width 目标图片的宽度
+     * @param height 目标图片的高度
+     */
+    resize(imageBase64, width, height) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!imageBase64)
+                throw exports.errors.argumentNull('imageBase64');
+            if (!width)
+                throw exports.errors.argumentNull('width');
+            if (!height)
+                throw exports.errors.argumentNull('height');
+            var canvas = document.createElement('canvas'); //.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            canvas.width = width;
+            canvas.height = height;
+            return yield new Promise((resolve, reject) => {
+                var img = new Image();
+                img.src = imageBase64;
+                img.onload = function () {
+                    // width = img.width
+                    // height = img.height
+                    if (ctx == null)
+                        throw 'get canvas context fail';
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    resolve(canvas.toDataURL());
+                };
+            });
+        });
+    }
+    list(args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let url = this.url("list"); //`${ImageService.baseUrl}/list`;
+            let result = yield this.postByJson(url, args);
+            return result;
+        });
+    }
+    /**
+     * 上传图片
+     * @param imageBase64 图片的 base64 数据
+     */
+    upload(fileData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!fileData)
+                throw exports.errors.argumentNull("fileData");
+            let url = ImageService.imageUploadUrl;
+            if (typeof fileData == "string") {
+                let imageBase64 = fileData;
+                if (!imageBase64)
+                    throw exports.errors.argumentNull('imageBase64');
+                let imageSize = yield this.getImageSize(imageBase64);
+                let maxWidth = 800;
+                let maxHeight = 800;
+                if (imageSize.width > maxWidth) { // || imageSize.height > maxHeight
+                    let height = imageSize.height / imageSize.width * maxWidth;
+                    imageBase64 = yield this.resize(imageBase64, maxWidth, height);
+                }
+                else if (imageSize.height > maxHeight) {
+                    let width = imageSize.width / imageSize.height * maxHeight;
+                    imageBase64 = yield this.resize(imageBase64, width, maxHeight);
+                }
+                let arr = imageBase64.split(",");
+                console.assert(arr.length == 2);
+                let blob = b64toBlob(arr[1], "image");
+                return this.postByFormData(url, { image: blob });
+            }
+            return this.postByFormData(url, { image: fileData });
+        });
+    }
+    /**
+     *
+     * @param id 删除图片
+     */
+    remove(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!id)
+                throw exports.errors.argumentNull('id');
+            let url = this.url("remove");
+            return this.postByJson(url, { id });
+        });
+    }
+}
+exports.ImageService = ImageService;
+let draws = {
+    text: (imageText, options) => {
+        return (ctx, canvasWidth, canvasHeight) => {
+            // let fontSize1 = Math.floor(canvasHeight / 3 * 0.8);
+            let fontSize = Math.floor((canvasWidth / imageText.length) * 0.6);
+            let bgColor = 'whitesmoke';
+            let textColor = '#999';
+            // let fontSize = Math.min(fontSize1, fontSize2);
+            options = options || {};
+            ctx.fillStyle = options.bgColor || bgColor; //'whitesmoke';
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            // 设置字体
+            ctx.font = `Bold ${options.fontSize}px Arial`;
+            // 设置对齐方式
+            ctx.textAlign = "left";
+            // 设置填充颜色
+            ctx.fillStyle = options.textColor || textColor; //"#999";
+            let textWidth = fontSize * imageText.length;
+            let startX = Math.floor((canvasWidth - textWidth) * 0.5);
+            let startY = Math.floor((canvasHeight - (options.fontSize || fontSize)) * 0.3);
+            // 设置字体内容，以及在画布上的位置
+            ctx.fillText(imageText, startX, Math.floor(canvasHeight * 0.6));
+        };
+    }
+};
+function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./out/services/video-service.js":
+/*!***************************************!*\
+  !*** ./out/services/video-service.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.VideoService = void 0;
+const maishu_chitu_service_1 = __webpack_require__(/*! maishu-chitu-service */ "maishu-chitu-service");
+const maishu_toolkit_1 = __webpack_require__(/*! maishu-toolkit */ "maishu-toolkit");
+const image_service_1 = __webpack_require__(/*! ./image-service */ "./out/services/image-service.js");
+class VideoService extends maishu_chitu_service_1.Service {
+    url(path) {
+        return VideoService.url(path);
+    }
+    static url(path) {
+        return maishu_toolkit_1.pathConcat(image_service_1.ImageService.serviceHost, "video", path);
+    }
+    upload(video) {
+        let url = this.url("upload");
+        let r = this.postByFormData(url, { video, name: video.name });
+        return r;
+    }
+}
+exports.VideoService = VideoService;
+
+
+/***/ }),
+
 /***/ "./out/strings.js":
 /*!************************!*\
   !*** ./out/strings.js ***!
@@ -2282,7 +2360,9 @@ let chinese = {
     noImageText: "暂无图片",
     dataLoading: "数据正在加载中...",
     dataEmpty: "暂无所要展示的数据",
-    imageSelectMax: "最多选择 {0} 张图片"
+    imageSelectMax: "最多选择 {0} 张图片",
+    selectFile: "选择文件",
+    uploading: "正在上传中",
 };
 let english = {
     selectImage: "Select Image",
@@ -2294,7 +2374,9 @@ let english = {
     noImageText: "NO IMAGE",
     dataLoading: "Data is loading...",
     dataEmpty: "Data is empty",
-    imageSelectMax: "Choose up to {0} pictures"
+    imageSelectMax: "Choose up to {0} pictures",
+    selectFile: "Select File",
+    uploading: "Uploading",
 };
 let strings = { chinese, english, };
 function getStrings(language) {
