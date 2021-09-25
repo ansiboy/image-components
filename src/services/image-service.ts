@@ -33,6 +33,10 @@ export let errors = {
     notSupportedInNode() {
         let msg = `Not implement in node environment.`
         return new Error(msg);
+    },
+    canvasModuleRequired() {
+        let msg = `Module canvas is required.`;
+        return new Error(msg);
     }
 }
 
@@ -173,6 +177,9 @@ export class ImageService extends Service {
         }
         else {
             let canvasModule = require("canvas");
+            if (canvasModule == null)
+                throw errors.canvasModuleRequired();
+
             canvas = canvasModule.createCanvas(200, 200);
         }
 

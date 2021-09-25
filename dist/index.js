@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.6.18
+ *  maishu-image-components v1.7.2
  * 
  * 
  */
@@ -974,6 +974,10 @@ class DataSourceDialog extends React.Component {
         }
     }
     renderBody() {
+        let children = this.props.children ? Array.isArray(this.props.children) ? this.props.children : [this.props.children] : [];
+        let itemElement = children.filter(o => o.type == exports.DataSourceDialogContext.Consumer)[0];
+        if (!itemElement)
+            return null;
         let { items } = this.state;
         if (items === undefined) {
             return React.createElement("div", { className: "empty" }, strings.dataLoading);
@@ -981,16 +985,21 @@ class DataSourceDialog extends React.Component {
         if (items == null || items.length == 0) {
             return React.createElement("div", { className: "empty" }, strings.dataEmpty);
         }
-        return items.map((o, i) => React.createElement(exports.DataSourceDialogContext.Provider, { key: i, value: { dataItem: o, index: i } }, this.props.children));
+        return items.map((o, i) => React.createElement(exports.DataSourceDialogContext.Provider, { key: i, value: { dataItem: o, index: i } }, itemElement));
     }
     componentDidMount() {
     }
     render() {
+        let children = this.props.children ? Array.isArray(this.props.children) ? this.props.children : [this.props.children] : [];
+        let topElement = children.filter(o => o.type == exports.DataSourceDialogTop.Consumer)[0];
+        let bottomElement = children.filter(o => o.type == exports.DataSourceDialogBottom.Consumer)[0];
         return React.createElement(modal_dialog_1.ModalDialog, Object.assign({}, this.props, { className: "data-source-dialog", ref: e => __classPrivateFieldSet(this, _dialog, e || __classPrivateFieldGet(this, _dialog)) }),
             React.createElement("div", { className: "modal-body" },
-                React.createElement(exports.DataSourceDialogTop.Provider, { value: {} }),
-                this.renderBody(),
-                React.createElement(exports.DataSourceDialogBottom.Provider, { value: {} })),
+                React.createElement("div", { className: "form-group" },
+                    React.createElement(exports.DataSourceDialogTop.Provider, { value: {} }, topElement)),
+                React.createElement("div", { className: "form-group" }, this.renderBody()),
+                React.createElement("div", { className: "form-group" },
+                    React.createElement(exports.DataSourceDialogBottom.Provider, { value: {} }, bottomElement))),
             React.createElement("div", { className: "modal-footer", style: { marginTop: 0 } },
                 React.createElement(paging_bar_1.PagingBar, { dataSource: this.props.dataSource }),
                 React.createElement("button", { type: "button", className: "btn btn-default", "data-dismiss": "modal" },
@@ -2063,6 +2072,10 @@ exports.errors = {
     notSupportedInNode() {
         let msg = `Not implement in node environment.`;
         return new Error(msg);
+    },
+    canvasModuleRequired() {
+        let msg = `Module canvas is required.`;
+        return new Error(msg);
     }
 };
 // export let settings = {
@@ -2122,6 +2135,19 @@ class ImageService extends maishu_chitu_service_1.Service {
         if (isBase64) {
             return id;
         }
+        //======================================================
+        // 如果多张图片，取第一张
+        if (id.indexOf(",") > 0) {
+            let arr = id.split(",").filter(o => o);
+            id = arr[0];
+        }
+        //======================================================
+        // 重路径提取图片 ID
+        let regex = /http\S+([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}_\d+_\d+)/i;
+        let m = regex.exec(id);
+        if (m) {
+            id = m[1];
+        }
         if (id != null && (id.startsWith("http://") || id.startsWith("https://")) || id.startsWith("//"))
             return id;
         if (id != null && id.indexOf("/") >= 0) {
@@ -2157,6 +2183,8 @@ class ImageService extends maishu_chitu_service_1.Service {
         }
         else {
             let canvasModule = __webpack_require__(/*! canvas */ "./node_modules/canvas/browser.js");
+            if (canvasModule == null)
+                throw exports.errors.canvasModuleRequired();
             canvas = canvasModule.createCanvas(200, 200);
         }
         var ctx = canvas.getContext('2d');
@@ -2229,17 +2257,17 @@ class ImageService extends maishu_chitu_service_1.Service {
                 let imageBase64 = fileData;
                 if (!imageBase64)
                     throw exports.errors.argumentNull('imageBase64');
-                let imageSize = yield this.getImageSize(imageBase64);
-                let maxWidth = 800;
-                let maxHeight = 800;
-                if (imageSize.width > maxWidth) { // || imageSize.height > maxHeight
-                    let height = imageSize.height / imageSize.width * maxWidth;
-                    imageBase64 = yield this.resize(imageBase64, maxWidth, height);
-                }
-                else if (imageSize.height > maxHeight) {
-                    let width = imageSize.width / imageSize.height * maxHeight;
-                    imageBase64 = yield this.resize(imageBase64, width, maxHeight);
-                }
+                // let imageSize = await this.getImageSize(imageBase64)
+                // let maxWidth = 800
+                // let maxHeight = 800
+                // if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
+                //     let height = imageSize.height / imageSize.width * maxWidth
+                //     imageBase64 = await this.resize(imageBase64, maxWidth, height)
+                // }
+                // else if (imageSize.height > maxHeight) {
+                //     let width = imageSize.width / imageSize.height * maxHeight
+                //     imageBase64 = await this.resize(imageBase64, width, maxHeight)
+                // }
                 let arr = imageBase64.split(",");
                 console.assert(arr.length == 2);
                 let blob = b64toBlob(arr[1], "image");
