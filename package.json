@@ -1,6 +1,6 @@
 {
     "name": "maishu-image-components",
-    "version": "1.7.2",
+    "version": "1.7.6",
     "description": "",
     "main": "out/index.js",
     "types": "out/index.d.ts",
@@ -34,7 +34,6 @@
         "require-less": "0.0.7",
         "style-loader": "^2.0.0",
         "webpack": "^4.26.1",
-        "canvas": "^2.8.0",
         "webpack-cli": "^3.1.2"
     },
     "dependencies": {

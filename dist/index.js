@@ -1,6 +1,6 @@
 /*!
  * 
- *  maishu-image-components v1.7.2
+ *  maishu-image-components v1.7.6
  * 
  * 
  */
@@ -211,166 +211,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ __webpack_exports__["default"] = (_node_modules_css_loader_dist_cjs_js_node_modules_less_loader_dist_cjs_js_image_upload_less__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
-
-/***/ }),
-
-/***/ "./node_modules/canvas/browser.js":
-/*!****************************************!*\
-  !*** ./node_modules/canvas/browser.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* globals document, ImageData */
-
-const parseFont = __webpack_require__(/*! ./lib/parse-font */ "./node_modules/canvas/lib/parse-font.js")
-
-exports.parseFont = parseFont
-
-exports.createCanvas = function (width, height) {
-  return Object.assign(document.createElement('canvas'), { width: width, height: height })
-}
-
-exports.createImageData = function (array, width, height) {
-  // Browser implementation of ImageData looks at the number of arguments passed
-  switch (arguments.length) {
-    case 0: return new ImageData()
-    case 1: return new ImageData(array)
-    case 2: return new ImageData(array, width)
-    default: return new ImageData(array, width, height)
-  }
-}
-
-exports.loadImage = function (src, options) {
-  return new Promise(function (resolve, reject) {
-    const image = Object.assign(document.createElement('img'), options)
-
-    function cleanup () {
-      image.onload = null
-      image.onerror = null
-    }
-
-    image.onload = function () { cleanup(); resolve(image) }
-    image.onerror = function () { cleanup(); reject(new Error('Failed to load the image "' + src + '"')) }
-
-    image.src = src
-  })
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/canvas/lib/parse-font.js":
-/*!***********************************************!*\
-  !*** ./node_modules/canvas/lib/parse-font.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Font RegExp helpers.
- */
-
-const weights = 'bold|bolder|lighter|[1-9]00'
-  , styles = 'italic|oblique'
-  , variants = 'small-caps'
-  , stretches = 'ultra-condensed|extra-condensed|condensed|semi-condensed|semi-expanded|expanded|extra-expanded|ultra-expanded'
-  , units = 'px|pt|pc|in|cm|mm|%|em|ex|ch|rem|q'
-  , string = '\'([^\']+)\'|"([^"]+)"|[\\w\\s-]+'
-
-// [ [ <‘font-style’> || <font-variant-css21> || <‘font-weight’> || <‘font-stretch’> ]?
-//    <‘font-size’> [ / <‘line-height’> ]? <‘font-family’> ]
-// https://drafts.csswg.org/css-fonts-3/#font-prop
-const weightRe = new RegExp('(' + weights + ') +', 'i')
-const styleRe = new RegExp('(' + styles + ') +', 'i')
-const variantRe = new RegExp('(' + variants + ') +', 'i')
-const stretchRe = new RegExp('(' + stretches + ') +', 'i')
-const sizeFamilyRe = new RegExp(
-  '([\\d\\.]+)(' + units + ') *'
-  + '((?:' + string + ')( *, *(?:' + string + '))*)')
-
-/**
- * Cache font parsing.
- */
-
-const cache = {}
-
-const defaultHeight = 16 // pt, common browser default
-
-/**
- * Parse font `str`.
- *
- * @param {String} str
- * @return {Object} Parsed font. `size` is in device units. `unit` is the unit
- *   appearing in the input string.
- * @api private
- */
-
-module.exports = function (str) {
-  // Cached
-  if (cache[str]) return cache[str]
-
-  // Try for required properties first.
-  const sizeFamily = sizeFamilyRe.exec(str)
-  if (!sizeFamily) return // invalid
-
-  // Default values and required properties
-  const font = {
-    weight: 'normal',
-    style: 'normal',
-    stretch: 'normal',
-    variant: 'normal',
-    size: parseFloat(sizeFamily[1]),
-    unit: sizeFamily[2],
-    family: sizeFamily[3].replace(/["']/g, '').replace(/ *, */g, ',')
-  }
-
-  // Optional, unordered properties.
-  let weight, style, variant, stretch
-  // Stop search at `sizeFamily.index`
-  let substr = str.substring(0, sizeFamily.index)
-  if ((weight = weightRe.exec(substr))) font.weight = weight[1]
-  if ((style = styleRe.exec(substr))) font.style = style[1]
-  if ((variant = variantRe.exec(substr))) font.variant = variant[1]
-  if ((stretch = stretchRe.exec(substr))) font.stretch = stretch[1]
-
-  // Convert to device units. (`font.unit` is the original unit)
-  // TODO: ch, ex
-  switch (font.unit) {
-    case 'pt':
-      font.size /= 0.75
-      break
-    case 'pc':
-      font.size *= 16
-      break
-    case 'in':
-      font.size *= 96
-      break
-    case 'cm':
-      font.size *= 96.0 / 2.54
-      break
-    case 'mm':
-      font.size *= 96.0 / 25.4
-      break
-    case '%':
-      // TODO disabled because existing unit tests assume 100
-      // font.size *= defaultHeight / 100 / 0.75
-      break
-    case 'em':
-    case 'rem':
-      font.size *= defaultHeight / 0.75
-      break
-    case 'q':
-      font.size *= 96 / 25.4 / 4
-      break
-  }
-
-  return (cache[str] = font)
-}
-
 
 /***/ }),
 
@@ -2074,7 +1914,7 @@ exports.errors = {
         return new Error(msg);
     },
     canvasModuleRequired() {
-        let msg = `Module canvas is required.`;
+        let msg = `Module canvas is required in node environment, please install canvas module.`;
         return new Error(msg);
     }
 };
@@ -2172,9 +2012,6 @@ class ImageService extends maishu_chitu_service_1.Service {
         return url;
     }
     static generateImageBase64(width, height, obj, options) {
-        if (document == null) {
-            throw exports.errors.notSupportedInNode();
-        }
         var canvas;
         if (typeof document != "undefined") {
             canvas = document.createElement('canvas');
@@ -2182,10 +2019,16 @@ class ImageService extends maishu_chitu_service_1.Service {
             canvas.height = height; //img_height;
         }
         else {
-            let canvasModule = __webpack_require__(/*! canvas */ "./node_modules/canvas/browser.js");
-            if (canvasModule == null)
-                throw exports.errors.canvasModuleRequired();
-            canvas = canvasModule.createCanvas(200, 200);
+            try {
+                let canvasModule = global["require"]("canvas");
+                canvas = canvasModule.createCanvas(width, height);
+            }
+            catch (err) {
+                if (err.code == "MODULE_NOT_FOUND") {
+                    throw exports.errors.canvasModuleRequired();
+                }
+                throw err;
+            }
         }
         var ctx = canvas.getContext('2d');
         if (ctx == null)

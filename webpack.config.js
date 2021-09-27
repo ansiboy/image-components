@@ -16,22 +16,21 @@ module.exports = {
     mode: 'development',
     devtool: 'source-map',
     externals: ["react", "react-dom", "maishu-chitu", "maishu-chitu-react", "maishu-chitu-service",
-        "maishu-toolkit", "maishu-ui-toolkit", "maishu-wuzhui", "maishu-wuzhui-helper"],
+        "maishu-toolkit", "maishu-ui-toolkit", "maishu-wuzhui", "maishu-wuzhui-helper", "canvas"
+    ],
     plugins: [
         new webpack.BannerPlugin(license),
     ],
     module: {
-        rules: [
-            {
-                test: /\.less$/,
-                use: [{
-                    loader: "style-loader" // creates style nodes from JS strings
-                }, {
-                    loader: "css-loader" // translates CSS into CommonJS
-                }, {
-                    loader: "less-loader" // compiles Less to CSS
-                }]
-            }
-        ]
+        rules: [{
+            test: /\.less$/,
+            use: [{
+                loader: "style-loader" // creates style nodes from JS strings
+            }, {
+                loader: "css-loader" // translates CSS into CommonJS
+            }, {
+                loader: "less-loader" // compiles Less to CSS
+            }]
+        }]
     }
 }

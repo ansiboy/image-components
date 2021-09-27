@@ -35,7 +35,7 @@ export let errors = {
         return new Error(msg);
     },
     canvasModuleRequired() {
-        let msg = `Module canvas is required.`;
+        let msg = `Module canvas is required in node environment, please install canvas module.`;
         return new Error(msg);
     }
 }
@@ -165,10 +165,6 @@ export class ImageService extends Service {
     private static generateImageBase64(width: number, height: number, text: string, options?: DrawOption): string
     private static generateImageBase64(width: number, height: number, draw: CanvasDraw): string
     private static generateImageBase64(width: number, height: number, obj: CanvasDraw | string, options?: DrawOption): string {
-        if (document == null) {
-            throw errors.notSupportedInNode()
-        }
-
         var canvas: HTMLCanvasElement;
         if (typeof document != "undefined") {
             canvas = document.createElement('canvas');
@@ -176,11 +172,16 @@ export class ImageService extends Service {
             canvas.height = height; //img_height;
         }
         else {
-            let canvasModule = require("canvas");
-            if (canvasModule == null)
-                throw errors.canvasModuleRequired();
-
-            canvas = canvasModule.createCanvas(200, 200);
+            try {
+                let canvasModule = global["require"]("canvas");
+                canvas = canvasModule.createCanvas(width, height);
+            }
+            catch (err: any) {
+                if (err.code == "MODULE_NOT_FOUND") {
+                    throw errors.canvasModuleRequired();
+                }
+                throw err;
+            }
         }
 
         var ctx = canvas.getContext('2d');
