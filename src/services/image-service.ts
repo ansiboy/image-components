@@ -173,7 +173,7 @@ export class ImageService extends Service {
         }
         else {
             try {
-                let canvasModule = global["require"]("canvas");
+                let canvasModule = eval("require")("canvas");
                 canvas = canvasModule.createCanvas(width, height);
             }
             catch (err: any) {
@@ -216,7 +216,7 @@ export class ImageService extends Service {
         if (!width) throw errors.argumentNull('width')
         if (!height) throw errors.argumentNull('height')
 
-        var canvas = document.createElement('canvas') //.getElementById("canvas");
+        var canvas = document.createElement('canvas');
         var ctx = canvas.getContext("2d");
 
         canvas.width = width
@@ -254,17 +254,17 @@ export class ImageService extends Service {
         if (typeof fileData == "string") {
             let imageBase64 = fileData;
             if (!imageBase64) throw errors.argumentNull('imageBase64')
-            // let imageSize = await this.getImageSize(imageBase64)
-            // let maxWidth = 800
-            // let maxHeight = 800
-            // if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
-            //     let height = imageSize.height / imageSize.width * maxWidth
-            //     imageBase64 = await this.resize(imageBase64, maxWidth, height)
-            // }
-            // else if (imageSize.height > maxHeight) {
-            //     let width = imageSize.width / imageSize.height * maxHeight
-            //     imageBase64 = await this.resize(imageBase64, width, maxHeight)
-            // }
+            let imageSize = await this.getImageSize(imageBase64)
+            let maxWidth = 800
+            let maxHeight = 800
+            if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
+                let height = imageSize.height / imageSize.width * maxWidth
+                imageBase64 = await this.resize(imageBase64, maxWidth, height)
+            }
+            else if (imageSize.height > maxHeight) {
+                let width = imageSize.width / imageSize.height * maxHeight
+                imageBase64 = await this.resize(imageBase64, width, maxHeight)
+            }
 
             let arr = imageBase64.split(",");
             console.assert(arr.length == 2);
