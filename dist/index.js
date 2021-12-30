@@ -2020,7 +2020,7 @@ class ImageService extends maishu_chitu_service_1.Service {
         }
         else {
             try {
-                let canvasModule = global["require"]("canvas");
+                let canvasModule = eval("require")("canvas");
                 canvas = canvasModule.createCanvas(width, height);
             }
             catch (err) {
@@ -2062,7 +2062,7 @@ class ImageService extends maishu_chitu_service_1.Service {
                 throw exports.errors.argumentNull('width');
             if (!height)
                 throw exports.errors.argumentNull('height');
-            var canvas = document.createElement('canvas'); //.getElementById("canvas");
+            var canvas = document.createElement('canvas');
             var ctx = canvas.getContext("2d");
             canvas.width = width;
             canvas.height = height;
@@ -2100,17 +2100,17 @@ class ImageService extends maishu_chitu_service_1.Service {
                 let imageBase64 = fileData;
                 if (!imageBase64)
                     throw exports.errors.argumentNull('imageBase64');
-                // let imageSize = await this.getImageSize(imageBase64)
-                // let maxWidth = 800
-                // let maxHeight = 800
-                // if (imageSize.width > maxWidth) {// || imageSize.height > maxHeight
-                //     let height = imageSize.height / imageSize.width * maxWidth
-                //     imageBase64 = await this.resize(imageBase64, maxWidth, height)
-                // }
-                // else if (imageSize.height > maxHeight) {
-                //     let width = imageSize.width / imageSize.height * maxHeight
-                //     imageBase64 = await this.resize(imageBase64, width, maxHeight)
-                // }
+                let imageSize = yield this.getImageSize(imageBase64);
+                let maxWidth = 800;
+                let maxHeight = 800;
+                if (imageSize.width > maxWidth) { // || imageSize.height > maxHeight
+                    let height = imageSize.height / imageSize.width * maxWidth;
+                    imageBase64 = yield this.resize(imageBase64, maxWidth, height);
+                }
+                else if (imageSize.height > maxHeight) {
+                    let width = imageSize.width / imageSize.height * maxHeight;
+                    imageBase64 = yield this.resize(imageBase64, width, maxHeight);
+                }
                 let arr = imageBase64.split(",");
                 console.assert(arr.length == 2);
                 let blob = b64toBlob(arr[1], "image");
