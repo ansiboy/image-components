@@ -5,16 +5,24 @@ import { ImageService } from "./image-service";
 export class VideoService extends Service {
 
     protected url(path: string) {
-        return VideoService.url(path);
+        return pathConcat(ImageService.serviceHost, path);
     }
 
-    protected static url(path: string) {
-        return pathConcat(ImageService.serviceHost, "video", path);
-    }
-
-    upload(video: File) {
-        let url = this.url("upload");
-        let r = this.postByFormData<{}>(url, { video, name: video.name });
+    async upload(video: File) {
+        type Result = { name: string, filePath: string };
+        let url = this.url("video/upload");
+        var r = await this.postByFormData<Result>(url, { video });
+        debugger;
         return r;
+    }
+
+    remove(filePath: string) {
+        let url = this.url(pathConcat("video/remove", filePath));
+        return this.postByJson(url, { id: filePath });
+    }
+
+    videoSource(name: string, appId: string) {
+        let url = this.url(pathConcat("video", name)) + `?application-id=${appId}`;
+        return url;
     }
 }

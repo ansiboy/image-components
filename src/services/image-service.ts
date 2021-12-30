@@ -248,7 +248,7 @@ export class ImageService extends Service {
      * 上传图片
      * @param imageBase64 图片的 base64 数据
      */
-    async upload(fileData: string | File) {
+    async upload(fileData: string | File, category?: string) {
         if (!fileData) throw errors.argumentNull("fileData");
         let url = ImageService.imageUploadUrl;
         if (typeof fileData == "string") {
@@ -270,10 +270,10 @@ export class ImageService extends Service {
             console.assert(arr.length == 2);
             let blob = b64toBlob(arr[1], "image")
 
-            return this.postByFormData<{ id: string }>(url, { image: blob });
+            return this.postByFormData<{ id: string }>(url, { image: blob, category });
         }
 
-        return this.postByFormData<{ id: string }>(url, { image: fileData });
+        return this.postByFormData<{ id: string }>(url, { image: fileData, category });
     }
 
     /**
